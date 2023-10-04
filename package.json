@@ -10,8 +10,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.1.8",
+    "@react-navigation/native-stack": "^6.9.14",
     "react": "18.2.0",
-    "react-native": "0.72.5"
+    "react-native": "0.72.5",
+    "react-native-paper": "^5.10.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
