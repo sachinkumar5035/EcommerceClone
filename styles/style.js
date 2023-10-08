@@ -17,7 +17,7 @@ export const defaultStyle=StyleSheet.create({
     padding:35,
     paddingTop:Platform.OS==="android"?StatusBar.currentHeight:0,
     flex:1,
-    backgroundColor:colors.color1
+    backgroundColor:colors.color2
 });
 
 export const inputStyling=StyleSheet.create({
