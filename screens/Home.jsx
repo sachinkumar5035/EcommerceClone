@@ -2,10 +2,10 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { colors, defaultStyle } from '../styles/style';
 import Header from '../components/Header';
-import { Avatar, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import SearchModal from '../components/SearchModal';
-
-
+import ProductCard from '../components/ProductCard';
+import { useNavigation } from '@react-navigation/native';
 
 const categories = [
     { category: 'Nice1', _id: 'akjskdla' },
@@ -17,33 +17,81 @@ const categories = [
     { category: 'Nice7', _id: 'akjskasa' },
 ];
 
-const products = [];
+const products = [
+    {
+        _id: 'alskjldak',
+        name: 'sample name1',
+        stock: 23,
+        images: [
+            {
+                url: 'https://picsum.photos/id/237/600/600',
+            },
+        ],
+        price: 1200,
+    },
+    {
+        _id: 'alsasldak',
+        name: 'sample name2',
+        stock: 23,
+        images: [
+            {
+                url: 'https://picsum.photos/id/237/600/600',
+            },
+        ],
+        price: 1200,
+    },
+    {
+        _id: 'aasldak',
+        name: 'sample name3',
+        stock: 23,
+        images: [
+            {
+                url: 'https://picsum.photos/id/237/600/600',
+            },
+        ],
+        price: 1200,
+    },
+    {
+        _id: 'lsasldak',
+        name: 'sample name4',
+        stock: 23,
+        images: [
+            {
+                url: 'https://picsum.photos/id/237/600/600',
+            },
+        ],
+        price: 1200,
+    },
+];
 
 const Home = () => {
+    const navigate = useNavigation();
 
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState('');
     const [activeSearch, setActiveSearch] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
 
-
-    const categoryButtonHandler = (id) => {
-        // console.log(id); //item id setCategory function will be called to set the category 
+    const categoryButtonHandler = id => {
+        // console.log(id); //item id setCategory function will be called to set the category
         setCategory(id);
-    }
+    };
 
+    const addToCartHandler = (id,stock) => {
+        console.log("adding to cart"+id);
+    };
 
     return (
         <>
-            {
-                activeSearch && <SearchModal
+            {activeSearch && (
+                <SearchModal
                     searchQuery={searchQuery}
                     setActiveSearch={setActiveSearch}
                     setSearchQuery={setSearchQuery}
                     products={products}
                 />
-            }
+            )}
 
-            <View style={defaultStyle}>
+            <View style={{...defaultStyle}} >
                 {/* header  */}
                 <Header />
 
@@ -53,14 +101,14 @@ const Home = () => {
                         paddingTop: 70,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        alignItems: "center"
+                        alignItems: 'center',
                     }}>
                     <View>
                         <Text style={{ fontSize: 25 }}>Our</Text>
                         <Text style={{ fontSize: 25, fontWeight: '900' }}>Products</Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => setActiveSearch((prev) => !prev)}>
+                    <TouchableOpacity onPress={() => setActiveSearch(prev => !prev)}>
                         {/* <Avatar.Icon icon={'magnify'} size={50} color="grey" style={{backgroundColor:colors.color2, elevation:12}}/> */}
                         <Text>Search...</Text>
                     </TouchableOpacity>
@@ -69,36 +117,53 @@ const Home = () => {
                 <View
                     style={{
                         flexDirection: 'row',
-                        height: 80,
                     }}>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{
-                        alignItems: "center"
-                    }}>
-                        {
-                            categories.map((item, index) => (
-                                <Button
-                                    key={item._id}
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{
+                            alignItems: 'center',
+                        }}>
+                        {categories.map((item, index) => (
+                            <Button
+                                key={item._id}
+                                style={{
+                                    backgroundColor:
+                                        category === item._id ? 'red' : colors.color5,
+                                    borderRadius: 100,
+                                    margin: 5,
+                                }}
+                                onPress={() => categoryButtonHandler(item._id)}>
+                                <Text
                                     style={{
-                                        backgroundColor: category === item._id ? "red" : colors.color5,
-                                        borderRadius: 100,
-                                        margin: 5,
-                                    }}
-                                    onPress={() => categoryButtonHandler(item._id)}
-                                >
-                                    <Text
-                                        style={{
-                                            color: category === item._id ? colors.color2 : "gray",
-                                            fontSize: 12,
-                                        }}>
-                                        {item.category}
-                                    </Text>
-                                </Button>
-                            ))}
+                                        color: category === item._id ? colors.color2 : 'gray',
+                                        fontSize: 12,
+                                    }}>
+                                    {item.category}
+                                </Text>
+                            </Button>
+                        ))}
                     </ScrollView>
                 </View>
 
                 {/* Products  */}
-
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                    {products.map((item, index) => {
+                        return <ProductCard
+                            stock={item.stock}
+                            price={item.price}
+                            image={item.images[0]?.url}
+                            name={item.name}
+                            id={item._id}
+                            addToCartHandler={addToCartHandler}
+                            key={item._id}
+                            i={index}
+                            navigate={navigate}
+                        />
+                    })
+                    }
+                </ScrollView>
+                {/* <ProductCard/> */}
             </View>
         </>
     );

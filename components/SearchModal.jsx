@@ -1,8 +1,8 @@
-import { View, Text, Platform, StatusBar, SafeAreaView, ScrollView, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
-import { colors } from '../styles/style'
-import { Searchbar } from 'react-native-paper';
-import { useNavigate } from 'react-router-dom';
+import { View, Text, Platform, StatusBar, SafeAreaView, ScrollView, TouchableOpacity, Image, BackHandler, Modal, TextInput } from 'react-native';
+import React, { useEffect } from 'react';
+import { colors } from '../styles/style';
+import { Headline, } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -11,27 +11,30 @@ import { useNavigate } from 'react-router-dom';
 const SearchModal = ({ searchQuery, setActiveSearch, setSearchQuery, products = [] }) => {
 
 
-   
+    const navigate = useNavigation();
+    const backAction = ()=>{
+        setSearchQuery(""); // when we click on back button search text must be empty 
+        setActiveSearch(false); // active search should be false
+        return true;
+    }
+
+    useEffect(()=>{
+        BackHandler.addEventListener("hardwareBackPress",backAction);
+
+        return ()=>{
+            BackHandler.removeEventListener("hardwareBackPress",backAction);
+        }
+
+    },[]);
+
 
     return (
-        <View style={{
-            height: "100%",
-            width: "100%",
-            position: "absolute",
-            top: 0,
-            zIndex: 100,
-            backgroundColor: colors.color2,
-            padding: 35,
-            paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
-        }}>
+        <Modal visible={true}>
             <SafeAreaView>
-                <Searchbar
+                <TextInput
                     placeholder="search..."
                     onChangeText={(query) => setSearchQuery(query)}
                     value={searchQuery}
-                    style={{
-                        marginTop: 20
-                    }}
                 />
                 <ScrollView>
                     <View style={{
@@ -55,7 +58,7 @@ const SearchModal = ({ searchQuery, setActiveSearch, setSearchQuery, products = 
                 </ScrollView>
 
             </SafeAreaView>
-        </View>
+        </Modal>
     )
 }
 
@@ -84,11 +87,18 @@ const SearchItem = ({price,name,imgSrc,handler})=>{
                     height:80,
                     width:80,
                     position:"absolute",
-                    resizeMode:"contain"
+                    resizeMode:"contain",
+                    top:-15,
+                    left:10,
+                    borderTopLeftRadius:20,
+                    borderBottomRightRadius:20
                 }} 
             />
 
-            
+            <View style={{width:"100%", paddingHorizontal:30}}>
+                <Text numberOfLines={1}>{name}</Text>
+                <Headline>₹{price}</Headline>
+            </View>
         </View>
 
     </TouchableOpacity>
