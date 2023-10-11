@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-const SearchModal = ({ searchQuery, setActiveSearch, setSearchQuery, products = [] }) => {
+const SearchModal = ({ isVisible,searchQuery, setActiveSearch, setSearchQuery, products = [] }) => {
 
 
     const navigate = useNavigation();
@@ -29,7 +29,7 @@ const SearchModal = ({ searchQuery, setActiveSearch, setSearchQuery, products = 
 
 
     return (
-        <Modal visible={true}>
+        <Modal visible={isVisible} onDismiss={()=>setActiveSearch(false)}>
             <SafeAreaView>
                 <TextInput
                     placeholder="search..."

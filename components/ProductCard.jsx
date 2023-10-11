@@ -12,11 +12,11 @@ const ProductCard = ({ stock, price, image, name, id, addToCartHandler, i, navig
             <View
                 style={{
                     elevation: 5,
-                    width:250,
                     alignItems:"center",
                     justifyContent:"space-between",
                     margin:20,
-                    height:400,
+                    height:500,
+                    width:300,
                     borderRadius: 20,
                     backgroundColor: i % 2 === 0 ? colors.color1 : colors.color2
                 }}

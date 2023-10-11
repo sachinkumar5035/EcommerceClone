@@ -6,6 +6,7 @@ import { Button } from 'react-native-paper';
 import SearchModal from '../components/SearchModal';
 import ProductCard from '../components/ProductCard';
 import { useNavigation } from '@react-navigation/native';
+import Footer from '../components/Footer';
 
 const categories = [
     { category: 'Nice1', _id: 'akjskdla' },
@@ -83,11 +84,12 @@ const Home = () => {
     return (
         <>
             {activeSearch && (
-                <SearchModal
+                <SearchModal 
                     searchQuery={searchQuery}
                     setActiveSearch={setActiveSearch}
                     setSearchQuery={setSearchQuery}
                     products={products}
+                    isVisible={activeSearch}
                 />
             )}
 
@@ -163,8 +165,11 @@ const Home = () => {
                     })
                     }
                 </ScrollView>
-                {/* <ProductCard/> */}
             </View>
+
+           <Footer activeRoute={"home"}/>
+
+
         </>
     );
 };
