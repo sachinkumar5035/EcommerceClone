@@ -3,7 +3,8 @@ import React, { useRef, useState } from 'react'
 import { colors, defaultStyle } from '../styles/style';
 import Header from '../components/Header';
 import { SliderBox } from "react-native-image-slider-box";
-import { Avatar } from 'react-native-paper';
+import { Avatar, Button } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
@@ -40,13 +41,32 @@ const ProductDetails = ({ route: { params } }) => {
     // console.log(params.id);
 
     const incrementQty = ()=>{
-        if(quantity>=stock) return
+        if(quantity>=stock){
+            return 
+        }
         setQuantity((prev)=>prev+1);
     }
     const decrementQty = ()=>{
-        if(quantity<=1) return
+        if(quantity<=1) return Toast.show({
+            type:"error",
+            text1:"quantity can not be less than 1"
+        })
         setQuantity((prev)=>prev-1);
     }
+
+    const addToCartHandler = ()=>{
+        if(stock==0){
+            return Toast.show({
+                type:"error",
+                text1:"out of stock"
+            })
+        }
+        Toast.show({
+            type:"success",
+            text1:"added to cart"
+        })
+    }
+
 
     return (
         <View>
@@ -170,8 +190,18 @@ const ProductDetails = ({ route: { params } }) => {
                             />
                         </TouchableOpacity>
                     </View>
-
                 </View>
+
+                <TouchableOpacity activeOpacity={.8} onPress={addToCartHandler}>
+                    <Button icon={'cart'} textColor='white' style={{
+                        backgroundColor:colors.color3,
+                        borderRadius:100,
+                        padding:5,
+                        marginVertical:35,
+                    }}>Add to cart</Button>
+                </TouchableOpacity>
+                
+
 
             </View>
         </View>
