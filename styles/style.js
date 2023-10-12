@@ -5,9 +5,9 @@ export const colors={
     color1_light:"rgba(227, 25, 99,1)",
     color1_light2:"rgba(199,0,73,0.8)",
     color2:"white",
-    color3:"rgba(45,45,45)",
+    color3:"rgba(45,45,45,1)",
     color4:"transparent",
-    color5:"#f2f2f2",
+    color5:"#e3dede",
     color6:"#f7f7f7"
 };
 

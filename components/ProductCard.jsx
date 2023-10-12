@@ -64,7 +64,7 @@ const ProductCard = ({ stock, price, image, name, id, addToCartHandler, i, navig
                         </Text>
                     </View>
                     <TouchableOpacity style={{
-                        backgroundColor:i%2==0?colors.color2:colors.color3,
+                        backgroundColor:i%2==0?colors.color2:colors.color1,
                         borderRadius:0,
                         borderBottomRightRadius:20,
                         borderBottomLeftRadius:20,

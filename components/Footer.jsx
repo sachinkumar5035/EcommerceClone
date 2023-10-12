@@ -7,8 +7,6 @@ import { Avatar } from 'react-native-paper';
 
 
 const Footer = ({ activeRoute = "home" }) => {
-
-
     const navigate = useNavigation();
 
     const isAuthenticated = true;
@@ -62,7 +60,7 @@ const Footer = ({ activeRoute = "home" }) => {
                     <Avatar.Icon style={{
                         backgroundColor: colors.color1,
                     }}
-                        icon="shopping"
+                    icon={activeRoute === "cart" ? "shopping" : "shopping-outline"}
                     />
 
                 </TouchableOpacity>
@@ -74,7 +72,13 @@ const Footer = ({ activeRoute = "home" }) => {
                     <Avatar.Icon style={{
                         backgroundColor: colors.color1
                     }}
-                        icon="cart"
+                    icon={
+                        isAuthenticated === false
+                          ? "login"
+                          : activeRoute === "profile"
+                          ? "account"
+                          : "account-outline"
+                      }
                     />
 
                 </TouchableOpacity>
@@ -107,7 +111,7 @@ const Footer = ({ activeRoute = "home" }) => {
                         <Avatar.Icon style={{
                             backgroundColor: colors.color1
                         }}
-                            icon="cart"
+                        icon={activeRoute === "home" ? "home" : "home-outline"}
                         />
 
                     </TouchableOpacity>

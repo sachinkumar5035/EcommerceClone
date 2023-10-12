@@ -4,11 +4,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './screens/Home';
 import Login from './screens/Login';
 import ProductDetails from './screens/ProductDetails';
+import { PaperProvider } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator();
 
 const Main = () => {
   return (
+    <PaperProvider>
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="home"
@@ -19,6 +21,7 @@ const Main = () => {
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
+    </PaperProvider>
   );
 };
 
