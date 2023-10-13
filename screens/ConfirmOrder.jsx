@@ -32,10 +32,11 @@ const ConfirmOrder = () => {
                     flex: 1
                 }}
             >
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     {
                         cartItems.map((item, index) => (
                             <ConfirmOrderItem
+                                price={item.price}
                                 key={item.product}
                                 image={item.image}
                                 name={item.name}
