@@ -2,11 +2,12 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { colors, defaultStyle } from '../styles/style';
 import Header from '../components/Header';
-import { Button } from 'react-native-paper';
+import { Avatar, Button } from 'react-native-paper';
 import SearchModal from '../components/SearchModal';
 import ProductCard from '../components/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 import Footer from '../components/Footer';
+import Heading from '../components/Heading';
 
 const categories = [
     { category: 'Nice1', _id: 'akjskdla' },
@@ -77,23 +78,24 @@ const Home = () => {
         setCategory(id);
     };
 
-    const addToCartHandler = (id,stock) => {
-        console.log("adding to cart"+id);
+    const addToCartHandler = (id, stock) => {
+        console.log("adding to cart" + id);
     };
 
     return (
         <>
-            {activeSearch && (
-                <SearchModal 
-                    searchQuery={searchQuery}
-                    setActiveSearch={setActiveSearch}
-                    setSearchQuery={setSearchQuery}
-                    products={products}
-                    isVisible={activeSearch}
-                />
-            )}
+            {
+                activeSearch && (
+                    <SearchModal
+                        searchQuery={searchQuery}
+                        setActiveSearch={setActiveSearch}
+                        setSearchQuery={setSearchQuery}
+                        products={products}
+                        isVisible={activeSearch}
+                    />
+                )}
 
-            <View style={{...defaultStyle}} >
+            <View style={{ ...defaultStyle }} >
                 {/* header  */}
                 <Header />
 
@@ -105,14 +107,17 @@ const Home = () => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                    <View>
+                        
+                    {/* <View>
                         <Text style={{ fontSize: 25 }}>Our</Text>
                         <Text style={{ fontSize: 25, fontWeight: '900' }}>Products</Text>
-                    </View>
+                    </View> */}
+
+                    <Heading text1='Our' text2='Products' />
+
 
                     <TouchableOpacity onPress={() => setActiveSearch(prev => !prev)}>
-                        {/* <Avatar.Icon icon={'magnify'} size={50} color="grey" style={{backgroundColor:colors.color2, elevation:12}}/> */}
-                        <Text>Search...</Text>
+                        <Avatar.Icon icon='magnify' size={50} color="grey" style={{ backgroundColor: colors.color2, elevation: 12 }} />
                     </TouchableOpacity>
                 </View>
 
@@ -167,7 +172,7 @@ const Home = () => {
                 </ScrollView>
             </View>
 
-           <Footer activeRoute={"home"}/>
+            <Footer activeRoute={"home"} />
 
 
         </>

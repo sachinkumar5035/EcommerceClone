@@ -12,7 +12,7 @@ const ITEM_WIDTH = SLIDER_WIDTH;
 const ProductDetails = ({ route: { params } }) => {
 
     const isCarousel = useRef(null);
-    const name = "Macbook pro m2";
+    const name = "Macbook Pro M2";
     const price = "12000";
     const description = "The random string generator creates a sequence of letters, numbers, and special characters in many output formats. The random strings can be easily copied. This free tool can generate up to ten thousand random strings where every string is a maximum of 100 characters in length."
     const [quantity,setQuantity]=useState(1);
@@ -37,8 +37,6 @@ const ProductDetails = ({ route: { params } }) => {
             url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         },
     ];
-
-    // console.log(params.id);
 
     const incrementQty = ()=>{
         if(quantity>=stock){
@@ -112,7 +110,7 @@ const ProductDetails = ({ route: { params } }) => {
                 </Text>
 
                 <Text
-                    numberOfLines={8}
+                    numberOfLines={10}
                     style={{
                         letterSpacing: 1,
                         fontSize: 18,
@@ -193,16 +191,19 @@ const ProductDetails = ({ route: { params } }) => {
                 </View>
 
                 <TouchableOpacity activeOpacity={.8} onPress={addToCartHandler}>
-                    <Button icon={'cart'} textColor='white' style={{
-                        backgroundColor:colors.color3,
+                    <Button 
+                    icon={'cart'} 
+                    textColor='white' 
+                    style={{
+                        backgroundColor:colors.color1,
                         borderRadius:100,
                         padding:5,
                         marginVertical:35,
                     }}>Add to cart</Button>
                 </TouchableOpacity>
-                
+            
 
-
+            
             </View>
         </View>
     )

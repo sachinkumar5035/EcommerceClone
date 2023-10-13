@@ -6,6 +6,7 @@ import Login from './screens/Login';
 import ProductDetails from './screens/ProductDetails';
 import { PaperProvider } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
+import Cart from './screens/Cart';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ const Main = () => {
         <Stack.Group>
           <Stack.Screen name="home" component={Home} />
           <Stack.Screen name="productDetails" component={ProductDetails} />
+          <Stack.Screen name="cart" component={Cart} />
         </Stack.Group>
       </Stack.Navigator>
       <Toast position="top" />
