@@ -5,8 +5,9 @@ import Header from '../components/Header'
 import Heading from '../components/Heading'
 import { Button } from 'react-native-paper'
 import CartItem from '../components/CartItem'
+import { useNavigation } from '@react-navigation/native'
 
-const cartItems=[ // we will fetch it from cart reducer later for now let us make it hard coded
+export const cartItems=[ // we will fetch it from cart reducer later for now let us make it hard coded
     {
         name:"Macbook",
         image:"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
@@ -59,6 +60,9 @@ const cartItems=[ // we will fetch it from cart reducer later for now let us mak
 
 
 const Cart = () => {
+
+
+    const navigate = useNavigation();
 
     const incrementHandler=(id,qty,stock)=>{
         console.log("incresing ",id,qty,stock);
@@ -118,7 +122,7 @@ const Cart = () => {
                 <Text>5 Items</Text>
                 <Text>₹1500</Text>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={cartItems.length>0?()=>navigate.navigate("confirmorder"):null}>
                 <Button icon={'cart'}
                     style={{
                         backgroundColor: colors.color3,
@@ -128,7 +132,7 @@ const Cart = () => {
                     }}
                     textColor={colors.color2}
                 >
-                    Check out
+                    Check Out
                 </Button>
             </TouchableOpacity>
         </View>

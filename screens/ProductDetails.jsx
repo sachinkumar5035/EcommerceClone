@@ -6,8 +6,6 @@ import { SliderBox } from "react-native-image-slider-box";
 import { Avatar, Button } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 
-const SLIDER_WIDTH = Dimensions.get("window").width;
-const ITEM_WIDTH = SLIDER_WIDTH;
 
 const ProductDetails = ({ route: { params } }) => {
 
@@ -203,7 +201,7 @@ const ProductDetails = ({ route: { params } }) => {
                 </TouchableOpacity>
             
 
-            
+
             </View>
         </View>
     )
