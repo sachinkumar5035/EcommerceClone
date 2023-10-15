@@ -130,7 +130,7 @@ const ProductDetails = ({ route: { params } }) => {
                     <Text
                         style={{
                             color: colors.color3,
-                            fontWeight: "90"
+                            fontWeight: "100"
                         }}
 
                     >
