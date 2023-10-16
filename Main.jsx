@@ -9,6 +9,8 @@ import Toast from 'react-native-toast-message';
 import Cart from './screens/Cart';
 import ConfirmOrder from './screens/ConfirmOrder';
 import Payment from './screens/Payment';
+import ForgetPassword from './screens/ForgetPassword';
+import Verify from './screens/Verify';
 
 
 
@@ -28,6 +30,13 @@ const Main = () => {
           <Stack.Screen name="confirmorder" component={ConfirmOrder} />
           <Stack.Screen name="payment" component={Payment} />
           <Stack.Screen name="login" component={Login} />
+
+          {/* Password resetting route */}
+          <Stack.Screen name='forgetpassword' component={ForgetPassword}/>
+          <Stack.Screen name='verify' component={Verify}/>
+
+
+
         </Stack.Group>
       </Stack.Navigator>
       <Toast position="top" />
