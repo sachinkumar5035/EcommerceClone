@@ -25,3 +25,5 @@ export const inputStyling=StyleSheet.create({
     marginVertical:10,
     marginHorizontal:20
 });
+
+export const defaultImg ="https://p.kindpng.com/picc/s/451-4517876_default-profile-hd-png-download.png";

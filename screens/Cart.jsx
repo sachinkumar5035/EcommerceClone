@@ -95,6 +95,7 @@ const Cart = () => {
                     {
                         cartItems.map((item,index)=>(
                             <CartItem 
+                            navigate={navigate}
                             key={item.product} 
                             id={item.product} 
                             name={item.name} 
