@@ -12,6 +12,7 @@ import Payment from './screens/Payment';
 import ForgetPassword from './screens/ForgetPassword';
 import Verify from './screens/Verify';
 import Signup from './screens/Signup';
+import Profile from './screens/Profile';
 
 
 
@@ -32,12 +33,15 @@ const Main = () => {
           <Stack.Screen name="payment" component={Payment} />
           <Stack.Screen name="login" component={Login} />
           <Stack.Screen name='signup' component={Signup}/>
+          <Stack.Screen name='profile' component={Profile}/>
+
+
+
+
           {/* Password resetting route */}
           <Stack.Screen name='forgetpassword' component={ForgetPassword}/>
           <Stack.Screen name='verify' component={Verify}/>
           
-
-
         </Stack.Group>
       </Stack.Navigator>
       <Toast position="top" />
