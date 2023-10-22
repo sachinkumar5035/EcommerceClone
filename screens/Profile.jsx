@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
-import { colors, defaultStyle } from '../styles/style'
+import { colors, defaultImg, defaultStyle } from '../styles/style'
 import { Avatar, Button } from 'react-native-paper'
 import ButtonBox from '../components/ButtonBox'
 import Footer from '../components/Footer'
@@ -11,15 +11,43 @@ const user = {
     email: "skumar@gmail.com"
 }
 
-const loading = true;
+
 
 const Profile = ({ navigation }) => {
 
-    const [avatar, setAvatar] = useState("null");
+    const [avatar, setAvatar] = useState("https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&q=80&w=1931&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); // getting null error
 
-    const navigateHandler = () => {
-
+    const logoutHandler = ()=>{
+        // console.log("logging out the user");
+        alert("logging out");
     }
+
+
+
+    const navigateHandler = (text) => {
+        switch (text) {
+            // text is comming from buttonBox text it must be same 
+            case "Admin":
+                navigation.navigate("adminpanel");
+                break;
+            case "Order":
+                navigation.navigate("order");
+                break;
+            case "Profile":
+                navigation.navigate("updateprofile");
+                break;
+            case "Password":
+                navigation.navigate("changepassword");
+                break;
+            case "Sign Out":
+                logoutHandler();
+                break;
+            default:
+                break;
+        }
+    }
+
+    const loading = false; // now this is for testing purpose later it will be fetched from backend 
 
     return (
 
@@ -31,59 +59,61 @@ const Profile = ({ navigation }) => {
 
                 {/* Loading */}
                 {
-                    loading ? 
-                    (<Loader/>) : 
-                   ( <>
+                    loading ?
+                        (<Loader />) :
+                        (<>
 
-                        <View style={styles.container}>
-                            <Avatar.Image
-                                size={100}
-                                backgroundColor={colors.color1}
-                                source={{
-                                    uri: avatar,
-                                }}
-                            />
-                            <TouchableOpacity onPress={() => navigation.navigate("camera", { updateProfile: true })}>
-                                <Button textColor={colors.color1}>Change Photo</Button>
-                            </TouchableOpacity>
+                            <View style={styles.container}>
+                                {/* profile image  */}
+                                <Avatar.Image
+                                    size={100}
+                                    backgroundColor={colors.color1}
+                                    source={{
+                                        uri: avatar ? avatar : defaultImg, // image giving error 
+                                    }}
+                                />
+                                <TouchableOpacity onPress={() => navigation.navigate("camera", { updateProfile: true })}>
+                                    <Button textColor={colors.color1}>Change Photo</Button>
+                                </TouchableOpacity>
 
-                            <Text style={styles.nameStyle}>
-                                {user?.name}
-                            </Text>
+                                <Text style={styles.nameStyle}>
+                                    {user?.name}
+                                </Text>
 
-                            <Text style={{ fontWeight: "300", color: colors.color2 }}>
-                                {user?.email}
-                            </Text>
-                        </View>
-
-                        <View>
-
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    margin: 10,
-                                    justifyContent: 'space-between'
-                                }}
-                            >
-                                <ButtonBox text={"Orders"} icon={'format-list-bulleted-square'} handler={navigateHandler} />
-                                <ButtonBox text={"Admin"} icon={"view-dashboard"} reverse={true} handler={navigateHandler} />
-                                <ButtonBox text={"Profile"} icon={"pencil"} handler={navigateHandler} />
+                                <Text style={{ fontWeight: "300", color: colors.color2 }}>
+                                    {user?.email}
+                                </Text>
                             </View>
 
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    margin: 10,
-                                    justifyContent: 'space-evenly'
-                                }}
-                            >
-                                <ButtonBox text={"Password"} icon={"pencil"} handler={navigateHandler} />
-                                <ButtonBox text={"Sign out"} icon={"exit-to-app"} handler={navigateHandler} />
+                            <View>
+
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        margin: 10,
+                                        justifyContent: 'space-between'
+                                    }}
+                                >
+                                    {/* because we are passing common navigationHandler we can use switch statement  */}
+                                    <ButtonBox text={"Orders"} icon={'format-list-bulleted-square'} handler={navigateHandler} />
+                                    <ButtonBox text={"Admin"} icon={"view-dashboard"} reverse={true} handler={navigateHandler} />
+                                    <ButtonBox text={"Profile"} icon={"pencil"} handler={navigateHandler} />
+                                </View>
+
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        margin: 10,
+                                        justifyContent: 'space-evenly'
+                                    }}
+                                >
+                                    <ButtonBox text={"Password"} icon={"pencil"} handler={navigateHandler} />
+                                    <ButtonBox text={"Sign out"} icon={"exit-to-app"} handler={navigateHandler} />
+                                </View>
+
                             </View>
 
-                        </View>
-
-                    </>)
+                        </>)
                 }
 
             </View>

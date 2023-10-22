@@ -13,14 +13,14 @@ const ButtonBox = ({icon,text,handler,reverse=false,loading=false}) => {
         alignItems:'center',
         borderRadius:20,
     }}
-        onPress={()=>handler(text)}
+        onPress={()=>handler(text)} 
         disabled={loading}
     >
         <Avatar.Icon 
         size={50}
         color={colors.color2} 
         style={{
-            backgroundColor:reverse?colors.color1:colors.color3,
+            backgroundColor:reverse?colors.color1:colors.color3, // reverse for red color in the button box
         }}
         icon={icon}
         />

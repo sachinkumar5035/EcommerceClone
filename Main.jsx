@@ -13,6 +13,8 @@ import ForgetPassword from './screens/ForgetPassword';
 import Verify from './screens/Verify';
 import Signup from './screens/Signup';
 import Profile from './screens/Profile';
+import UpdateProfile from './screens/UpdateProfile';
+import Admin from './screens/Admin';
 
 
 
@@ -34,9 +36,9 @@ const Main = () => {
           <Stack.Screen name="login" component={Login} />
           <Stack.Screen name='signup' component={Signup}/>
           <Stack.Screen name='profile' component={Profile}/>
-
-
-
+          <Stack.Screen name='updateprofile' component={UpdateProfile}/>
+          <Stack.Screen name='adminpanel' component={Admin}/>
+          
 
           {/* Password resetting route */}
           <Stack.Screen name='forgetpassword' component={ForgetPassword}/>
