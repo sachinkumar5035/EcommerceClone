@@ -15,6 +15,8 @@ import Signup from './screens/Signup';
 import Profile from './screens/Profile';
 import UpdateProfile from './screens/UpdateProfile';
 import Admin from './screens/Admin';
+import ChangePassword from './screens/ChangePassword';
+import Orders from './screens/Orders';
 
 
 
@@ -37,13 +39,18 @@ const Main = () => {
           <Stack.Screen name='signup' component={Signup}/>
           <Stack.Screen name='profile' component={Profile}/>
           <Stack.Screen name='updateprofile' component={UpdateProfile}/>
-          <Stack.Screen name='adminpanel' component={Admin}/>
+          <Stack.Screen name='changepassword' component={ChangePassword}/>
+          <Stack.Screen name='orders' component={Orders}/>
           
+
 
           {/* Password resetting route */}
           <Stack.Screen name='forgetpassword' component={ForgetPassword}/>
           <Stack.Screen name='verify' component={Verify}/>
           
+
+        {/* admin routes */}
+
         </Stack.Group>
       </Stack.Navigator>
       <Toast position="top" />

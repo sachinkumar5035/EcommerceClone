@@ -30,8 +30,8 @@ const Profile = ({ navigation }) => {
             case "Admin":
                 navigation.navigate("adminpanel");
                 break;
-            case "Order":
-                navigation.navigate("order");
+            case "Orders":
+                navigation.navigate("orders");
                 break;
             case "Profile":
                 navigation.navigate("updateprofile");

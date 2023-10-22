@@ -6,7 +6,9 @@ import { Avatar } from 'react-native-paper'
 
 const ButtonBox = ({icon,text,handler,reverse=false,loading=false}) => {
   return (
-    <TouchableOpacity style={{
+    <TouchableOpacity
+    activeOpacity={1}
+    style={{
         backgroundColor:reverse?colors.color1:colors.color3,
         height:80,
         width:80,
