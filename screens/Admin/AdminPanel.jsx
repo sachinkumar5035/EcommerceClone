@@ -6,6 +6,7 @@ import ButtonBox from '../../components/ButtonBox'
 import ProductListHeading from '../../components/ProductListHeading'
 import { products } from '../Home'
 import ProductListItem from '../../components/ProductListItem'
+import Chart from '../../components/Chart'
 
 const AdminPanel = ({navigation}) => {
 
@@ -36,7 +37,7 @@ const AdminPanel = ({navigation}) => {
                             alignItems: 'center',
 
                         }}>
-
+                            <Chart inStock={18} outOfStock={3} />
                         </View>
 
                         <View style={{
