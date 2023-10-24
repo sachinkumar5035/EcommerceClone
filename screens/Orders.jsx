@@ -103,7 +103,7 @@ const Orders = () => {
                                             paymentMethod={item.paymentMethod}
                                             orderedOn={item.createdAt.split("T")[0]}
                                             address={`${item.shippingInfo.address}, ${item.shippingInfo.city}, ${item.shippingInfo.country}, ${item.shippingInfo.pinCode}`}
-                                            admin={true}
+                                            // admin={true}
                                         />
                                     )) : (
                                         <Heading style={{ textAlign: "center" }}>No Orders Yet</Heading>

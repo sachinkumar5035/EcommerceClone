@@ -49,7 +49,7 @@ const SearchModal = ({ isVisible,searchQuery, setActiveSearch, setSearchQuery, p
                                     name={i.name}
                                     price={i.price}
                                     handler={()=>
-                                        navigate.navigate("productDetails",{id:i._id})
+                                        navigate.navigate("productdetails",{id:i._id})
                                     }
                                 />
                             ))

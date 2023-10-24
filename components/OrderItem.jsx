@@ -16,7 +16,9 @@ const OrderItem = ({
     index = 0
 }) => {
 
-
+    // updateHandler = ()=>{
+    //     console.log("update handler called");
+    // }
 
     return (
         <View style={{

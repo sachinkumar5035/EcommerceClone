@@ -14,9 +14,9 @@ import Verify from './screens/Verify';
 import Signup from './screens/Signup';
 import Profile from './screens/Profile';
 import UpdateProfile from './screens/UpdateProfile';
-import Admin from './screens/Admin';
 import ChangePassword from './screens/ChangePassword';
 import Orders from './screens/Orders';
+import AdminPanel from './screens/Admin/AdminPanel';
 
 
 
@@ -31,7 +31,7 @@ const Main = () => {
         screenOptions={{headerShown: false,}}>
         <Stack.Group>
           <Stack.Screen name="home" component={Home} />
-          <Stack.Screen name="productDetails" component={ProductDetails} />
+          <Stack.Screen name="productdetails" component={ProductDetails} />
           <Stack.Screen name="cart" component={Cart} />
           <Stack.Screen name="confirmorder" component={ConfirmOrder} />
           <Stack.Screen name="payment" component={Payment} />
@@ -50,6 +50,7 @@ const Main = () => {
           
 
         {/* admin routes */}
+        <Stack.Screen name='adminpanel' component={AdminPanel}/>
 
         </Stack.Group>
       </Stack.Navigator>

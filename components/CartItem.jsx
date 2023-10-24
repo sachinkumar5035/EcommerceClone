@@ -54,7 +54,7 @@ const CartItem = ({
                     style={{
                         fontSize:18
                     }}
-                    onPress={()=>navigate.navigate("productDetails",{id})}
+                    onPress={()=>navigate.navigate("productdetails",{id})}
                 >
                     {name}
                 </Text>

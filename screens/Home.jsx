@@ -19,11 +19,12 @@ const categories = [
     { category: 'Nice7', _id: 'akjskasa' },
 ];
 
-const products = [
+export const products = [
     {
         _id: 'alskjldak',
-        name: 'sample name1',
+        name: 'name1',
         stock: 23,
+        category:"category1",
         images: [
             {
                 url: 'https://picsum.photos/id/237/600/600',
@@ -33,8 +34,9 @@ const products = [
     },
     {
         _id: 'alsasldak',
-        name: 'sample name2',
+        name: 'name2',
         stock: 23,
+        category:"category2", // this will be the category id of the category 
         images: [
             {
                 url: 'https://picsum.photos/id/237/600/600',
@@ -44,8 +46,9 @@ const products = [
     },
     {
         _id: 'aasldak',
-        name: 'sample name3',
+        name: 'name3',
         stock: 23,
+        category:"category3",
         images: [
             {
                 url: 'https://picsum.photos/id/237/600/600',
@@ -55,8 +58,9 @@ const products = [
     },
     {
         _id: 'lsasldak',
-        name: 'sample name4',
+        name: 'name4',
         stock: 23,
+        category:"category4",
         images: [
             {
                 url: 'https://picsum.photos/id/237/600/600',
