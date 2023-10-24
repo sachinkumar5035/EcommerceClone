@@ -36,8 +36,6 @@ const Chart = ({inStock=0,outOfStock=0}) => {
                 chartConfig={chartConfig}
                 accessor={"population"}
                 backgroundColor={colors.color3}
-                paddingLeft={"15"}
-                center={[10, 0]}
                 absolute
             />
         </View>

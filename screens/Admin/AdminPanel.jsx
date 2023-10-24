@@ -12,8 +12,23 @@ const AdminPanel = ({navigation}) => {
 
     const loading = false;
 
-    const navigationHandler = () => {
-
+    const navigationHandler = (text) => {
+        // based on the text we will navigate through the screen 
+        // make sure text will match with ButtonBox text 
+        switch (text) {
+            case "Category":
+                navigation.navigate('categories');
+                break;
+            case "All Orders":
+                navigation.navigate('adminorders');
+                break;
+            case "Product":
+                navigation.navigate('newproduct');
+                break;
+            default:
+                navigation.navigate('newproduct');
+                break;
+        }
     }
 
     const deleteProductHandler=(id)=>{
@@ -26,17 +41,19 @@ const AdminPanel = ({navigation}) => {
             <Header back={true} />
             {/* heading  */}
             <View style={{ marginBottom: 20, paddingTop: 70 }}>
-                <Text style={styles.heading}>Admin</Text>
+                <Text style={styles.heading}>Admin Panel</Text>
             </View>
             {
                 loading ? (<Loader />) : (
                     <>
-                        <View style={{
-                            backgroundColor: colors.color3,
-                            borderRadius: 20,
-                            alignItems: 'center',
-
-                        }}>
+                        <View 
+                            style={{
+                                backgroundColor: colors.color3,
+                                borderRadius: 10,
+                                alignItems: 'center',
+                                
+                            }}
+                        >
                             <Chart inStock={18} outOfStock={3} />
                         </View>
 
@@ -45,9 +62,9 @@ const AdminPanel = ({navigation}) => {
                             justifyContent: 'space-between',
                             margin: 10
                         }} >
-                            <ButtonBox icon={'plus'} text={'Plus'} handler={navigationHandler} />
-                            <ButtonBox icon={'format-list-bulleted-square'} text={'All Orders'} handler={navigationHandler} />
-                            <ButtonBox icon={'plus'} text={'Category'} reverse={true} handler={navigationHandler} />
+                            <ButtonBox icon={'plus'} text={'Product'} handler={navigationHandler} />
+                            <ButtonBox icon={'format-list-bulleted-square'} text={'All Orders'} reverse={true} handler={navigationHandler} />
+                            <ButtonBox icon={'plus'} text={'Category'}  handler={navigationHandler} />
 
                         </View>
 
