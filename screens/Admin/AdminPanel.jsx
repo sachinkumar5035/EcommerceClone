@@ -114,3 +114,10 @@ const styles = StyleSheet.create({
 })
 
 export default AdminPanel
+
+// center a div?
+
+
+
+
+

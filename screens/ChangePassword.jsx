@@ -40,7 +40,8 @@ const ChangePassword = ({navigation}) => {
                     value={oldPassword}
                     onChangeText={setOldPassword}
                 />
-                 <TextInput 
+                
+                <TextInput 
                     {...inputOptions}
                     placeholder='Confirm Password'
                     secureTextEntry={true}

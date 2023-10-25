@@ -63,6 +63,9 @@ const ProductDetails = ({ route: { params } }) => {
         })
     }
 
+    const imagePressHandler =()=>{
+        
+    }
 
     return (
         <View>
