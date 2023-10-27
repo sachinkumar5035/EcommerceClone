@@ -39,17 +39,17 @@ const categories=[
 
     },
     {
-        name:"TopWear",
+        name:"Kurtas",
         _id:"ID6",
 
     },
     {
-        name:"Shoes",
+        name:"medicine",
         _id:"ID7",
 
     },
     {
-        name:"Sports wear",
+        name:"Daily use",
         _id:"ID8",
 
     },

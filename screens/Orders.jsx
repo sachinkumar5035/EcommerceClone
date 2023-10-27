@@ -6,7 +6,7 @@ import Loader from '../components/Loader'
 import Heading from '../components/Heading'
 import OrderItem from '../components/OrderItem'
 
-const order = [
+export const order = [
     {
         _id: "kljas1kdjla;s",
         shippingInfo: {
@@ -114,7 +114,6 @@ const Orders = () => {
                         </View>
                     </>
                 )
-
             }
 
         </View>
