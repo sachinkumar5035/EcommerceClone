@@ -19,6 +19,7 @@ import Orders from './screens/Orders';
 import AdminPanel from './screens/Admin/AdminPanel';
 import Categories from './screens/Admin/Categories';
 import AdminOrders from './screens/Admin/AdminOrders';
+import UpdateProduct from './screens/Admin/UpdateProduct';
 
 
 
@@ -55,6 +56,10 @@ const Main = () => {
         <Stack.Screen name='adminpanel' component={AdminPanel}/>
         <Stack.Screen name='categories' component={Categories}/>
         <Stack.Screen name='adminorders' component={AdminOrders}/>
+        <Stack.Screen name='updateproduct' component={UpdateProduct}/>
+
+
+
 
         </Stack.Group>
       </Stack.Navigator>

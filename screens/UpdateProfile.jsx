@@ -4,7 +4,7 @@ import { colors, defaultStyle, inputStyling } from '../styles/style';
 import {  Button, TextInput } from 'react-native-paper';
 import Header from '../components/Header';
 
-const inputOptions = {
+export const inputOptions = {
     style: inputStyling,
     mode: 'outlined',
     activeOutlineColor: colors.color1
