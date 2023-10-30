@@ -12,8 +12,8 @@ import SelectComponent from '../../components/SelectComponent'
 // from myModal we are navigating to update product by passing Id so that id can be accessed here also by using route.params
 const UpdateProduct = ({ navigation, route }) => {
 
-    const loading = false;
-    const loadingOther = false;
+    const loading = false; // this loading is used when page is fetching the data 
+    const loadingOther = false; // this loading is for button 
     // console.log(route.params);
 
     const [id] = useState(route.params.id);
@@ -91,6 +91,7 @@ const UpdateProduct = ({ navigation, route }) => {
                             <TextInput
                                 {...inputOptions}
                                 placeholder='Price'
+                                keyboardType='number-pad'
                                 value={price}
                                 onChangeText={setPrice}
                             />
@@ -98,6 +99,7 @@ const UpdateProduct = ({ navigation, route }) => {
                             <TextInput
                                 {...inputOptions}
                                 placeholder='Stock'
+                                keyboardType='number-pad'
                                 value={stock}
                                 onChangeText={setStock}
                             />
