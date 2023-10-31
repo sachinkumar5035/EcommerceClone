@@ -34,7 +34,6 @@ const NewProduct = ({ navigation, route }) => {
         console.log(name, description, price, stock, categoryId);
     }
 
-
     return (
         <>
             <View
@@ -96,7 +95,6 @@ const NewProduct = ({ navigation, route }) => {
                                                 right: 2
                                             }}
                                         />
-
                                     </TouchableOpacity>
 
 
@@ -108,6 +106,7 @@ const NewProduct = ({ navigation, route }) => {
                                     value={name}
                                     onChangeText={setName}
                                 />
+
                                 <TextInput
                                     {...inputOptions}
                                     placeholder='Description'
@@ -142,7 +141,9 @@ const NewProduct = ({ navigation, route }) => {
                                         textAlignVertical: 'center'
                                     }}
                                     onPress={() => setVisible(true)}
-                                >{category}</Text>
+                                >
+                                    {category}
+                                </Text>
 
                                 <Button
                                     textColor={colors.color2}
@@ -163,8 +164,13 @@ const NewProduct = ({ navigation, route }) => {
                     )
                 }
             </View>
-            <SelectComponent visible={visible} setVisible={setVisible} setCategory={setCategory} setCategoryId={setCategoryId} categories={categories} />
-
+            <SelectComponent
+                visible={visible}
+                setVisible={setVisible}
+                setCategory={setCategory}
+                setCategoryId={setCategoryId}
+                categories={categories}
+            />
         </>
     )
 }
@@ -181,6 +187,5 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     }
 })
-
 
 export default NewProduct

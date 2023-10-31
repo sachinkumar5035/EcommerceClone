@@ -14,7 +14,7 @@ const UpdateProduct = ({ navigation, route }) => {
 
     const loading = false; // this loading is used when page is fetching the data 
     const loadingOther = false; // this loading is for button 
-    // console.log(route.params);
+    console.log("Update product ",route.params);
 
     const [id] = useState(route.params.id);
     const [name, setName] = useState("");
@@ -24,119 +24,138 @@ const UpdateProduct = ({ navigation, route }) => {
     const [category, setCategory] = useState("Laptop");
     const [categoryId, setCategoryId] = useState("");
     const [categories, setCategories] = useState([
-        {_id:"ID1",category:"Laptop"},
-        {_id:"ID2",category:"Cloths"},
-        {_id:"ID3",category:"Daily"}
+        { _id: "ID1", category: "Laptop" },
+        { _id: "ID2", category: "Cloths" },
+        { _id: "ID3", category: "Daily" }
     ]);
     const [visible, setVisible] = useState(false);
 
+    const images = [
+        {
+            url: "https://picsum.photos/id/237/600/600",
+            _id: "ID1"
+        },
+        {
+            url: "https://picsum.photos/id/237/600/600",
+            _id: "ID2"
+        }
+    ]
+
+
+
     const submitHandler = () => {
-        console.log(name, description,price,stock,categoryId);
+        console.log(name, description, price, stock, categoryId);
     }
 
 
     return (
-       <>
-        <View
-            style={{
-                ...defaultStyle,
-                backgroundColor: colors.color5
-            }}
-        >
-            <Header back={true} />
+        <>
+            <View
+                style={{
+                    ...defaultStyle,
+                    backgroundColor: colors.color5
+                }}
+            >
+                <Header back={true} />
 
-            <View style={{ marginBottom: 20, paddingTop: 70 }}>
-                <Text style={styles.heading}>Update Product</Text>
-            </View>
+                <View style={{ marginBottom: 20, paddingTop: 70 }}>
+                    <Text style={styles.heading}>Update Product</Text>
+                </View>
 
-            {
-                loading ? (<Loader />) : (
-                    <ScrollView
-                        style={{
-                            padding: 20,
-                            elevation: 10,
-                            borderRadius: 10,
-                            backgroundColor: colors.color3
-                        }}
-                    >
-                        <View
+                {
+                    loading ? (<Loader />) : (
+                        <ScrollView
                             style={{
-                                justifyContent: "center",
-                                height: 650
+                                padding: 20,
+                                elevation: 10,
+                                borderRadius: 10,
+                                backgroundColor: colors.color3
                             }}
                         >
-                            <Button
-                                textColor={colors.color1}
-                                onPress={() => navigation.navigate('productimages', {
-                                    id,
-                                    images: []
-                                })}
+                            <View
+                                style={{
+                                    justifyContent: "center",
+                                    height: 650
+                                }}
                             >
-                                Manage Images
-                            </Button>
+                                <Button
+                                    textColor={colors.color1}
+                                    onPress={() => navigation.navigate('productimages', {
+                                        id, // id is product id 
+                                        images: images // here we are sending the images array for the product to ProductImages page
+                                    })}
+                                >
+                                    Manage Images
+                                </Button>
 
-                            <TextInput
-                                {...inputOptions}
-                                placeholder='Name'
-                                value={name}
-                                onChangeText={setName}
-                            />
-                            <TextInput
-                                {...inputOptions}
-                                placeholder='Description'
-                                value={description}
-                                onChangeText={setDescription}
-                            />
+                                <TextInput
+                                    {...inputOptions}
+                                    placeholder='Name'
+                                    value={name}
+                                    onChangeText={setName}
+                                />
+                                <TextInput
+                                    {...inputOptions}
+                                    placeholder='Description'
+                                    value={description}
+                                    onChangeText={setDescription}
+                                />
 
-                            <TextInput
-                                {...inputOptions}
-                                placeholder='Price'
-                                keyboardType='number-pad'
-                                value={price}
-                                onChangeText={setPrice}
-                            />
+                                <TextInput
+                                    {...inputOptions}
+                                    placeholder='Price'
+                                    keyboardType='number-pad'
+                                    value={price}
+                                    onChangeText={setPrice}
+                                />
 
-                            <TextInput
-                                {...inputOptions}
-                                placeholder='Stock'
-                                keyboardType='number-pad'
-                                value={stock}
-                                onChangeText={setStock}
-                            />
+                                <TextInput
+                                    {...inputOptions}
+                                    placeholder='Stock'
+                                    keyboardType='number-pad'
+                                    value={stock}
+                                    onChangeText={setStock}
+                                />
 
-                            <Text
-                                style={{
-                                    height: 50,
-                                    backgroundColor: colors.color2,
-                                    marginVertical: 10,
-                                    marginHorizontal: 20,
-                                    textAlign: "center",
-                                    borderRadius: 3,
-                                    textAlignVertical: 'center'
-                                }}
-                                onPress={() => setVisible(true)}
-                            >{category}</Text>
+                                <Text
+                                    style={{
+                                        height: 50,
+                                        backgroundColor: colors.color2,
+                                        marginVertical: 10,
+                                        marginHorizontal: 20,
+                                        textAlign: "center",
+                                        borderRadius: 3,
+                                        textAlignVertical: 'center'
+                                    }}
+                                    onPress={() => setVisible(true)}
+                                >{category}</Text>
 
-                            <Button
-                                textColor={colors.color2}
-                                style={{
-                                    backgroundColor: colors.color1,
-                                    margin: 20,
-                                    padding: 6
-                                }}
-                                onPress={submitHandler}
-                                loading={loadingOther}
-                                disabled={loadingOther}
-                            >Update</Button>
+                                <Button
+                                    textColor={colors.color2}
+                                    style={{
+                                        backgroundColor: colors.color1,
+                                        margin: 20,
+                                        padding: 6
+                                    }}
+                                    onPress={submitHandler}
+                                    loading={loadingOther}
+                                    disabled={loadingOther}
+                                >Update</Button>
 
-                        </View>
-                    </ScrollView>
-                )
-            }
-        </View>
-        <SelectComponent visible={visible} setVisible={setVisible} setCategory={setCategory} setCategoryId={setCategoryId} categories={categories}/>
-       
-       </>
+                            </View>
+                        </ScrollView>
+                    )
+                }
+            </View>
+            <SelectComponent
+                visible={visible}
+                setVisible={setVisible}
+                setCategory={setCategory}
+                setCategoryId={setCategoryId}
+                categories={categories}
+            />
+
+        </>
     )
 }
 

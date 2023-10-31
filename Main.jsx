@@ -21,6 +21,8 @@ import Categories from './screens/Admin/Categories';
 import AdminOrders from './screens/Admin/AdminOrders';
 import UpdateProduct from './screens/Admin/UpdateProduct';
 import NewProduct from './screens/Admin/NewProduct';
+import ProductImages from './screens/Admin/ProductImages';
+
 
 
 
@@ -61,7 +63,7 @@ const Main = () => {
         <Stack.Screen name='newproduct' component={NewProduct}/>
 
         {/* product Images remaining  */}
-
+        <Stack.Screen name='productimages' component={ProductImages}/>
         </Stack.Group>
       </Stack.Navigator>
       <Toast position="top" />

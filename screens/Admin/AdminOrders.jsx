@@ -14,6 +14,7 @@ const AdminOrders = () => {
 
     const loading=false;
     const processOrderLoading=false;
+    
     const updateHandler=()=>{
 
     }
@@ -69,7 +70,7 @@ const AdminOrders = () => {
                 )
             }
 
-      <Text>AdminOrders</Text>
+      {/* <Text>AdminOrders</Text> */}
     </View>
   )
 }
