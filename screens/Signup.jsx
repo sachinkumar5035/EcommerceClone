@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { colors, defaultStyle, inputStyling, defaultImg } from '../styles/style';
 import { Avatar, Button, TextInput } from 'react-native-paper';
 import Footer from '../components/Footer';
@@ -11,7 +11,7 @@ const inputOptions = {
 }
 
 
-const Signup = ({ navigation }) => {
+const Signup = ({ navigation,route }) => {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -20,18 +20,25 @@ const Signup = ({ navigation }) => {
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
     const [pinCode, setPinCode] = useState("");
-    const [avatar, setAvatar] = useState("");
+    const [avatar, setAvatar] = useState('');
 
     const disableSignupBtn = !name || !email || !password || !address || !city || !country || !pinCode ;
 
 
     const loading = false;
 
+    // console.log(route.params.image);
 
     const submitHandler = () => {
         // alert("send otp btn clicked");
         navigation.navigate("verify");
     }
+
+    useEffect(() => {
+        if(route.params?.image){ // this is sent from the camera.jsx file while selecting the image
+          setAvatar(route.params.image);
+        }
+      }, [route.params])
 
     return (
         <>

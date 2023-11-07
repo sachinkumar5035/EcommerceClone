@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { colors, defaultStyle } from '../../styles/style'
 import Header from '../../components/Header'
 import ImageCard from '../../components/ImageCard'
@@ -26,6 +26,13 @@ const ProductImages = ({ navigation, route }) => {
         console.log("Image id ", id);
         console.log("Product id ", productId);
     }
+
+    useEffect(() => {
+        if(route.params?.image){ // this is sent from the camera.jsx while selecting the image
+          setImage(route.params.image);
+          setImageChanged(true);
+        }
+      }, [route.params])
 
 
     return (

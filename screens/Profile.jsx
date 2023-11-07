@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { colors, defaultImg, defaultStyle } from '../styles/style'
 import { Avatar, Button } from 'react-native-paper'
 import ButtonBox from '../components/ButtonBox'
@@ -13,7 +13,7 @@ const user = {
 
 
 
-const Profile = ({ navigation }) => {
+const Profile = ({ navigation,route }) => {
 
     const [avatar, setAvatar] = useState("https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&q=80&w=1931&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); // getting null error
 
@@ -46,6 +46,13 @@ const Profile = ({ navigation }) => {
                 break;
         }
     }
+
+    useEffect(() => {
+        if(route.params?.image){ // this is sent from the camera.jsx file while selecting the image
+          setAvatar(route.params.image);
+          // to save the image while changing it we need to call a function for that, we will do it later
+        }
+      }, [route.params])
 
     const loading = false; // now this is for testing purpose later it will be fetched from backend 
 

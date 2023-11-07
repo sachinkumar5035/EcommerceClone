@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Header from '../../components/Header'
 import { colors, defaultStyle } from '../../styles/style'
 import Loader from '../../components/Loader'
@@ -33,6 +33,14 @@ const NewProduct = ({ navigation, route }) => {
     const submitHandler = () => {
         console.log(name, description, price, stock, categoryId);
     }
+
+    useEffect(() => {
+      if(route.params?.image){ // this is sent from the camera.jsx while selecting the image 
+        setImage(route.params.image);
+      }
+    }, [route.params])
+    
+
 
     return (
         <>
