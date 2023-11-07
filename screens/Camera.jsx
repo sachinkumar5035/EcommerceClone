@@ -1,7 +1,7 @@
 import { Camera, useCameraDevice, useCameraDevices, useCameraPermission } from "react-native-vision-camera";
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Avatar, Button, Text } from "react-native-paper";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Loader from "../components/Loader";
 import { colors } from "../styles/style";
 import {launchCamera,launchImageLibrary} from "react-native-image-picker";
@@ -12,9 +12,9 @@ const CameraComponent = ({ navigation, route }) => {
 
     const [devices, setDevices] = useState(useCameraDevice('back'));
     const [hasPermission, setHasPermission] = useState(null);
-    const [camera, setCamera] = useState(null);
+    // const [camera, setCamera] = useState(null);
     const [selectImage, setSelectImage] = useState('');
-
+    const camera = useRef(null)
     // console.log(route.params);
 
     useEffect(() => {
@@ -66,8 +66,35 @@ const CameraComponent = ({ navigation, route }) => {
     }
 
 
-    const clickPicture = () => {
+    const clickPicture = async () => {
         console.log("click picture clicked ");
+
+        const photo = await camera.current.takePhoto();
+
+        console.log(photo);
+
+
+        // if(route.params?.newProduct){ // in newProduct we passed newProduct as a flag
+        //     return navigation.navigate("newproduct",{
+        //         image:response.assets[0].uri
+        //     })
+        // }
+        // if(route.params?.updateProduct){ // in update product we passed updateProduct as a flag
+        //     return navigation.navigate("productimages",{
+        //         image:response.assets[0].uri
+        //     })
+        // }
+        // if(route.params?.updateProfile){
+        //     return navigation.navigate("profile",{ // in update profile we passed updateProfile as a flag while navigating 
+        //         image:response.assets[0].uri
+        //     })
+        // }
+        // else{
+        //     return navigation.navigate("signup",{
+        //         image:response.assets[0].uri
+        //     })
+        // }
+
     }
 
     const flipAction = () => {
@@ -85,13 +112,14 @@ const CameraComponent = ({ navigation, route }) => {
             }}
         >
             <Camera
+                ref={camera}
                 device={devices}
                 isActive={true}
+                photo={true}
                 style={{
                     ...StyleSheet.absoluteFill,
                     flex: 1
                 }}
-                ref={(e) => setCamera(e)}
             />
 
             <View
