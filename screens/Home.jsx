@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { colors, defaultStyle } from '../styles/style';
 import Header from '../components/Header';
 import { Avatar, Button } from 'react-native-paper';
@@ -8,6 +8,7 @@ import ProductCard from '../components/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 import Footer from '../components/Footer';
 import Heading from '../components/Heading';
+import Loader from '../components/Loader';
 
 const categories = [
     { category: 'Nice1', _id: 'akjskdla' },
@@ -23,8 +24,10 @@ export const products = [
     {
         _id: 'alskjldak',
         name: 'name1',
+        description:"Lorem ipsum dolor sit amet consectetur adipisicing elit Nam ducimus in, deserunt facere laudantium necessitatibus obcaecati, accusantium saepe ipsa repellendus soluta consequatur perferendis iste aperiam quos dolore voluptate? Suscipit, obcaecat",
         stock: 23,
         category:"category1",
+
         images: [
             {
                 url: 'https://picsum.photos/id/237/600/600',
@@ -35,6 +38,7 @@ export const products = [
     {
         _id: 'alsasldak',
         name: 'name2',
+        description:"Lorem ipsum dolor sit amet consectetur adipisicing elit Nam ducimus in, deserunt facere laudantium necessitatibus obcaecati, accusantium saepe ipsa repellendus soluta consequatur perferendis iste aperiam quos dolore voluptate? Suscipit, obcaecat",
         stock: 23,
         category:"category2", // this will be the category id of the category 
         images: [
@@ -47,6 +51,7 @@ export const products = [
     {
         _id: 'aasldak',
         name: 'name3',
+        description:"Lorem ipsum dolor sit amet consectetur adipisicing elit Nam ducimus in, deserunt facere laudantium necessitatibus obcaecati, accusantium saepe ipsa repellendus soluta consequatur perferendis iste aperiam quos dolore voluptate? Suscipit, obcaecat",
         stock: 23,
         category:"category3",
         images: [
@@ -59,6 +64,7 @@ export const products = [
     {
         _id: 'lsasldak',
         name: 'name4',
+        description:"Lorem ipsum dolor sit amet consectetur adipisicing elit Nam ducimus in, deserunt facere laudantium necessitatibus obcaecati, accusantium saepe ipsa repellendus soluta consequatur perferendis iste aperiam quos dolore voluptate? Suscipit, obcaecat",
         stock: 23,
         category:"category4",
         images: [
@@ -70,12 +76,28 @@ export const products = [
     },
 ];
 
+
 const Home = () => {
+
     const navigate = useNavigation();
 
     const [category, setCategory] = useState('');
     const [activeSearch, setActiveSearch] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(false);
+    
+
+    // useEffect(() => {
+    //     fetch("https://fakestoreapi.com/products")
+    //     .then((res) => res.json())
+    //     .then((json) => {
+    //         setProducts(json);
+    //         setLoading(false);
+    //     });
+        
+    // }, [products,loading])
+    
+
 
     const categoryButtonHandler = id => {
         // console.log(id); //item id setCategory function will be called to set the category
@@ -83,8 +105,14 @@ const Home = () => {
     };
 
     const addToCartHandler = (id, stock) => {
-        console.log("adding to cart" + id);
+        console.log("@@@id",id,"   @@stock ",stock)
+
+        // navigate.navigate('cart',{
+        //     id:id,
+        //     stock:count
+        // })
     };
+
 
     return (
         <>
@@ -99,7 +127,9 @@ const Home = () => {
                     />
                 )}
 
-            <View style={{ ...defaultStyle }} >
+            {
+                loading?<Loader/>:(
+                    <View style={{ ...defaultStyle }} >
                 {/* header  */}
                 <Header />
 
@@ -111,15 +141,8 @@ const Home = () => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        
-                    {/* <View>
-                        <Text style={{ fontSize: 25 }}>Our</Text>
-                        <Text style={{ fontSize: 25, fontWeight: '900' }}>Products</Text>
-                    </View> */}
 
                     <Heading text1='Our' text2='Products' />
-
-
                     <TouchableOpacity onPress={() => setActiveSearch(prev => !prev)}>
                         <Avatar.Icon icon='magnify' size={50} color="grey" style={{ backgroundColor: colors.color2, elevation: 12 }} />
                     </TouchableOpacity>
@@ -159,7 +182,7 @@ const Home = () => {
 
                 {/* Products  */}
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} >
-                    {products.map((item, index) => {
+                    {products && products.map((item, index) => {
                         return <ProductCard
                             stock={item.stock}
                             price={item.price}
@@ -170,15 +193,18 @@ const Home = () => {
                             key={item._id}
                             i={index}
                             navigate={navigate}
+                            description={item.description}
                         />
                     })
                     }
                 </ScrollView>
             </View>
+                )
+            }
 
-            <Footer activeRoute={"home"} />
-
-
+            <Footer    
+                activeRoute={"home"} 
+            />
         </>
     );
 };

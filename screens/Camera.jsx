@@ -70,30 +70,29 @@ const CameraComponent = ({ navigation, route }) => {
         console.log("click picture clicked ");
 
         const photo = await camera.current.takePhoto();
-
-        console.log(photo);
-
-
-        // if(route.params?.newProduct){ // in newProduct we passed newProduct as a flag
-        //     return navigation.navigate("newproduct",{
-        //         image:response.assets[0].uri
-        //     })
-        // }
-        // if(route.params?.updateProduct){ // in update product we passed updateProduct as a flag
-        //     return navigation.navigate("productimages",{
-        //         image:response.assets[0].uri
-        //     })
-        // }
-        // if(route.params?.updateProfile){
-        //     return navigation.navigate("profile",{ // in update profile we passed updateProfile as a flag while navigating 
-        //         image:response.assets[0].uri
-        //     })
-        // }
-        // else{
-        //     return navigation.navigate("signup",{
-        //         image:response.assets[0].uri
-        //     })
-        // }
+        
+        launchCamera(options,response=>{
+            if(route.params?.newProduct){ // in newProduct we passed newProduct as a flag
+                return navigation.navigate("newproduct",{
+                    image:response.assets[0].uri
+                })
+            }
+            if(route.params?.updateProduct){ // in update product we passed updateProduct as a flag
+                return navigation.navigate("productimages",{
+                    image:response.assets[0].uri
+                })
+            }
+            if(route.params?.updateProfile){
+                return navigation.navigate("profile",{ // in update profile we passed updateProfile as a flag while navigating 
+                    image:response.assets[0].uri
+                })
+            }
+            else{
+                return navigation.navigate("signup",{
+                    image:response.assets[0].uri
+                })
+            }
+        })
 
     }
 

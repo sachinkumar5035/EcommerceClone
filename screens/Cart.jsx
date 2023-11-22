@@ -59,8 +59,8 @@ export const cartItems=[ // we will fetch it from cart reducer later for now let
 ]
 
 
-const Cart = () => {
-
+const Cart = ({id,stock}) => {
+    // console.log("@@@id",id, + "   @@stock "+stock)
 
     const navigate = useNavigation();
 

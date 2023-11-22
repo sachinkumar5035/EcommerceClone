@@ -3,13 +3,14 @@ import React from 'react'
 import { colors } from '../styles/style'
 import { Button } from 'react-native-paper'
 
-const ProductCard = ({ stock, price, image, name, id, addToCartHandler, i, navigate }) => {
+const ProductCard = ({ stock, price, image, name, id, addToCartHandler, i, navigate,description }) => {
     return (
+
         <TouchableOpacity 
             activeOpacity={1}
             onPress={() => navigate.navigate("productdetails", { id })}
         >
-            <View
+            <View 
                 style={{
                     elevation: 5,
                     alignItems:"center",
@@ -62,7 +63,24 @@ const ProductCard = ({ stock, price, image, name, id, addToCartHandler, i, navig
                         >
                             ₹{price}
                         </Text>
+                        
                     </View>
+
+                        <Text
+                            numberOfLines={4}
+                            style={{
+                                padding:10,
+                               top:100,
+                                color: i % 2 == 0 ? colors.color2 : colors.color1,
+                                fontSize: 20,
+                                fontWeight: "300"
+                            }}
+                            
+                        >
+                            {description}
+                        </Text>
+
+
                     <TouchableOpacity style={{
                         backgroundColor:i%2==0?colors.color2:colors.color1,
                         borderRadius:0,
@@ -70,12 +88,13 @@ const ProductCard = ({ stock, price, image, name, id, addToCartHandler, i, navig
                         borderBottomLeftRadius:20,
                         width:"100%"
                     }}>
-                        <Button onPress={()=>addToCartHandler(id,stock)} textColor={i%2==0?colors.color1:colors.color3}>
+                        <Button onPress={()=>addToCartHandler(id,stock)} textColor={i%2==0?colors.color1:colors.color2}>
                             Add to Cart
                         </Button>
                     </TouchableOpacity>
             </View>
         </TouchableOpacity>
+        
     )
 }
 

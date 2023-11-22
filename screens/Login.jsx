@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import { colors, defaultStyle, inputStyling } from '../styles/style';
 import { Button, TextInput } from 'react-native-paper';
 import Footer from '../components/Footer';
+import axios from 'axios';
+
+
 
 const inputOptions={
     style:inputStyling,
@@ -15,12 +18,16 @@ const Login = ({navigation}) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    // const dispatch = Dispatch();
     const loading = false;
 
 
-    const submitHandler =()=>{
-        alert("login btn clicked");
+    const submitHandler = async (email,password)=>{
+        console.log(email,password);
+
+        const data = await axios.get(`https://fakestoreapi.com/products`); // api for login a user
+
+        console.log(data);
     }
 
     return (
@@ -57,7 +64,7 @@ const Login = ({navigation}) => {
                     textColor={colors.color2} 
                     style={styles.btnLogin}
                     disabled={email==="" || password===""}
-                    onPress={submitHandler}
+                    onPress={()=>submitHandler(email,password)}
                 >
                     Log In
                 </Button>
