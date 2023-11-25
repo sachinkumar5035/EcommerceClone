@@ -1,7 +1,13 @@
 import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
-    LOGIN_FAIL
+    LOGIN_FAIL,
+    LOAD_USER_REQUEST,
+    LOAD_USER_SUCCESS,
+    LOAD_USER_FAIL,
+    LOGOUT_REQUEST,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAIL
 } from '../constants/userConstants';
 import axios from 'axios';
 import { server} from '../store.js'
@@ -14,11 +20,52 @@ export const login=(email,password)=>async(dispatch)=>{
         const {data} = await axios.post(`${server}/user/login`, { email, password },config); // api for login a user
         dispatch({
             type:LOGIN_SUCCESS,
-            payload:data.message
+            payload:data.message // from server we are sending message as response from send token that will be collected as data
+            // data will be look like 
+            // {
+                // success:true,
+                // message:message
+            // }
         }); 
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
+            payload: error?.response?.data?.message,
+        });
+    }
+}
+
+// at the time of app opening this loadUser will be called and is user is already logged in then it will be shown as footer 
+export const loadUser=()=>async(dispatch)=>{
+    try {
+        dispatch({type:LOAD_USER_REQUEST});
+        const config = { headers: { "Content-Type": "application/json" } };
+        const {data} = await axios.get(`${server}/user/me`,{withCredentials:true}); // api for login a user
+        dispatch({
+            type:LOAD_USER_SUCCESS,
+            payload:data.user // from backend we are sending message so we have to receive message here also 
+        }); 
+    } catch (error) {
+        dispatch({
+            type: LOAD_USER_FAIL,
+            payload: error?.response?.data?.message,
+        });
+    }
+}
+
+
+
+export const logout=()=>async(dispatch)=>{
+    try {
+        dispatch({type:LOGOUT_REQUEST});
+        const {data} = await axios.get(`${server}/user/logout`,{withCredentials:true}); // api for login a user
+        dispatch({
+            type:LOGOUT_SUCCESS,
+            payload:data.message 
+        }); 
+    } catch (error) {
+        dispatch({
+            type: LOGOUT_FAIL,
             payload: error?.response?.data?.message,
         });
     }

@@ -3,14 +3,14 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { colors } from '../styles/style';
 import { Avatar } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 
 
 const Footer = ({ activeRoute = "home" }) => {
     const navigate = useNavigation();
 
-    const isAuthenticated = false;
-    const loading = false;
+    const { loading, isAuthenticated } = useSelector((state) => state.user);
 
     const navigationHandler = (key) => {
 
@@ -22,10 +22,10 @@ const Footer = ({ activeRoute = "home" }) => {
                 navigate.navigate('cart');
                 break;
             case 2:
-                if(isAuthenticated){
+                if (isAuthenticated) {
                     navigate.navigate('profile');
                 }
-                else{
+                else {
                     navigate.navigate('login');
                 }
                 break;
@@ -38,88 +38,88 @@ const Footer = ({ activeRoute = "home" }) => {
 
 
     return (
-        <View
-            style={{
-                backgroundColor: colors.color1,
-                borderTopRightRadius: 20,
-                borderTopLeftRadius: 20,
-                height: 50
-            }}
-        >
+        loading === false && (
             <View
                 style={{
-                    flexDirection: "row",
-                    justifyContent: "space-evenly"
-                }}
-
-            >
-                <TouchableOpacity
-                    activeOpacity={.8}
-                    onPress={() => navigationHandler(1)}
-                >
-                    <Avatar.Icon style={{
-                        backgroundColor: colors.color1,
-                    }}
-                    icon={activeRoute === "cart" ? "shopping" : "shopping-outline"}
-                    />
-
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    activeOpacity={.8}
-                    onPress={() => navigationHandler(2)}
-                >
-                    <Avatar.Icon style={{
-                        backgroundColor: colors.color1
-                    }}
-                    icon={
-                        isAuthenticated === false
-                          ? "login"
-                          : activeRoute === "profile"
-                          ? "account"
-                          : "account-outline"
-                      }
-                    />
-
-                </TouchableOpacity>
-            </View>
-
-            <View
-                style={{
-                    position: "absolute",
-                    height: 80,
-                    width: 80,
-                    backgroundColor: colors.color2,
-                    borderRadius: 100,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    alignSelf: "center",
-                    top: -30
+                    backgroundColor: colors.color1,
+                    borderTopRightRadius: 20,
+                    borderTopLeftRadius: 20,
+                    height: 50
                 }}
             >
                 <View
                     style={{
-                        borderRadius: 100,
-                        alignItems: "center",
-                        justifyContent: "center"
+                        flexDirection: "row",
+                        justifyContent: "space-evenly"
                     }}
+
                 >
                     <TouchableOpacity
                         activeOpacity={.8}
-                        onPress={() => navigationHandler(0)}
+                        onPress={() => navigationHandler(1)}
+                    >
+                        <Avatar.Icon style={{
+                            backgroundColor: colors.color1,
+                        }}
+                            icon={activeRoute === "cart" ? "shopping" : "shopping-outline"}
+                        />
+
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        activeOpacity={.8}
+                        onPress={() => navigationHandler(2)}
                     >
                         <Avatar.Icon style={{
                             backgroundColor: colors.color1
                         }}
-                        icon={activeRoute === "home" ? "home" : "home-outline"}
+                            icon={
+                                isAuthenticated === false
+                                    ? "login"
+                                    : activeRoute === "profile"
+                                        ? "account"
+                                        : "account-outline"
+                            }
                         />
 
                     </TouchableOpacity>
                 </View>
+
+                <View
+                    style={{
+                        position: "absolute",
+                        height: 80,
+                        width: 80,
+                        backgroundColor: colors.color2,
+                        borderRadius: 100,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        alignSelf: "center",
+                        top: -30
+                    }}
+                >
+                    <View
+                        style={{
+                            borderRadius: 100,
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}
+                    >
+                        <TouchableOpacity
+                            activeOpacity={.8}
+                            onPress={() => navigationHandler(0)}
+                        >
+                            <Avatar.Icon style={{
+                                backgroundColor: colors.color1
+                            }}
+                                icon={activeRoute === "home" ? "home" : "home-outline"}
+                            />
+
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-
-
-        </View>
+        )
     )
 }
 

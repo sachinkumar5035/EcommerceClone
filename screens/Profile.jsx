@@ -5,6 +5,9 @@ import { Avatar, Button } from 'react-native-paper'
 import ButtonBox from '../components/ButtonBox'
 import Footer from '../components/Footer'
 import Loader from '../components/Loader'
+import { useDispatch } from 'react-redux'
+import { logout } from '../redux/action/userAction'
+import { useMessageAndError } from '../utils/customHooks'
 
 const user = {
     name: "skumar",
@@ -17,16 +20,17 @@ const Profile = ({ navigation,route }) => {
 
     const [avatar, setAvatar] = useState("https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&q=80&w=1931&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); // getting null error
 
+    const dispatch = useDispatch();
+
+    const loading = useMessageAndError(navigation,"login",dispatch);
+        
     const logoutHandler = ()=>{
-        // console.log("logging out the user");
-        alert("logging out");
+        dispatch(logout());
     }
-
-
 
     const navigateHandler = (text) => {
         switch (text) {
-            // text is comming from buttonBox text it must be same 
+            // text is coming from buttonBox text, it must be exactly same 
             case "Admin":
                 navigation.navigate("adminpanel");
                 break;
@@ -54,7 +58,7 @@ const Profile = ({ navigation,route }) => {
         }
       }, [route.params])
 
-    const loading = false; // now this is for testing purpose later it will be fetched from backend 
+    // const loading = false; // now this is for testing purpose later it will be fetched from backend 
 
     return (
 
@@ -115,7 +119,7 @@ const Profile = ({ navigation,route }) => {
                                     }}
                                 >
                                     <ButtonBox text={"Password"} icon={"pencil"} handler={navigateHandler} />
-                                    <ButtonBox text={"Sign out"} icon={"exit-to-app"} handler={navigateHandler} />
+                                    <ButtonBox text={"Sign Out"} icon={"exit-to-app"} handler={navigateHandler} />
                                 </View>
 
                             </View>

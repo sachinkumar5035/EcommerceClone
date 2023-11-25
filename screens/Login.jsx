@@ -1,13 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import { colors, defaultStyle, inputStyling } from '../styles/style';
 import { Button, TextInput } from 'react-native-paper';
 import Footer from '../components/Footer';
-// import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../redux/action/userAction';
-import Toast from 'react-native-toast-message';
-import { CLEAR_ERROR, CLEAR_MESSAGE } from '../redux/constants/userConstants';
+import { useMessageAndError } from '../utils/customHooks';
+
 
 
 const inputOptions={
@@ -22,35 +21,14 @@ const Login = ({navigation}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const {loading,error,message,isAuthenticated} = useSelector((state)=>state.user);   
 
-    // console.log("@@@loading ",loading, "@@@error ",error,"@@@message ",message,"@@@isAuthenticated",isAuthenticated);
+    const loading = useMessageAndError(navigation,"profile",dispatch); // using our custom hook 
 
+    // const {loading,error,message,isAuthenticated} = useSelector((state)=>state.user);   
     const submitHandler = ()=>{
-        dispatch(login("sachinkumar5035@gmail.com","password123@"));
+        dispatch(login(email,password));
     }
 
-    useEffect(() => {
-      if(error){
-        Toast.show({
-            type:"error",
-            text1:error
-        })
-        dispatch({
-            type:CLEAR_ERROR
-        })
-      }
-      else if(message){
-            Toast.show({
-                type:"success",
-                text1:message
-            })
-            dispatch({
-                type:CLEAR_MESSAGE
-            })
-      }
-    }, [error,message,dispatch])
-    
 
     return (
         <>
@@ -85,7 +63,7 @@ const Login = ({navigation}) => {
                     loading={loading}
                     textColor={colors.color2} 
                     style={styles.btnLogin}
-                    // disabled={email==="" || password===""}
+                    disabled={email==="" || password===""}
                     onPress={submitHandler}
                 >
                     Log In
