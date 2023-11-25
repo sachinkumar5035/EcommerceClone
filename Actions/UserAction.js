@@ -1,8 +1,4 @@
 import axios from "axios";
-import { err } from "react-native-svg/lib/typescript/xml";
-
-
-
 
 export const login = (email, password) => async (dispatch) => {
     try {
