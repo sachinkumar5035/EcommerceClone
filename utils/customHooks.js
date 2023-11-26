@@ -4,7 +4,6 @@ import { CLEAR_ERROR, CLEAR_MESSAGE } from "../redux/constants/userConstants";
 import Toast from "react-native-toast-message";
 
 
-
 export const useMessageAndError = (navigation, navigateTo="login", dispatch) => {
 
     const { loading, error, message } = useSelector((state) => state.user);
@@ -33,6 +32,38 @@ export const useMessageAndError = (navigation, navigateTo="login", dispatch) => 
             dispatch({
                 type: CLEAR_MESSAGE
             })
+        }
+    }, [error, message, dispatch])
+
+    return loading;
+}
+
+
+export const useMessageAndErrorOther = (dispatch,navigation, navigateTo,func) => {
+
+    const { loading, error, message } = useSelector((state) => state.other);
+    // console.log("@@@loading ",loading, "@@@error ",error,"@@@message ",message);
+
+    useEffect(() => {
+        if (error) {
+            Toast.show({
+                type: "error",
+                text1: error
+            })
+            dispatch({
+                type: CLEAR_ERROR
+            })
+        }
+        if (message) {
+            Toast.show({
+                type: "success",
+                text1: message
+            })
+            dispatch({
+                type: CLEAR_MESSAGE
+            })
+            navigateTo?navigation.navigate(navigateTo):null;
+            func?dispatch(func()):null;
         }
     }, [error, message, dispatch])
 

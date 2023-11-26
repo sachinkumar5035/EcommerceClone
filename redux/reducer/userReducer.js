@@ -10,7 +10,10 @@ import {
     LOAD_USER_FAIL,
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
-    LOGOUT_FAIL
+    LOGOUT_FAIL,
+    REGISTER_USER_REQUEST,
+    REGISTER_USER_SUCCESS,
+    REGISTER_USER_FAIL
 } from '../constants/userConstants';
 
 
@@ -20,6 +23,8 @@ export const userReducer = createReducer({}, (builder) => {
     }).addCase(LOAD_USER_REQUEST, (state) => {
         state.loading = true
     }).addCase(LOGOUT_REQUEST,(state)=>{
+        state.loading=true
+    }).addCase(REGISTER_USER_REQUEST,(state)=>{
         state.loading=true
     });
 
@@ -36,6 +41,10 @@ export const userReducer = createReducer({}, (builder) => {
         state.isAuthenticated=false,
         state.message=action.payload,
         state.user=null
+    }).addCase(REGISTER_USER_SUCCESS,(state,action)=>{
+        state.loading=false,
+        state.isAuthenticated=true,
+        state.message=action.payload
     });
 
     builder.addCase(LOGIN_FAIL, (state, action) => {
@@ -49,6 +58,10 @@ export const userReducer = createReducer({}, (builder) => {
     }).addCase(LOGOUT_FAIL,(state,action)=>{
         state.loading=false,
         state.isAuthenticated=true,
+        state.error=action.payload
+    }).addCase(REGISTER_USER_FAIL,(state,action)=>{
+        state.loading=false,
+        state.isAuthenticated=false,
         state.error=action.payload
     });
 

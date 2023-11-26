@@ -2,10 +2,12 @@ import {configureStore} from "@reduxjs/toolkit";
 import { userReducer } from "./reducer/userReducer.js";
 
 import axios from 'axios';
+import { otherReducer } from "./reducer/otherReducer.js";
 
 export const store = configureStore({
     reducer:{
-        user: userReducer
+        user: userReducer,
+        other:otherReducer
     }
 });
 

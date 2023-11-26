@@ -7,7 +7,10 @@ import {
     LOAD_USER_FAIL,
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
-    LOGOUT_FAIL
+    LOGOUT_FAIL,
+    REGISTER_USER_REQUEST,
+    REGISTER_USER_FAIL,
+    REGISTER_USER_SUCCESS
 } from '../constants/userConstants';
 import axios from 'axios';
 import { server} from '../store.js'
@@ -17,7 +20,7 @@ export const login=(email,password)=>async(dispatch)=>{
     try {
         dispatch({type:LOGIN_REQUEST});
         const config = { headers: { "Content-Type": "application/json" } };
-        const {data} = await axios.post(`${server}/user/login`, { email, password },config); // api for login a user
+        const {data} = await axios.post(`${server}/user/login`, { email, password },config,{withCredentials:true}); // api for login a user
         dispatch({
             type:LOGIN_SUCCESS,
             payload:data.message // from server we are sending message as response from send token that will be collected as data
@@ -39,7 +42,7 @@ export const login=(email,password)=>async(dispatch)=>{
 export const loadUser=()=>async(dispatch)=>{
     try {
         dispatch({type:LOAD_USER_REQUEST});
-        const config = { headers: { "Content-Type": "application/json" } };
+        const config = { headers: { "Content-Type": "application/json" } }; // while sending text data only
         const {data} = await axios.get(`${server}/user/me`,{withCredentials:true}); // api for login a user
         dispatch({
             type:LOAD_USER_SUCCESS,
@@ -70,3 +73,26 @@ export const logout=()=>async(dispatch)=>{
         });
     }
 }
+
+
+export const registerUser=(formData) => async(dispatch)=>{
+    try {
+        dispatch({type:REGISTER_USER_REQUEST})
+        // console.log("@@formData request se phle ",formData);
+        const config = { headers: { "Content-Type": "multipart/form-data" } }; // multipart/form-data while uploading file and text data 
+        const {data} = await axios.post(`${server}/user/register`,formData,config,{withCredentials:true});
+        // console.log("request ke bad me formData",data.message);
+        dispatch({
+            type:REGISTER_USER_SUCCESS,
+            payload:data.message
+        })
+    } catch (error) {
+        dispatch({
+            type:REGISTER_USER_FAIL,
+            payload:error?.response?.data?.message
+        })
+        // console.log("error aa gya bc",error);
+    }
+}
+
+

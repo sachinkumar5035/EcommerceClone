@@ -3,6 +3,11 @@ import React, { useState,useEffect } from 'react'
 import { colors, defaultStyle, inputStyling, defaultImg } from '../styles/style';
 import { Avatar, Button, TextInput } from 'react-native-paper';
 import Footer from '../components/Footer';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../redux/action/userAction';
+import mime from 'mime';
+import { useMessageAndError } from '../utils/customHooks';
+
 
 const inputOptions = {
     style: inputStyling,
@@ -24,14 +29,29 @@ const Signup = ({ navigation,route }) => {
 
     const disableSignupBtn = !name || !email || !password || !address || !city || !country || !pinCode ;
 
+    const dispatch = useDispatch();
 
-    const loading = false;
+    const loading = useMessageAndError(navigation,"profile",dispatch);
 
     // console.log(route.params.image);
 
     const submitHandler = () => {
-        // alert("send otp btn clicked");
-        navigation.navigate("verify");
+        const myForm = new FormData();
+        myForm.append("name",name);
+        myForm.append("email",email);
+        myForm.append("password",password);
+        myForm.append("address",address);
+        myForm.append("city",city);
+        myForm.append("country",country);
+        myForm.append("pinCode",pinCode);
+        if(avatar!==""){
+            myForm.append("file",{
+                uri:avatar,
+                type:mime.getType(avatar),
+                name:avatar.split("/").pop()
+            });
+        }
+        dispatch(registerUser(myForm));
     }
 
     useEffect(() => {
@@ -128,7 +148,7 @@ const Signup = ({ navigation,route }) => {
                             loading={loading}
                             textColor={colors.color2}
                             style={styles.btnLogin}
-                            disabled={email === ""}
+                            disabled={disableSignupBtn}
                             onPress={submitHandler}
                         >
                             Sign Up

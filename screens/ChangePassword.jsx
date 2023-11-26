@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import { colors, defaultStyle, inputStyling } from '../styles/style';
 import { Button, TextInput } from 'react-native-paper';
 import Header from '../components/Header';
+import { useDispatch } from 'react-redux';
+import { useMessageAndErrorOther } from '../utils/customHooks';
+import { changePassword } from '../redux/action/otherAction';
 
 const inputOptions={
     style:inputStyling,
@@ -16,10 +19,15 @@ const ChangePassword = ({navigation}) => {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
 
-    const loading = false;
+    const dispatch = useDispatch();
+
+    const loading = useMessageAndErrorOther(dispatch); // redirect to login page
 
     const submitHandler =()=>{
-        alert("login btn clicked");
+        // alert("change password clicked");
+        dispatch(changePassword(oldPassword,newPassword));
+        setNewPassword("");
+        setOldPassword("");
     }
 
     return (
@@ -43,7 +51,7 @@ const ChangePassword = ({navigation}) => {
                 
                 <TextInput 
                     {...inputOptions}
-                    placeholder='Confirm Password'
+                    placeholder='New Password'
                     secureTextEntry={true}
                     value={newPassword}
                     onChangeText={setNewPassword}

@@ -5,21 +5,23 @@ import { Avatar, Button } from 'react-native-paper'
 import ButtonBox from '../components/ButtonBox'
 import Footer from '../components/Footer'
 import Loader from '../components/Loader'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../redux/action/userAction'
 import { useMessageAndError } from '../utils/customHooks'
 
-const user = {
-    name: "skumar",
-    email: "skumar@gmail.com"
-}
+// const user = {
+//     name: "skumar",
+//     email: "skumar@gmail.com"
+// }
 
 
 
 const Profile = ({ navigation,route }) => {
 
-    const [avatar, setAvatar] = useState("https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&q=80&w=1931&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); // getting null error
+    const {user} = useSelector((state)=>state.user);
+    const [avatar, setAvatar] = useState(defaultImg); 
 
+    // console.log(user);
     const dispatch = useDispatch();
 
     const loading = useMessageAndError(navigation,"login",dispatch);
@@ -50,6 +52,11 @@ const Profile = ({ navigation,route }) => {
                 break;
         }
     }
+    useEffect(()=>{
+        if(user?.avatar){
+            setAvatar(user.avatar.url);
+        }
+      },[user])
 
     useEffect(() => {
         if(route.params?.image){ // this is sent from the camera.jsx file while selecting the image
@@ -107,7 +114,11 @@ const Profile = ({ navigation,route }) => {
                                 >
                                     {/* because we are passing common navigationHandler we can use switch statement  */}
                                     <ButtonBox text={"Orders"} icon={'format-list-bulleted-square'} handler={navigateHandler} />
-                                    <ButtonBox text={"Admin"} icon={"view-dashboard"} reverse={true} handler={navigateHandler} />
+                                    {
+                                        user?.role==='admin'&&(
+                                            <ButtonBox text={"Admin"} icon={"view-dashboard"} reverse={true} handler={navigateHandler} />
+                                        )
+                                    }
                                     <ButtonBox text={"Profile"} icon={"pencil"} handler={navigateHandler} />
                                 </View>
 
