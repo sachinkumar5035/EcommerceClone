@@ -3,6 +3,10 @@ import React, { useState } from 'react'
 import { colors, defaultStyle, inputStyling } from '../styles/style';
 import {  Button, TextInput } from 'react-native-paper';
 import Header from '../components/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { useMessageAndErrorOther } from '../utils/customHooks';
+import { updateProfile } from '../redux/action/otherAction';
+import { loadUser } from '../redux/action/userAction';
 
 export const inputOptions = {
     style: inputStyling,
@@ -13,21 +17,29 @@ export const inputOptions = {
 
 const UpdateProfile = ({ navigation }) => {
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [country, setCountry] = useState("");
-    const [pinCode, setPinCode] = useState("");
+    const {user} = useSelector((state)=>state.user);
 
-    const disableUpdateBtn = !name || !email  || !address || !city || !country || !pinCode ;
+    // console.log(user);
+
+    const [name, setName] = useState(user?.name);
+    const [email, setEmail] = useState(user?.email);
+    const [address, setAddress] = useState(user?.address);
+    const [city, setCity] = useState(user?.city);
+    const [country, setCountry] = useState(user?.country);
+    const [pinCode, setPinCode] = useState(user?.pinCode.toString());
+
+    const dispatch  = useDispatch();
 
 
-    const loading = false;
+    // const disableUpdateBtn = !name || !email  || !address || !city || !country || !pinCode ;
 
+
+    const loading = useMessageAndErrorOther(dispatch,navigation,"profile");
 
     const submitHandler = () => {
-        alert("send otp btn clicked");
+        // alert("send otp btn clicked");
+        // i have handled the empty cases in backend 
+        dispatch(updateProfile(name,email,address,country,pinCode,city));
     }
 
     return (
@@ -98,7 +110,6 @@ const UpdateProfile = ({ navigation }) => {
                             loading={loading}
                             textColor={colors.color2}
                             style={styles.btnUpdate}
-                            disabled={email === ""}
                             onPress={submitHandler}
                         >
                             Update

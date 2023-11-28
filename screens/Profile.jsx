@@ -1,32 +1,29 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { colors, defaultImg, defaultStyle } from '../styles/style'
 import { Avatar, Button } from 'react-native-paper'
 import ButtonBox from '../components/ButtonBox'
 import Footer from '../components/Footer'
 import Loader from '../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../redux/action/userAction'
-import { useMessageAndError } from '../utils/customHooks'
+import { loadUser, logout } from '../redux/action/userAction'
+import { useMessageAndError, useMessageAndErrorOther } from '../utils/customHooks'
+import { useIsFocused } from '@react-navigation/native'
+import mime from 'mime';
+import { updatePic } from '../redux/action/otherAction'
 
-// const user = {
-//     name: "skumar",
-//     email: "skumar@gmail.com"
-// }
+const Profile = ({ navigation, route }) => {
 
-
-
-const Profile = ({ navigation,route }) => {
-
-    const {user} = useSelector((state)=>state.user);
-    const [avatar, setAvatar] = useState(defaultImg); 
+    const { user } = useSelector((state) => state.user);
+    const [avatar, setAvatar] = useState(defaultImg);
 
     // console.log(user);
+    const idFocused = useIsFocused();
     const dispatch = useDispatch();
 
-    const loading = useMessageAndError(navigation,"login",dispatch);
-        
-    const logoutHandler = ()=>{
+    const loading = useMessageAndError(navigation, "login", dispatch);
+
+    const logoutHandler = () => {
         dispatch(logout());
     }
 
@@ -52,18 +49,30 @@ const Profile = ({ navigation,route }) => {
                 break;
         }
     }
-    useEffect(()=>{
-        if(user?.avatar){
-            setAvatar(user.avatar.url);
-        }
-      },[user])
+
+    const loadingPic = useMessageAndErrorOther(dispatch, null, null, loadUser);
 
     useEffect(() => {
-        if(route.params?.image){ // this is sent from the camera.jsx file while selecting the image
-          setAvatar(route.params.image);
-          // to save the image while changing it we need to call a function for that, we will do it later
+        if (user?.avatar) {
+            setAvatar(user.avatar.url);
         }
-      }, [route.params])
+
+    }, [user])
+
+    useEffect(() => {
+        if (route.params?.image) { // this is sent from the camera.jsx file while selecting the image
+            setAvatar(route.params.image);
+            // to save the image while changing it we need to call a function for that, we will do it later
+            const myForm = new FormData();
+            myForm.append("file", {
+                uri: route.params.image,
+                type: mime.getType(route.params.image),
+                name: route.params.image.split("/").pop()
+            })
+            dispatch(updatePic(myForm));
+        }
+        dispatch(loadUser());
+    }, [route.params, dispatch, idFocused])
 
     // const loading = false; // now this is for testing purpose later it will be fetched from backend 
 
@@ -90,8 +99,8 @@ const Profile = ({ navigation,route }) => {
                                         uri: avatar ? avatar : defaultImg, // image giving error 
                                     }}
                                 />
-                                <TouchableOpacity onPress={() => navigation.navigate("camera", { updateProfile: true })}>
-                                    <Button textColor={colors.color1}>Change Photo</Button>
+                                <TouchableOpacity disabled={loadingPic} onPress={() => navigation.navigate("camera", { updateProfile: true })}>
+                                    <Button loading={loadingPic} disabled={loadingPic} textColor={colors.color1}>Change Photo</Button>
                                 </TouchableOpacity>
 
                                 <Text style={styles.nameStyle}>
@@ -115,7 +124,7 @@ const Profile = ({ navigation,route }) => {
                                     {/* because we are passing common navigationHandler we can use switch statement  */}
                                     <ButtonBox text={"Orders"} icon={'format-list-bulleted-square'} handler={navigateHandler} />
                                     {
-                                        user?.role==='admin'&&(
+                                        user?.role === 'admin' && (
                                             <ButtonBox text={"Admin"} icon={"view-dashboard"} reverse={true} handler={navigateHandler} />
                                         )
                                     }

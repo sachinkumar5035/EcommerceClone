@@ -20,7 +20,9 @@ export const login=(email,password)=>async(dispatch)=>{
     try {
         dispatch({type:LOGIN_REQUEST});
         const config = { headers: { "Content-Type": "application/json" } };
+        // console.log(email,password);
         const {data} = await axios.post(`${server}/user/login`, { email, password },config,{withCredentials:true}); // api for login a user
+        // console.log(data);
         dispatch({
             type:LOGIN_SUCCESS,
             payload:data.message // from server we are sending message as response from send token that will be collected as data
@@ -30,11 +32,13 @@ export const login=(email,password)=>async(dispatch)=>{
                 // message:message
             // }
         }); 
+        
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
             payload: error?.response?.data?.message,
         });
+        // console.log(error);
     }
 }
 

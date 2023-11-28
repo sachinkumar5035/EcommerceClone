@@ -27,6 +27,8 @@ const Login = ({navigation}) => {
     // const {loading,error,message,isAuthenticated} = useSelector((state)=>state.user);   
     const submitHandler = ()=>{
         dispatch(login(email,password));
+        setEmail("");
+        setPassword("");
     }
 
 
