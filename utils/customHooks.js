@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { CLEAR_ERROR, CLEAR_MESSAGE } from "../redux/constants/userConstants";
 import Toast from "react-native-toast-message";
+import axios from "axios";
+import { server } from "../redux/store";
 
 
 export const useMessageAndError = (navigation, navigateTo="login", dispatch) => {
@@ -68,4 +70,19 @@ export const useMessageAndErrorOther = (dispatch,navigation, navigateTo,func) =>
     }, [error, message, dispatch])
 
     return loading;
+}
+
+
+export const useSetCategories = (setCategories,isFocused)=>{
+    useEffect(() => {
+        axios.get(`${server}/category/all`).then(res=>{
+            setCategories(res.data.categories) // from backend in all categories route we sending {categories} 
+        }).catch(e=>{
+            Toast.show({
+                type:error,
+                text1:e.response.data.message
+            })
+        })
+    }, [isFocused])
+    
 }

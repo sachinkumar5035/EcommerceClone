@@ -19,9 +19,9 @@ import { server} from '../store.js'
 export const login=(email,password)=>async(dispatch)=>{
     try {
         dispatch({type:LOGIN_REQUEST});
-        const config = { headers: { "Content-Type": "application/json" } };
+        const config = { headers: { "Content-Type": "application/json" },withCredentials:true };
         // console.log(email,password);
-        const {data} = await axios.post(`${server}/user/login`, { email, password },config,{withCredentials:true}); // api for login a user
+        const {data} = await axios.post(`${server}/user/login`, { email, password },config); // api for login a user
         // console.log(data);
         dispatch({
             type:LOGIN_SUCCESS,

@@ -5,105 +5,41 @@ import Header from '../components/Header';
 import { Avatar, Button } from 'react-native-paper';
 import SearchModal from '../components/SearchModal';
 import ProductCard from '../components/ProductCard';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import Footer from '../components/Footer';
 import Heading from '../components/Heading';
 import Loader from '../components/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProducts } from '../redux/action/productAction';
+import { useSetCategories } from '../utils/customHooks';
 
-const categories = [
-    { category: 'Nice1', _id: 'akjskdla' },
-    { category: 'Nice2', _id: 'jskdla' },
-    { category: 'Nice3', _id: 'akskdla' },
-    { category: 'Nice4', _id: 'akasdskdla' },
-    { category: 'Nice5', _id: 'akjsasddla' },
-    { category: 'Nice6', _id: 'akjskasdaa' },
-    { category: 'Nice7', _id: 'akjskasa' },
-];
-
-export const products = [
-    {
-        _id: 'alskjldak',
-        name: 'name1',
-        description:"Lorem ipsum dolor sit amet consectetur adipisicing elit Nam ducimus in, deserunt facere laudantium necessitatibus obcaecati, accusantium saepe ipsa repellendus soluta consequatur perferendis iste aperiam quos dolore voluptate? Suscipit, obcaecat",
-        stock: 23,
-        category:"category1",
-
-        images: [
-            {
-                url: 'https://picsum.photos/id/237/600/600',
-            },
-        ],
-        price: 1200,
-    },
-    {
-        _id: 'alsasldak',
-        name: 'name2',
-        description:"Lorem ipsum dolor sit amet consectetur adipisicing elit Nam ducimus in, deserunt facere laudantium necessitatibus obcaecati, accusantium saepe ipsa repellendus soluta consequatur perferendis iste aperiam quos dolore voluptate? Suscipit, obcaecat",
-        stock: 23,
-        category:"category2", // this will be the category id of the category 
-        images: [
-            {
-                url: 'https://picsum.photos/id/237/600/600',
-            },
-        ],
-        price: 1200,
-    },
-    {
-        _id: 'aasldak',
-        name: 'name3',
-        description:"Lorem ipsum dolor sit amet consectetur adipisicing elit Nam ducimus in, deserunt facere laudantium necessitatibus obcaecati, accusantium saepe ipsa repellendus soluta consequatur perferendis iste aperiam quos dolore voluptate? Suscipit, obcaecat",
-        stock: 23,
-        category:"category3",
-        images: [
-            {
-                url: 'https://picsum.photos/id/237/600/600',
-            },
-        ],
-        price: 1200,
-    },
-    {
-        _id: 'lsasldak',
-        name: 'name4',
-        description:"Lorem ipsum dolor sit amet consectetur adipisicing elit Nam ducimus in, deserunt facere laudantium necessitatibus obcaecati, accusantium saepe ipsa repellendus soluta consequatur perferendis iste aperiam quos dolore voluptate? Suscipit, obcaecat",
-        stock: 23,
-        category:"category4",
-        images: [
-            {
-                url: 'https://picsum.photos/id/237/600/600',
-            },
-        ],
-        price: 1200,
-    },
-];
+// const categories = [
+//     { category: 'Nice1', _id: 'akjskdla' },
+//     { category: 'Nice2', _id: 'jskdla' },
+//     { category: 'Nice3', _id: 'akskdla' },
+//     { category: 'Nice4', _id: 'akasdskdla' },
+//     { category: 'Nice5', _id: 'akjsasddla' },
+//     { category: 'Nice6', _id: 'akjskasdaa' },
+//     { category: 'Nice7', _id: 'akjskasa' },
+// ];
 
 
 const Home = () => {
-
+    const dispatch = useDispatch();
     const navigate = useNavigation();
 
     const [category, setCategory] = useState('');
     const [activeSearch, setActiveSearch] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(false);
-    
-
-    // useEffect(() => {
-    //     fetch("https://fakestoreapi.com/products")
-    //     .then((res) => res.json())
-    //     .then((json) => {
-    //         setProducts(json);
-    //         setLoading(false);
-    //     });
-        
-    // }, [products,loading])
-    
-
+    const {products} = useSelector((state)=>state.product); // this state we have defined in store in productReducer
+    const [categories,setCategories] = useState([]);
+    const isFocused = useIsFocused();
 
     const categoryButtonHandler = id => {
         // console.log(id); //item id setCategory function will be called to set the category
         setCategory(id);
     };
-
     const addToCartHandler = (id, stock) => {
         console.log("@@@id",id,"   @@stock ",stock)
 
@@ -112,6 +48,15 @@ const Home = () => {
         //     stock:count
         // })
     };
+
+    useSetCategories(setCategories,isFocused);
+
+    useEffect(() => {
+        dispatch(getAllProducts());
+        
+    }, [products,loading])
+
+    
 
 
     return (
