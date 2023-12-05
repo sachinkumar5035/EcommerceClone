@@ -1,40 +1,71 @@
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState,useEffect } from 'react'
 import { colors, defaultStyle } from '../styles/style';
 import Header from '../components/Header';
 import { SliderBox } from "react-native-image-slider-box";
 import { Avatar, Button } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import { getProductDetails } from '../redux/action/productAction';
 
 
 const ProductDetails = ({ route: { params } }) => {
 
+    // console.log("@@@ product details page ",params.id); // product id 
+
+
     const isCarousel = useRef(null);
-    const name = "Macbook Pro M2";
-    const price = "12000";
-    const description = "The random string generator creates a sequence of letters, numbers, and special characters in many output formats. The random strings can be easily copied. This free tool can generate up to ten thousand random strings where every string is a maximum of 100 characters in length."
+    // const name = "Macbook Pro M2";
+    // const price = "12000";
+    // const description = "The random string generator creates 
+    // a sequence of letters, numbers, and special characters in m
+    // any output formats. The random strings can be easily copied. This free 
+    // tool can generate up to ten thousand random strings where every string is a maximum of 100 characters in length."
+
     const [quantity,setQuantity]=useState(1);
-    const stock=10;
+    // const stock=10;
+    const dispatch  = useDispatch();
+    const isFocused = useIsFocused();
+    const {product:{
+        name,
+        price,
+        stock,
+        description,
+        images
+    } } = useSelector((state)=>state.product); // this product is available in product state of otherReducer
+
+    // console.log(images);
+
+    useEffect(() => {
+        dispatch(getProductDetails(params.id));
+    }, [dispatch,params.id,isFocused])
+    
 
 
-    const images = [
-        {
-            id: "kjaslkjdal",
-            url: "https://media.istockphoto.com/id/1292435524/photo/mother-and-daughter-having-fun-at-the-park.jpg?s=1024x1024&w=is&k=20&c=6ABG03wtRrRtUXumZjlRG8OYlwOuLgb1rPYdIXPouyU="
-        },
-        {
-            id: "kjasljdal",
-            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        },
-        {
-            id: "kjasaskjdal",
-            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        },
-        {
-            id: "kjasalksjdal",
-            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        },
-    ];
+
+
+
+    // console.log("@@@ product ",product);
+
+    // const images = [
+    //     {
+    //         id: "kjaslkjdal",
+    //         url: "https://media.istockphoto.com/id/1292435524/photo/mother-and-daughter-having-fun-at-the-park.jpg?s=1024x1024&w=is&k=20&c=6ABG03wtRrRtUXumZjlRG8OYlwOuLgb1rPYdIXPouyU="
+    //     },
+    //     {
+    //         id: "kjasljdal",
+    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    //     },
+    //     {
+    //         id: "kjasaskjdal",
+    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    //     },
+    //     {
+    //         id: "kjasalksjdal",
+    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    //     },
+    // ];
 
     const incrementQty = ()=>{
         if(quantity>=stock){

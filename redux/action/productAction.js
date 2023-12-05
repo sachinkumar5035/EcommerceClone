@@ -16,11 +16,11 @@ import { server } from "../store";
 // http://localhost:3000/api/v1/product/all
 
 
-export const getAllProducts = () => async (dispatch) => {
+export const getAllProducts = (keyword,category) => async (dispatch) => {
     try {
         dispatch({ type: GET_ALL_PRODUCTS_REQUEST });
         const config = { headers: { "Content-Type": "application/json" },withCredentials:true };
-        const { data } = await axios.get(`${server}/product/all`,config);
+        const { data } = await axios.get(`${server}/product/all?keyword=${keyword}&category=${category}`,config);
         // from backend we are getting data like success: true,
         // products: a list of all products so from here we will be sending that to reducer by using data.products 
         // console.log(data.products);
@@ -34,7 +34,7 @@ export const getAllProducts = () => async (dispatch) => {
             type: GET_ALL_PRODUCTS_FAIL,
             payload: error?.response?.data?.message,
         })
-        // console.log(error);
+        console.log(error);
     }
 }
 
@@ -58,7 +58,7 @@ export const getAdminProducts = () => async (dispatch) => {
             type: GET_ADMIN_PRODUCTS_FAIL,
             payload: error?.response?.data?.message,
         })
-        // console.log(error);
+        console.log(error);
     }
 }
 
@@ -69,18 +69,17 @@ export const getProductDetails = (id) => async (dispatch) => {
         dispatch({ type: PRODUCT_DETAILS_REQUEST });
         const config = { headers: { "Content-Type": "application/json" },withCredentials:true};
         const { data } = await axios.get(`${server}/product/${id}`,config);
-        // console.log(data.product);
+        // console.log(data.product.images);
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
             payload: data.product
         })
-        // console.log(data);
     } catch (error) {
         dispatch({
             type: PRODUCT_DETAILS_FAIL,
             payload: error?.response?.data?.message,
         })
-        // console.log(error);
+        console.log(error);
     }
 }
 

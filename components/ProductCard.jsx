@@ -4,11 +4,18 @@ import { colors } from '../styles/style'
 import { Button } from 'react-native-paper'
 
 const ProductCard = ({ stock, price, image, name, id, addToCartHandler, i, navigate,description }) => {
+
+    const navigationHandler = ()=>{
+        // console.log("Product card ",id);
+       navigate.navigate("productdetails", { id:id });
+    }
+
+
     return (
 
         <TouchableOpacity 
             activeOpacity={1}
-            onPress={() => navigate.navigate("productdetails", { id })}
+            onPress={navigationHandler}
         >
             <View 
                 style={{

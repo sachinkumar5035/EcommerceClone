@@ -13,15 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from '../redux/action/productAction';
 import { useSetCategories } from '../utils/customHooks';
 
-// const categories = [
-//     { category: 'Nice1', _id: 'akjskdla' },
-//     { category: 'Nice2', _id: 'jskdla' },
-//     { category: 'Nice3', _id: 'akskdla' },
-//     { category: 'Nice4', _id: 'akasdskdla' },
-//     { category: 'Nice5', _id: 'akjsasddla' },
-//     { category: 'Nice6', _id: 'akjskasdaa' },
-//     { category: 'Nice7', _id: 'akjskasa' },
-// ];
 
 
 const Home = () => {
@@ -40,8 +31,12 @@ const Home = () => {
         // console.log(id); //item id setCategory function will be called to set the category
         setCategory(id);
     };
+
+    // console.log("products ",products);
+
+
     const addToCartHandler = (id, stock) => {
-        console.log("@@@id",id,"   @@stock ",stock)
+        // console.log("@@@id",id,"   @@stock ",stock)
 
         // navigate.navigate('cart',{
         //     id:id,
@@ -52,11 +47,8 @@ const Home = () => {
     useSetCategories(setCategories,isFocused);
 
     useEffect(() => {
-        dispatch(getAllProducts());
-        
-    }, [products,loading])
-
-    
+        dispatch(getAllProducts(searchQuery,category)) ;
+    }, [dispatch,category,searchQuery,isFocused])
 
 
     return (

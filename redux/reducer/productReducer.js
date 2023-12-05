@@ -23,7 +23,7 @@ export const productReducer = createReducer({products:[],product:{}}, (builder) 
         state.inStock=action.payload.inStock 
     }).addCase(PRODUCT_DETAILS_SUCCESS,(state,action)=>{
         state.loading=false,
-        state.message=action.payload, // because we are also sending message from backend with product details 
+        // state.message=action.payload, // because we are also sending message from backend with product details 
         state.product=action.payload
     });
 

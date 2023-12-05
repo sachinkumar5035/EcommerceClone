@@ -7,16 +7,16 @@ export const login = (email, password) => async (dispatch) => {
 
         const {data} = await axios.post(`https://fakestoreapi.com/products`, { email, password }, config); // api for login a user
 
-        console.log(data);
+        // console.log(data);
 
-        // dispatch({type:LOGIN_SUCCESS,
-        //     payload:data
-        // });
+        dispatch({type:LOGIN_SUCCESS,
+            payload:data
+        });
 
     } catch (error) {
-        // dispatch({
-        //     payload: error.response.data.message,
-        // });
-        console.log(error);
+        dispatch({
+            payload: error.response.data.message,
+        });
+        // console.log(error);
     }
 };

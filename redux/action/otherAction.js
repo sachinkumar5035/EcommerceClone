@@ -28,7 +28,7 @@ export const changePassword=(oldPassword,newPassword)=>async(dispatch)=>{
             type:CHANGE_PASSWORD_FAIL,
             payload: error?.response?.data?.message,
         })
-        // console.log(error);
+        console.log(error);
     }
 }
 
@@ -49,7 +49,7 @@ export const updateProfile = (name,email,address,country,pinCode,city) => async(
             type:UPDATE_PROFILE_FAIL,
             payload: error?.response?.data?.message,
         })
-        // console.log(error);
+        console.log(error);
     }
 }
 
@@ -61,7 +61,7 @@ export const updatePic=(formData) => async(dispatch)=>{
         // console.log("@@formData request se phle ",formData);
         const config = { headers: { "Content-Type": "multipart/form-data" },withCredentials:true }; // multipart/form-data while uploading file and text data 
         const {data} = await axios.put(`${server}/user/updatepic`,formData,config,);
-        // console.log("request ke bad me formData",data.message);
+        // console.log("request ke bad me formData",data);
         dispatch({
             type:UPDATE_PIC_SUCCESS,
             payload:data.message
@@ -71,6 +71,6 @@ export const updatePic=(formData) => async(dispatch)=>{
             type:UPDATE_PIC_FAIL,
             payload:error?.response?.data?.message
         })
-        // console.log("error aa gya bc",error);
+        console.log("error aa gya bc",error);
     }
 }

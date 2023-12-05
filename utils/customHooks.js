@@ -77,9 +77,9 @@ export const useSetCategories = (setCategories,isFocused)=>{
     useEffect(() => {
         axios.get(`${server}/category/all`).then(res=>{
             setCategories(res.data.categories) // from backend in all categories route we sending {categories} 
-        }).catch(e=>{
+        }).catch((e)=>{
             Toast.show({
-                type:error,
+                type:"error",
                 text1:e.response.data.message
             })
         })
