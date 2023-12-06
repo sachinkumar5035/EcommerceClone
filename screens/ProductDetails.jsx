@@ -1,5 +1,5 @@
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native'
-import React, { useRef, useState,useEffect } from 'react'
+import { View, Text, Dimensions, TouchableOpacity,Image } from 'react-native'
+import React, { useRef, useState, useEffect } from 'react'
 import { colors, defaultStyle } from '../styles/style';
 import Header from '../components/Header';
 import { SliderBox } from "react-native-image-slider-box";
@@ -10,11 +10,10 @@ import { useIsFocused } from '@react-navigation/native';
 import { getProductDetails } from '../redux/action/productAction';
 
 
+
 const ProductDetails = ({ route: { params } }) => {
 
     // console.log("@@@ product details page ",params.id); // product id 
-
-
     const isCarousel = useRef(null);
     // const name = "Macbook Pro M2";
     // const price = "12000";
@@ -23,79 +22,73 @@ const ProductDetails = ({ route: { params } }) => {
     // any output formats. The random strings can be easily copied. This free 
     // tool can generate up to ten thousand random strings where every string is a maximum of 100 characters in length."
 
-    const [quantity,setQuantity]=useState(1);
+    const [quantity, setQuantity] = useState(1);
     // const stock=10;
-    const dispatch  = useDispatch();
+    const dispatch = useDispatch();
     const isFocused = useIsFocused();
-    const {product:{
+    const { product: {
         name,
         price,
         stock,
-        description,
-        images
-    } } = useSelector((state)=>state.product); // this product is available in product state of otherReducer
+        description
+    } } = useSelector((state) => state.product); // this product is available in product state of otherReducer
 
-    // console.log(images);
+    // console.log("@@@images", images);
 
     useEffect(() => {
         dispatch(getProductDetails(params.id));
-    }, [dispatch,params.id,isFocused])
-    
-
-
-
-
+    }, [dispatch, params.id, isFocused])
 
     // console.log("@@@ product ",product);
 
-    // const images = [
-    //     {
-    //         id: "kjaslkjdal",
-    //         url: "https://media.istockphoto.com/id/1292435524/photo/mother-and-daughter-having-fun-at-the-park.jpg?s=1024x1024&w=is&k=20&c=6ABG03wtRrRtUXumZjlRG8OYlwOuLgb1rPYdIXPouyU="
-    //     },
-    //     {
-    //         id: "kjasljdal",
-    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-    //     },
-    //     {
-    //         id: "kjasaskjdal",
-    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-    //     },
-    //     {
-    //         id: "kjasalksjdal",
-    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-    //     },
-    // ];
+    const images = [
+        {
+            id: "kjaslkjdal",
+            url: "https://media.istockphoto.com/id/1292435524/photo/mother-and-daughter-having-fun-at-the-park.jpg?s=1024x1024&w=is&k=20&c=6ABG03wtRrRtUXumZjlRG8OYlwOuLgb1rPYdIXPouyU="
+        },
+        {
+            id: "kjasljdal",
+            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+        {
+            id: "kjasaskjdal",
+            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+        {
+            id: "kjasalksjdal",
+            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+    ];
 
-    const incrementQty = ()=>{
-        if(quantity>=stock){
-            return 
+    const incrementQty = () => {
+        if (quantity >= stock) {
+            return
         }
-        setQuantity((prev)=>prev+1);
+        setQuantity((prev) => prev + 1);
     }
-    const decrementQty = ()=>{
-        if(quantity<=1) return Toast.show({
-            type:"error",
-            text1:"quantity can not be less than 1"
+    const decrementQty = () => {
+        if (quantity <= 1) return Toast.show({
+            type: "error",
+            text1: "quantity can not be less than 1"
         })
-        setQuantity((prev)=>prev-1);
+        setQuantity((prev) => prev - 1);
     }
 
-    const addToCartHandler = ()=>{
-        if(stock==0){
+    const addToCartHandler = () => {
+        if (stock == 0) {
             return Toast.show({
-                type:"error",
-                text1:"out of stock"
+                type: "error",
+                text1: "out of stock"
             })
         }
         Toast.show({
-            type:"success",
-            text1:"added to cart"
+            type: "success",
+            text1: "added to cart"
         })
     }
 
-    const imagePressHandler =()=>{
-        
+    const imagePressHandler = () => {
+
     }
 
     return (
@@ -106,6 +99,7 @@ const ProductDetails = ({ route: { params } }) => {
                     height: 300
                 }}
                 images={images.map((item, index) => item.url)}
+                // images={images.url}
                 dotColor="red"
                 imageLoadingColor="black"
                 autoplay={true}
@@ -119,8 +113,6 @@ const ProductDetails = ({ route: { params } }) => {
                     padding: 10
                 }}
             >
-
-
                 <Text
                     numberOfLines={2}
                     style={{
@@ -155,7 +147,7 @@ const ProductDetails = ({ route: { params } }) => {
 
                 <View
                     style={{
-                        margin:15,
+                        margin: 15,
                         flexDirection: "row",
                         justifyContent: "space-between",
                         alignItems: "center",
@@ -181,64 +173,62 @@ const ProductDetails = ({ route: { params } }) => {
                     >
 
                         <TouchableOpacity onPress={decrementQty}>
-                            <Avatar.Icon 
-                            icon={"minus"} 
-                            size={25} 
-                            style={{
-                                backgroundColor:colors.color5,
-                                height:25,
-                                width:25,
-                                borderRadius:5
-                            }}
+                            <Avatar.Icon
+                                icon={"minus"}
+                                size={25}
+                                style={{
+                                    backgroundColor: colors.color5,
+                                    height: 25,
+                                    width: 25,
+                                    borderRadius: 5
+                                }}
                             />
                         </TouchableOpacity>
                         <Text
                             style={{
-                                backgroundColor:colors.color4,
-                                height:25,
-                                width:25,
-                                textAlignVertical:'center',
-                                textAlign:'center',
-                                borderWidth:1,
-                                borderRadius:5,
-                                borderColor:colors.color5
+                                backgroundColor: colors.color4,
+                                height: 25,
+                                width: 25,
+                                textAlignVertical: 'center',
+                                textAlign: 'center',
+                                borderWidth: 1,
+                                borderRadius: 5,
+                                borderColor: colors.color5
                             }}
                         >
                             {quantity}
                         </Text>
 
                         <TouchableOpacity onPress={incrementQty}>
-                            <Avatar.Icon 
-                            icon={"plus"} 
-                            size={25} 
-                            style={{
-                                backgroundColor:colors.color5,
-                                height:25,
-                                width:25,
-                                borderRadius:5
-                            }}
+                            <Avatar.Icon
+                                icon={"plus"}
+                                size={25}
+                                style={{
+                                    backgroundColor: colors.color5,
+                                    height: 25,
+                                    width: 25,
+                                    borderRadius: 5
+                                }}
                             />
                         </TouchableOpacity>
                     </View>
                 </View>
 
                 <TouchableOpacity activeOpacity={.8} onPress={addToCartHandler}>
-                    <Button 
-                    icon={'cart'} 
-                    textColor='white' 
-                    style={{
-                        backgroundColor:colors.color1,
-                        borderRadius:100,
-                        padding:5,
-                        marginVertical:35,
-                    }}>Add to cart</Button>
+                    <Button
+                        icon={'cart'}
+                        textColor='white'
+                        style={{
+                            backgroundColor: colors.color1,
+                            borderRadius: 100,
+                            padding: 5,
+                            marginVertical: 35,
+                        }}>Add to cart</Button>
                 </TouchableOpacity>
-            
-
-
             </View>
         </View>
     )
 }
+
 
 export default ProductDetails

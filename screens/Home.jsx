@@ -32,7 +32,7 @@ const Home = () => {
         setCategory(id);
     };
 
-    // console.log("products ",products);
+    // console.log("products ",products[0].images);
 
 
     const addToCartHandler = (id, stock) => {
