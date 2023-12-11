@@ -4,12 +4,14 @@ import { userReducer } from "./reducer/userReducer.js";
 import axios from 'axios';
 import { otherReducer } from "./reducer/otherReducer.js";
 import { productReducer } from "./reducer/productReducer.js";
+import { cartReducer } from "./reducer/cartReducer.js";
 
 export const store = configureStore({
     reducer:{
         user: userReducer,
         other:otherReducer,
-        product:productReducer
+        product:productReducer,
+        cart:cartReducer
     }
 });
 

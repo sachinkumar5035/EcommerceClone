@@ -12,6 +12,8 @@ import Loader from '../components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from '../redux/action/productAction';
 import { useSetCategories } from '../utils/customHooks';
+import { ADD_TO_CART } from '../redux/constants/cartConstant';
+import Toast from 'react-native-toast-message';
 
 
 
@@ -34,10 +36,32 @@ const Home = () => {
 
     // console.log("products ",products[0].images);
 
+    // this function is called from productCard in which image is first image of product 
+    const addToCartHandler = (id,name,price,image,stock) => {
+        // console.log(id,name,price,image,stock);
 
-    const addToCartHandler = (id, stock) => {
-        // console.log("@@@id",id,"   @@stock ",stock)
+        if(stock===0)
+            return Toast.show({
+                        type:'error',
+                        text1:"Product is out of stock"
+                    })
 
+        dispatch({
+          type:ADD_TO_CART,
+          payload:{
+            product:id, // 
+            name,
+            price,
+            image,
+            stock,
+            quantity:1
+          }  
+        });
+
+        Toast.show({
+            type:'success',
+            text1:"Added to cart"
+        })
         // navigate.navigate('cart',{
         //     id:id,
         //     stock:count

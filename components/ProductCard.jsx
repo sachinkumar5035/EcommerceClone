@@ -95,7 +95,7 @@ const ProductCard = ({ stock, price, image, name, id, addToCartHandler, i, navig
                         borderBottomLeftRadius:20,
                         width:"100%"
                     }}>
-                        <Button onPress={()=>addToCartHandler(id,stock)} textColor={i%2==0?colors.color1:colors.color2}>
+                        <Button onPress={()=>addToCartHandler(id,name,price,image,stock)} textColor={i%2==0?colors.color1:colors.color2}>
                             Add to Cart
                         </Button>
                     </TouchableOpacity>
