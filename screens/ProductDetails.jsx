@@ -8,6 +8,7 @@ import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
 import { getProductDetails } from '../redux/action/productAction';
+import { ADD_TO_CART } from '../redux/constants/cartConstant';
 
 
 
@@ -30,7 +31,8 @@ const ProductDetails = ({ route: { params } }) => {
         name,
         price,
         stock,
-        description
+        description,
+        images
     } } = useSelector((state) => state.product); // this product is available in product state of otherReducer
 
     // console.log("@@@images", images);
@@ -41,24 +43,24 @@ const ProductDetails = ({ route: { params } }) => {
 
     // console.log("@@@ product ",product);
 
-    const images = [
-        {
-            id: "kjaslkjdal",
-            url: "https://media.istockphoto.com/id/1292435524/photo/mother-and-daughter-having-fun-at-the-park.jpg?s=1024x1024&w=is&k=20&c=6ABG03wtRrRtUXumZjlRG8OYlwOuLgb1rPYdIXPouyU="
-        },
-        {
-            id: "kjasljdal",
-            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        },
-        {
-            id: "kjasaskjdal",
-            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        },
-        {
-            id: "kjasalksjdal",
-            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        },
-    ];
+    // const images = [
+    //     {
+    //         id: "kjaslkjdal",
+    //         url: "https://media.istockphoto.com/id/1292435524/photo/mother-and-daughter-having-fun-at-the-park.jpg?s=1024x1024&w=is&k=20&c=6ABG03wtRrRtUXumZjlRG8OYlwOuLgb1rPYdIXPouyU="
+    //     },
+    //     {
+    //         id: "kjasljdal",
+    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    //     },
+    //     {
+    //         id: "kjasaskjdal",
+    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    //     },
+    //     {
+    //         id: "kjasalksjdal",
+    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    //     },
+    // ];
 
     const incrementQty = () => {
         if (quantity >= stock) {
@@ -75,16 +77,27 @@ const ProductDetails = ({ route: { params } }) => {
     }
 
     const addToCartHandler = () => {
-        if (stock == 0) {
-            return Toast.show({
-                type: "error",
-                text1: "out of stock"
-            })
-        }
-        Toast.show({
-            type: "success",
-            text1: "added to cart"
-        })
+        if(stock===0)
+        return Toast.show({
+                    type:'error',
+                    text1:"Product is out of stock"
+                })
+
+    dispatch({
+      type:ADD_TO_CART,
+      payload:{
+        product:params.id, // 
+        name,
+        price,
+        image:images[0]?.url,
+        stock,
+        quantity
+      }  
+    });
+    Toast.show({
+        type:'success',
+        text1:"Added to cart"
+    })
     }
 
     const imagePressHandler = () => {
@@ -94,7 +107,7 @@ const ProductDetails = ({ route: { params } }) => {
     return (
         <View>
             <Header back={true} />
-            <SliderBox
+            {/* <SliderBox
                 style={{
                     height: 300
                 }}
@@ -106,7 +119,7 @@ const ProductDetails = ({ route: { params } }) => {
                 autoplayInterval={3000}
                 circleLoop={true}
                 onCurrentImagePressed={() => imagePressHandler}
-            />
+            /> */}
 
             <View
                 style={{
