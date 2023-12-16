@@ -49,12 +49,12 @@ const Home = () => {
         dispatch({
           type:ADD_TO_CART,
           payload:{
-            product:id, // 
+            product:id, // in orderModel we have product as id in orderItem
             name,
             price,
             image,
             stock,
-            quantity:1
+            quantity:1 // from home page if user is adding product in cart then the quantity will always be one 
           }  
         });
 

@@ -5,8 +5,8 @@ export const cartReducer = createReducer({cartItems:[]}, (builder) => {
 
 
     builder.addCase(ADD_TO_CART,(state,action)=>{
-        // console.log(action.payload);
         const item = action.payload;
+        console.log(item);
         const isExist = state.cartItems.find((i)=>i.product===item.product)
         if(isExist){
             state.cartItems = state.cartItems.filter((i)=>i.product===isExist.product ? item : i)

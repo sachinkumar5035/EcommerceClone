@@ -7,15 +7,15 @@ const CartItem = ({
     id,
     name,
     stock,
-    amount,
+    price,
     imgSrc,
     index,
-    qty,
+    quantity,
     incrementHandler,
     decrementHandler,
     navigate
 }) => {
-
+    // console.log("qty ",quantity);
     return (
         <View
             style={{
@@ -66,7 +66,7 @@ const CartItem = ({
                         fontWeight:"900"
                     }}
                 >
-                    ₹{amount}
+                    ₹{price}
                 </Text>
             </View>
             
@@ -79,7 +79,7 @@ const CartItem = ({
                     alignSelf:"center"
                 }}
             >
-                <TouchableOpacity onPress={()=>decrementHandler(id,qty)}>
+                <TouchableOpacity onPress={()=>decrementHandler(id,name,price,imgSrc,stock,quantity)}>
                             <Avatar.Icon 
                             icon={"minus"} 
                             size={25} 
@@ -103,10 +103,11 @@ const CartItem = ({
                                 borderColor:colors.color5
                             }}
                         >
-                            {qty}
+                            {quantity}
                         </Text>
 
-                        <TouchableOpacity onPress={()=>incrementHandler(id,qty,stock)}>
+                        {/* id,name,price,image,stock,quantity */}
+                        <TouchableOpacity onPress={()=>incrementHandler(id,name,price,imgSrc,stock,quantity)}>
                             <Avatar.Icon 
                             icon={"plus"} 
                             size={25} 

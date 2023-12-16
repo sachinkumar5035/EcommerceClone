@@ -43,24 +43,24 @@ const ProductDetails = ({ route: { params } }) => {
 
     // console.log("@@@ product ",product);
 
-    // const images = [
-    //     {
-    //         id: "kjaslkjdal",
-    //         url: "https://media.istockphoto.com/id/1292435524/photo/mother-and-daughter-having-fun-at-the-park.jpg?s=1024x1024&w=is&k=20&c=6ABG03wtRrRtUXumZjlRG8OYlwOuLgb1rPYdIXPouyU="
-    //     },
-    //     {
-    //         id: "kjasljdal",
-    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-    //     },
-    //     {
-    //         id: "kjasaskjdal",
-    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-    //     },
-    //     {
-    //         id: "kjasalksjdal",
-    //         url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-    //     },
-    // ];
+    const secondaryImages = [
+        {
+            id: "kjaslkjdal",
+            url: "https://media.istockphoto.com/id/1292435524/photo/mother-and-daughter-having-fun-at-the-park.jpg?s=1024x1024&w=is&k=20&c=6ABG03wtRrRtUXumZjlRG8OYlwOuLgb1rPYdIXPouyU="
+        },
+        {
+            id: "kjasljdal",
+            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+        {
+            id: "kjasaskjdal",
+            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+        {
+            id: "kjasalksjdal",
+            url: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+    ];
 
     const incrementQty = () => {
         if (quantity >= stock) {
@@ -69,10 +69,7 @@ const ProductDetails = ({ route: { params } }) => {
         setQuantity((prev) => prev + 1);
     }
     const decrementQty = () => {
-        if (quantity <= 1) return Toast.show({
-            type: "error",
-            text1: "quantity can not be less than 1"
-        })
+        if (quantity <= 1) return 
         setQuantity((prev) => prev - 1);
     }
 
@@ -89,7 +86,7 @@ const ProductDetails = ({ route: { params } }) => {
         product:params.id, // 
         name,
         price,
-        image:images[0]?.url,
+        image: images?images[0].url:secondaryImages[0].url,
         stock,
         quantity
       }  
@@ -107,11 +104,11 @@ const ProductDetails = ({ route: { params } }) => {
     return (
         <View>
             <Header back={true} />
-            {/* <SliderBox
+            <SliderBox
                 style={{
                     height: 300
                 }}
-                images={images.map((item, index) => item.url)}
+                images={images?images.map((item, index) => item.url):secondaryImages.map((item,index)=>item.url)}
                 // images={images.url}
                 dotColor="red"
                 imageLoadingColor="black"
@@ -119,7 +116,7 @@ const ProductDetails = ({ route: { params } }) => {
                 autoplayInterval={3000}
                 circleLoop={true}
                 onCurrentImagePressed={() => imagePressHandler}
-            /> */}
+            />
 
             <View
                 style={{

@@ -7,6 +7,8 @@ import { Button } from 'react-native-paper'
 import CartItem from '../components/CartItem'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
+import Toast from 'react-native-toast-message'
+import { ADD_TO_CART, REMOVE_FROM_CART } from '../redux/constants/cartConstant'
 
 // export const cartItems=[ // we will fetch it from cart reducer later for now let us make it hard coded
 //     {
@@ -61,19 +63,60 @@ import { useDispatch, useSelector } from 'react-redux'
 
 
 const Cart = ({id,stock}) => {
-    // console.log("@@@id",id, + "   @@stock "+stock)
 
     const navigate = useNavigation();
     const dispatch=useDispatch();
 
     const {cartItems} = useSelector((state)=>state.cart); // we have created a store with name cart 
+    
+    const incrementHandler=(id,name,price,image,stock,quantity)=>{
+        // console.log("increasing ",id,quantity,stock);
+        const newQuantity = quantity+1;
 
-    const incrementHandler=(id,qty,stock)=>{
-        console.log("increasing ",id,qty,stock);
+        if(stock <= quantity){
+            return Toast.show({
+                type:"error",
+                text1:"Maximum Value Added"
+            });
+        }
+
+        dispatch({
+            type:ADD_TO_CART,
+            payload:{
+                product:id,
+                name:name,
+                price:price,
+                image:image,
+                stock:stock,
+                quantity:newQuantity
+            }
+        })
     }
     
-    const decrementHandler=(id,qty)=>{
-        console.log("decreasing ", id, qty);
+    
+    const decrementHandler=(id,name,price,image,stock,quantity)=>{
+        console.log("decreasing ",id,quantity,stock);
+        const newqty = quantity-1;
+        if(quantity<=1){
+            return  dispatch({
+                type:REMOVE_FROM_CART,
+                payload:{
+                    id:id
+                }
+            })
+        }
+        
+        dispatch({
+            type:ADD_TO_CART,
+            payload:{
+                product:id,
+                name:name,
+                price:price,
+                image:image,
+                stock:stock,
+                quantity:newqty
+            }
+        })
     }
     
 
@@ -104,10 +147,10 @@ const Cart = ({id,stock}) => {
                             id={item.product} 
                             name={item.name} 
                             stock={item.stock}
-                            amount={item.price}
+                            price={item.price}
                             imgSrc={item.image}
                             index={index}
-                            qty={item.quantity}
+                            quantity={item.quantity}
                             incrementHandler={incrementHandler}
                             decrementHandler={decrementHandler}
                         />
