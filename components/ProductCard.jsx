@@ -10,7 +10,7 @@ const ProductCard = ({ stock, price, image, name, id, addToCartHandler, i, navig
        navigate.navigate("productdetails", { id:id });
     }
 
-
+    // console.log("stock of product ",stock);
     return (
 
         <TouchableOpacity 

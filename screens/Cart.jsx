@@ -62,24 +62,22 @@ import { ADD_TO_CART, REMOVE_FROM_CART } from '../redux/constants/cartConstant'
 // ]
 
 
-const Cart = ({id,stock}) => {
+const Cart = () => {
 
     const navigate = useNavigation();
     const dispatch=useDispatch();
 
     const {cartItems} = useSelector((state)=>state.cart); // we have created a store with name cart 
-    
+    // console.log(cartItems);
     const incrementHandler=(id,name,price,image,stock,quantity)=>{
-        // console.log("increasing ",id,quantity,stock);
         const newQuantity = quantity+1;
-
         if(stock <= quantity){
             return Toast.show({
                 type:"error",
                 text1:"Maximum Value Added"
             });
         }
-
+        // console.log("dispatch add to cart with ", id,name,price,image,stock,quantity);
         dispatch({
             type:ADD_TO_CART,
             payload:{
@@ -95,9 +93,9 @@ const Cart = ({id,stock}) => {
     
     
     const decrementHandler=(id,name,price,image,stock,quantity)=>{
-        console.log("decreasing ",id,quantity,stock);
         const newqty = quantity-1;
         if(quantity<=1){
+            console.log("dispatch remove from cart");
             return  dispatch({
                 type:REMOVE_FROM_CART,
                 payload:{
@@ -105,7 +103,7 @@ const Cart = ({id,stock}) => {
                 }
             })
         }
-        
+        console.log("dispatch add to cart with ", id,name,price,image,stock,quantity);
         dispatch({
             type:ADD_TO_CART,
             payload:{
@@ -150,7 +148,7 @@ const Cart = ({id,stock}) => {
                             price={item.price}
                             imgSrc={item.image}
                             index={index}
-                            quantity={item.quantity}
+                            qty={item.quantity}
                             incrementHandler={incrementHandler}
                             decrementHandler={decrementHandler}
                         />

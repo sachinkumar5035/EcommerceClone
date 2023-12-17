@@ -24,7 +24,7 @@ const ProductDetails = ({ route: { params } }) => {
     // tool can generate up to ten thousand random strings where every string is a maximum of 100 characters in length."
 
     const [quantity, setQuantity] = useState(1);
-    // const stock=10;
+    
     const dispatch = useDispatch();
     const isFocused = useIsFocused();
     const { product: {
@@ -35,7 +35,7 @@ const ProductDetails = ({ route: { params } }) => {
         images
     } } = useSelector((state) => state.product); // this product is available in product state of otherReducer
 
-    // console.log("@@@images", images);
+    console.log("@@@stock ",stock);
 
     useEffect(() => {
         dispatch(getProductDetails(params.id));
@@ -63,14 +63,26 @@ const ProductDetails = ({ route: { params } }) => {
     ];
 
     const incrementQty = () => {
+       
         if (quantity >= stock) {
-            return
+            return Toast.show({
+                type:"error",
+                text1:"Maximum value added"
+            })
         }
         setQuantity((prev) => prev + 1);
+        // console.log("increasing qty stock ", quantity,stock);
     }
     const decrementQty = () => {
-        if (quantity <= 1) return 
+        if (quantity <= 1) 
+        {   return 
+                Toast.show({
+                type:"error",
+                text1:"At-least one quantity needs to added"
+            })
+        }
         setQuantity((prev) => prev - 1);
+        console.log("decreasing qty ", quantity,stock);
     }
 
     const addToCartHandler = () => {
@@ -79,16 +91,16 @@ const ProductDetails = ({ route: { params } }) => {
                     type:'error',
                     text1:"Product is out of stock"
                 })
-
+    console.log("add to cart ",params.id,name,price,images[0].url,stock,quantity);
     dispatch({
       type:ADD_TO_CART,
       payload:{
         product:params.id, // 
-        name,
-        price,
+        name:name,
+        price:price,
         image: images?images[0].url:secondaryImages[0].url,
-        stock,
-        quantity
+        stock:stock,
+        quantity:quantity
       }  
     });
     Toast.show({
