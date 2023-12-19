@@ -77,7 +77,6 @@ const Cart = () => {
                 text1:"Maximum Value Added"
             });
         }
-        // console.log("dispatch add to cart with ", id,name,price,image,stock,quantity);
         dispatch({
             type:ADD_TO_CART,
             payload:{
@@ -91,11 +90,9 @@ const Cart = () => {
         })
     }
     
-    
     const decrementHandler=(id,name,price,image,stock,quantity)=>{
         const newqty = quantity-1;
         if(quantity<=1){
-            console.log("dispatch remove from cart");
             return  dispatch({
                 type:REMOVE_FROM_CART,
                 payload:{
@@ -103,7 +100,6 @@ const Cart = () => {
                 }
             })
         }
-        console.log("dispatch add to cart with ", id,name,price,image,stock,quantity);
         dispatch({
             type:ADD_TO_CART,
             payload:{
@@ -173,8 +169,8 @@ const Cart = () => {
                     paddingHorizontal: 35
                 }}
             >
-                <Text>5 Items</Text>
-                <Text>₹1500</Text>
+                <Text>{cartItems.length} Items</Text>
+                <Text>₹{cartItems.reduce((prev,curr)=>prev+curr.quantity*curr.price,0)}</Text>
             </View>
             <TouchableOpacity onPress={cartItems.length>0?()=>navigate.navigate("confirmorder"):null}>
                 <Button icon={'cart'}

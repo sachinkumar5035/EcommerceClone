@@ -4,6 +4,10 @@ import { colors, defaultStyle } from '../styles/style'
 import Header from '../components/Header'
 import Heading from '../components/Heading'
 import { Button, RadioButton } from 'react-native-paper'
+import { useDispatch, useSelector } from 'react-redux'
+import { placeOrder } from '../redux/action/otherAction'
+import { useMessageAndErrorOther } from '../utils/customHooks'
+import { CLEAR_CART } from '../redux/constants/cartConstant'
 
 
 
@@ -11,20 +15,36 @@ const Payment = ({ navigation, route }) => {
 
     const [paymentMethod, setPaymentMethod] = useState("COD");
     // console.log(paymentMethod);
-    const isAuthenticated=true;
+    const dispatch = useDispatch();
+    const {user,isAuthenticated} = useSelector((state)=>state.user);
+    const {cartItems} = useSelector((state)=>state.cart);
+    // const isAuthenticated=true;
     
     const redirectToLogin=()=>{
         navigation.navigate("login");
     }
 
-    const codHandler=()=>{
-
+    const codHandler=(paymentInfo)=>{
+        const shippingInfo = {
+            address:user.address,
+            city:user.city,
+            // state:user.state,
+            country:user.country,
+            pinCode:user.pinCode
+        }
+        const itemsPrice = route.params.itemsPrice;
+        const shippingCharges = route.params.shippingCharges;
+        const taxPrice = route.params.tax;
+        const totalAmount = route.params.totalAmount;
+        // console.log(cartItems);
+        dispatch(placeOrder(cartItems,shippingInfo,paymentMethod,itemsPrice,taxPrice,shippingCharges,totalAmount,paymentInfo));
     }
 
     const onlineHandler=()=>{
 
     }
 
+    const loading = useMessageAndErrorOther(dispatch,navigation,"profile",()=>({type:CLEAR_CART}));
 
     return (
         <View style={{ ...defaultStyle }}>
@@ -53,12 +73,15 @@ const Payment = ({ navigation, route }) => {
             </View>
 
             <TouchableOpacity
+                disabled={loading}
                 onPress={
-                    !isAuthenticated?redirectToLogin:paymentMethod==="COD"?codHandler:onlineHandler
+                    !isAuthenticated?redirectToLogin:paymentMethod==="COD"?()=>codHandler():onlineHandler
                 }
             
             >
                 <Button
+                    loading={loading}
+                    disabled={loading}
                     style={styles.btn}
                     textColor={colors.color2}
                     icon={paymentMethod === "COD" ? "check-circle" : "circle-multiple-outline"}

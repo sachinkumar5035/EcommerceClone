@@ -35,7 +35,7 @@ const ProductDetails = ({ route: { params } }) => {
         images
     } } = useSelector((state) => state.product); // this product is available in product state of otherReducer
 
-    console.log("@@@stock ",stock);
+    // console.log("@@@stock ",stock);
 
     useEffect(() => {
         dispatch(getProductDetails(params.id));
@@ -82,7 +82,6 @@ const ProductDetails = ({ route: { params } }) => {
             })
         }
         setQuantity((prev) => prev - 1);
-        console.log("decreasing qty ", quantity,stock);
     }
 
     const addToCartHandler = () => {
@@ -91,7 +90,7 @@ const ProductDetails = ({ route: { params } }) => {
                     type:'error',
                     text1:"Product is out of stock"
                 })
-    console.log("add to cart ",params.id,name,price,images[0].url,stock,quantity);
+    // console.log("add to cart ",params.id,name,price,images[0].url,stock,quantity);
     dispatch({
       type:ADD_TO_CART,
       payload:{

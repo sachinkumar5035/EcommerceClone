@@ -1,16 +1,26 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import {  TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Avatar } from 'react-native-paper'
 import { colors } from '../styles/style'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
+import { CLEAR_CART } from '../redux/constants/cartConstant'
 
 
 const Header = ({ back, emptyCart = false }) => {
 
     const navigate = useNavigation();
     const route = useRoute();
+    const dispatch = useDispatch();
+
+
     const emptyCartHandler = () => {
-        console.log("empty cart handler");
+        // console.log("empty cart handler");
+        
+        dispatch({
+            type:CLEAR_CART
+        })
+
     }
 
     return (
@@ -60,3 +70,6 @@ const Header = ({ back, emptyCart = false }) => {
 }
 
 export default Header
+
+
+

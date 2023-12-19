@@ -11,6 +11,7 @@ import {
     UPDATE_PROFILE_REQUEST,
     UPDATE_PROFILE_SUCCESS
 } from "../constants/userConstants";
+import { PLACE_ORDER_FAIL, PLACE_ORDER_REQUEST, PLACE_ORDER_SUCCESS } from "../constants/cartConstant";
 
 
 export const otherReducer = createReducer({}, (builder) => {
@@ -21,30 +22,38 @@ export const otherReducer = createReducer({}, (builder) => {
         state.loading = true
     }).addCase(UPDATE_PIC_REQUEST, (state) => {
         state.loading = true
+    }).addCase(PLACE_ORDER_REQUEST, (state) => {
+        state.loading = true
     });
 
     //success cases
     builder.addCase(CHANGE_PASSWORD_SUCCESS, (state, action) => {
         state.loading = false,
-            state.message = action.payload
+        state.message = action.payload
     }).addCase(UPDATE_PROFILE_SUCCESS, (state, action) => {
         state.loading = false,
-            state.message = action.payload
+        state.message = action.payload
     }).addCase(UPDATE_PIC_SUCCESS, (state, action) => {
         state.loading = false,
-            state.message = action.payload
-    });
+        state.message = action.payload
+    }).addCase(PLACE_ORDER_SUCCESS, (state, action) => {
+        state.loading=false,
+        state.message=action.payload
+    }); 
 
     // fail cases
     builder.addCase(CHANGE_PASSWORD_FAIL, (state, action) => {
         state.loading = false,
-            state.error = action.payload
+        state.error = action.payload
     }).addCase(UPDATE_PROFILE_FAIL, (state, action) => {
         state.loading = false,
-            state.error = action.payload
+        state.error = action.payload
     }).addCase(UPDATE_PIC_FAIL, (state, action) => {
         state.loading = false,
-            state.error = action.payload
+        state.error = action.payload
+    }).addCase(PLACE_ORDER_FAIL, (state, action) => {
+        state.loading = false,
+        state.error = action.payload
     });
 
 
