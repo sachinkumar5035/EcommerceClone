@@ -25,6 +25,7 @@ const UpdateProfile = ({ navigation }) => {
     const [email, setEmail] = useState(user?.email);
     const [address, setAddress] = useState(user?.address);
     const [city, setCity] = useState(user?.city);
+    const [state,setState] = useState(user?.state);
     const [country, setCountry] = useState(user?.country);
     const [pinCode, setPinCode] = useState(user?.pinCode.toString());
 
@@ -89,6 +90,12 @@ const UpdateProfile = ({ navigation }) => {
                             placeholder='City'
                             value={city}
                             onChangeText={setCity}
+                        />
+                        <TextInput
+                            {...inputOptions}
+                            placeholder='State'
+                            value={state}
+                            onChangeText={setState}
                         />
 
                         <TextInput

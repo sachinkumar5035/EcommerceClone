@@ -28,7 +28,7 @@ const Payment = ({ navigation, route }) => {
         const shippingInfo = {
             address:user.address,
             city:user.city,
-            // state:user.state,
+            state:user.state,
             country:user.country,
             pinCode:user.pinCode
         }
@@ -36,7 +36,6 @@ const Payment = ({ navigation, route }) => {
         const shippingCharges = route.params.shippingCharges;
         const taxPrice = route.params.tax;
         const totalAmount = route.params.totalAmount;
-        // console.log(cartItems);
         dispatch(placeOrder(cartItems,shippingInfo,paymentMethod,itemsPrice,taxPrice,shippingCharges,totalAmount,paymentInfo));
     }
 

@@ -77,12 +77,13 @@ export const updatePic=(formData) => async(dispatch)=>{
 }
 
 
-
+                      // cartItems,shippingInfo,paymentMethod,itemsPrice,taxPrice,shippingCharges,totalAmount,paymentInfo
 export const placeOrder=(orderItems,shippingInfo,paymentMethod,itemsPrice,taxPrice,shippingCharges,totalAmount,paymentInfo)=>async(dispatch)=>{
     try {
         dispatch({type:PLACE_ORDER_REQUEST});
         console.log("1");
         const config = { headers: { "Content-Type": "application/json" },withCredentials:true };
+        
         const {data} = await axios.post(`${server}/order/new`,{shippingInfo,orderItems,paymentMethod,paymentInfo,itemsPrice,shippingCharges,taxPrice,totalAmount},config);
         console.log("2");
         dispatch({

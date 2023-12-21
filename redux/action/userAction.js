@@ -38,7 +38,7 @@ export const login=(email,password)=>async(dispatch)=>{
             type: LOGIN_FAIL,
             payload: error?.response?.data?.message,
         });
-        console.log("error aa gya bc",error);
+        // console.log("login method me error aa gya bc",error);
     }
 }
 
@@ -57,7 +57,7 @@ export const loadUser=()=>async(dispatch)=>{
             type: LOAD_USER_FAIL,
             payload: error?.response?.data?.message,
         });
-        console.log("error aa gya bc",error);
+        // console.log("load user me error aa gya bc",error);
     }
 }
 
@@ -76,7 +76,7 @@ export const logout=()=>async(dispatch)=>{
             type: LOGOUT_FAIL,
             payload: error?.response?.data?.message,
         });
-        console.log("error aa gya bc",error);
+        // console.log("log out user me error aa gya bc",error);
     }
 }
 
@@ -97,7 +97,7 @@ export const registerUser=(formData) => async(dispatch)=>{
             type:REGISTER_USER_FAIL,
             payload:error?.response?.data?.message
         })
-        console.log("error aa gya bc",error);
+        // console.log("register user me error aa gya bc",error);
     }
 }
 
