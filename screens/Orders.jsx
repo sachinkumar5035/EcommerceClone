@@ -5,6 +5,7 @@ import { defaultStyle, colors } from '../styles/style'
 import Loader from '../components/Loader'
 import Heading from '../components/Heading'
 import OrderItem from '../components/OrderItem'
+import { useSelector } from 'react-redux'
 
 export const order = [
     {
@@ -65,7 +66,7 @@ export const order = [
 const Orders = () => {
 
     const loading = false;
-
+    const {cartItems} = useSelector((state)=>state.cart);
 
     return (
         <View

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CLEAR_ERROR, CLEAR_MESSAGE } from "../redux/constants/userConstants";
 import Toast from "react-native-toast-message";
@@ -85,4 +85,28 @@ export const useSetCategories = (setCategories,isFocused)=>{
         })
     }, [isFocused])
     
+}
+
+
+// we can use when we want to get the orders(admin/user for both)
+export const useGetOrders = (isFocused,isAdmin=false) =>{
+    const [orders,setOrders] = useState([]);
+    const [loading,setLoading] = useState(false);
+    useEffect(() => {
+        setLoading(true);
+        axios.get(`${server}/order/${isAdmin?"admin":"me"}`).then(res=>{
+            setOrders(res.data.orders) // from backend for both routes admin and me we are sending orders as result 
+            setLoading(false);
+        }).catch((e)=>{
+            Toast.show({
+                type:"error",
+                text1:e.response.data.message
+            })
+            setLoading(false);
+        })
+    }, [isFocused])
+    return {
+        loading,
+        orders
+    }
 }

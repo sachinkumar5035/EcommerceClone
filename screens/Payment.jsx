@@ -8,14 +8,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { placeOrder } from '../redux/action/otherAction'
 import { useMessageAndErrorOther } from '../utils/customHooks'
 import { CLEAR_CART } from '../redux/constants/cartConstant'
-
+import {useStripe} from '@stripe/stripe-react-native'
+import Toast from 'react-native-toast-message'
+import axios from 'axios'
+import { server } from '../redux/store'
+import Loader from '../components/Loader'
 
 
 const Payment = ({ navigation, route }) => {
 
     const [paymentMethod, setPaymentMethod] = useState("COD");
+    const [loaderLoading,setLoaderLoading] = useState(false);
     // console.log(paymentMethod);
     const dispatch = useDispatch();
+    const stripe = useStripe();
     const {user,isAuthenticated} = useSelector((state)=>state.user);
     const {cartItems} = useSelector((state)=>state.cart);
     // const isAuthenticated=true;
@@ -39,14 +45,53 @@ const Payment = ({ navigation, route }) => {
         dispatch(placeOrder(cartItems,shippingInfo,paymentMethod,itemsPrice,taxPrice,shippingCharges,totalAmount,paymentInfo));
     }
 
-    const onlineHandler=()=>{
+    const onlineHandler = async()=>{
+        try {
+            const config = { headers: { "Content-Type": "application/json" },withCredentials:true };
+            const {data:{client_secret}} = await axios.post(`${server}/order/payment`,{totalAmount:route.params.totalAmount},config);
+            const init = await stripe.initPaymentSheet({
+                paymentIntentClientSecret:client_secret,
+                merchantDisplayName:"KumarShop"});
+            
+                if(init.error){
+                    return Toast.show({
+                        type:"error",
+                        text1:"Some Stripe error",
+                        text2:init.error.message
+                    })
+                }
+            const presentSheet = await stripe.presentPaymentSheet();
+            setLoaderLoading(true);
+            if(presentSheet.error){
+                setLoaderLoading(false);
+                return Toast.show({
+                    type:"error",
+                    text1:"Some presentSheet error",
+                    text2:presentSheet.error.message
+                })
+            }
 
+            const {paymentIntent} = await stripe.retrievePaymentIntent(client_secret);
+
+            if(paymentIntent.status==='Succeeded'){
+                codHandler({id:paymentIntent.id,status:paymentIntent.status});
+            }
+
+
+        } catch (error) {
+            return Toast.show({
+                type:"error",
+                text1:"Internal server error",
+                text2:error
+            })
+        }
     }
 
     const loading = useMessageAndErrorOther(dispatch,navigation,"profile",()=>({type:CLEAR_CART}));
 
     return (
-        <View style={{ ...defaultStyle }}>
+        loaderLoading?(<Loader/>):(
+            <View style={{ ...defaultStyle }}>
             {/* header */}
             <Header back={true} />
 
@@ -91,6 +136,7 @@ const Payment = ({ navigation, route }) => {
                 </Button>
             </TouchableOpacity>
         </View>
+        )
     )
 }
 
