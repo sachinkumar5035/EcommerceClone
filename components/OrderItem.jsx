@@ -2,6 +2,8 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { colors } from '../styles/style'
 import { Button } from 'react-native-paper'
+import { useDispatch } from 'react-redux'
+import { processOrder } from '../redux/action/orderAction'
 
 const OrderItem = ({
     id,
@@ -16,9 +18,13 @@ const OrderItem = ({
     index = 0
 }) => {
 
-    // updateHandler = ()=>{
-    //     console.log("update handler called");
-    // }
+    const dispatch = useDispatch();
+
+
+    updateHandler = (id)=>{
+        // console.log("update handler called",id);
+        dispatch(processOrder(id));
+    }
 
     return (
         <View style={{

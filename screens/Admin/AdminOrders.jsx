@@ -1,24 +1,32 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {defaultStyle} from '../../styles/style'
 import { colors } from '../../styles/style'
 import Header from '../../components/Header'
 import Loader from '../../components/Loader'
 import OrderItem from '../../components/OrderItem'
 import Heading from '../../components/Heading'
-import { order } from '../Orders'
+import { getAdminOrder, getOrder1 } from '../../redux/action/orderAction'
+import { useDispatch, useSelector } from 'react-redux'
+import { useMessageAndError, useMessageAndErrorOther } from '../../utils/customHooks'
 
 
 
-const AdminOrders = () => {
+const AdminOrders = ({navigation}) => {
+    const dispatch = useDispatch();
+    const {orders,loading} = useSelector((state)=>state.orders); // store for orders is orders 
+   
+    // const loading=false;
+    const processOrderLoading=useMessageAndErrorOther(dispatch,navigation,"adminpanel",);
 
-    const loading=false;
-    const processOrderLoading=false;
-    
-    const updateHandler=()=>{
-
+    const updateHandler=(id)=>{
+        console.log(id);
     }
 
+
+    useEffect(() => {
+        dispatch(getOrder1());
+      }, [])
 
 
   return (
@@ -45,7 +53,7 @@ const AdminOrders = () => {
 
                             <ScrollView showsVerticalScrollIndicator={false}>
                                 {
-                                    order.length > 0 ? order.map((item, index) => (
+                                    orders.length > 0 ? orders.map((item, index) => (
                                         <OrderItem
                                             key={item._id}
                                             id={item._id}
@@ -53,14 +61,15 @@ const AdminOrders = () => {
                                             price={item.totalAmount}
                                             status={item.orderStatus}
                                             paymentMethod={item.paymentMethod}
-                                            orderedOn={item.createdAt.split("T")[0]}
+                                            orderedOn={item.placedOn.split("T")[0]}
                                             address={`${item.shippingInfo.address}, ${item.shippingInfo.city}, ${item.shippingInfo.country}, ${item.shippingInfo.pinCode}`}
                                             admin={true}
                                             updateHandler={updateHandler}
                                             loading={processOrderLoading}
                                         />
                                     )) : (
-                                        <Heading style={{ textAlign: "center" }}>No Orders Yet</Heading>
+                                        // <Heading style={{ textAlign: "center" }}>No Orders Yet</Heading>
+                                        <Text style={{textAlign:'center',fontWeight:"800"}}>No orders Yet</Text>
                                     )
                                 }
                             </ScrollView>

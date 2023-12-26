@@ -1,17 +1,19 @@
-import {configureStore} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { userReducer } from "./reducer/userReducer.js";
 
 import axios from 'axios';
 import { otherReducer } from "./reducer/otherReducer.js";
 import { productReducer } from "./reducer/productReducer.js";
 import { cartReducer } from "./reducer/cartReducer.js";
+import { orderReducer } from "./reducer/orderReducer.js";
 
 export const store = configureStore({
-    reducer:{
+    reducer: {
         user: userReducer,
-        other:otherReducer,
-        product:productReducer,
-        cart:cartReducer
+        other: otherReducer,
+        product: productReducer,
+        cart: cartReducer,
+        orders: orderReducer
     }
 });
 
