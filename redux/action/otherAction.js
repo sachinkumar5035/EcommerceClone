@@ -11,6 +11,7 @@ import { CHANGE_PASSWORD_FAIL,
         UPDATE_PROFILE_SUCCESS 
     } from '../constants/userConstants.js';
 import { PLACE_ORDER_FAIL, PLACE_ORDER_REQUEST, PLACE_ORDER_SUCCESS } from '../constants/cartConstant.js';
+import { ADD_CATEGORY_FAIL, ADD_CATEGORY_REQUEST, ADD_CATEGORY_SUCCESS, DELETE_CATEGORY_FAIL, DELETE_CATEGORY_REQUEST, DELETE_CATEGORY_SUCCESS } from '../constants/categoryConstant.js';
 
 
 
@@ -97,5 +98,45 @@ export const placeOrder=(orderItems,shippingInfo,paymentMethod,itemsPrice,taxPri
             payload: error?.response?.data?.message,
         })
         console.log("error in place order action method ",error);
+    }
+}
+
+
+export const addCategory=(category) => async(dispatch)=>{
+    try {
+        dispatch({type:ADD_CATEGORY_REQUEST})
+        const config = { headers: { "Content-Type": "application/json" },withCredentials:true }; 
+        const {data} = await axios.post(`${server}/category/new`,{category},config,);
+        dispatch({
+            type:ADD_CATEGORY_SUCCESS,
+            payload:data.message
+        })
+        return true
+    } catch (error) {
+        dispatch({
+            type:ADD_CATEGORY_FAIL,
+            payload:error?.response?.data?.message
+        })
+        console.log("error in addCategory action method ",error);
+    }
+}
+
+
+
+export const deleteCategory=(id) => async(dispatch)=>{
+    try {
+        dispatch({type:DELETE_CATEGORY_REQUEST});
+        const config = {withCredentials:true };
+        const {data} = await axios.delete(`${server}/category/delete/${id}`,config);
+        dispatch({
+            type:DELETE_CATEGORY_SUCCESS,
+            payload:data.message
+        })
+    } catch (error) {
+        dispatch({
+            type:DELETE_CATEGORY_FAIL,
+            payload:error?.response?.data?.message
+        })
+        console.log("error in deleteCategory action method ",error);
     }
 }
