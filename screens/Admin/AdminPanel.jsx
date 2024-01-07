@@ -7,13 +7,20 @@ import ProductListHeading from '../../components/ProductListHeading'
 // import { products } from '../Home'
 import ProductListItem from '../../components/ProductListItem'
 import Chart from '../../components/Chart'
+import { useAdminProduct } from '../../utils/customHooks'
+import { useDispatch } from 'react-redux'
+import { useIsFocused } from '@react-navigation/native'
 
-const products=[];
+// const products=[];
 
 
 const AdminPanel = ({navigation}) => {
 
-    const loading = false;
+    // const loading = false;
+    const dispatch = useDispatch();
+    const isFocused = useIsFocused();
+    const {loading,products,inStock,outOfStock} = useAdminProduct(dispatch,isFocused);
+
 
     const navigationHandler = (text) => {
         // based on the text we will navigate through the screen 
@@ -39,6 +46,7 @@ const AdminPanel = ({navigation}) => {
     }
 
     return (
+        <ScrollView showsVerticalScrollIndicator={false}>
         <View style={defaultStyle}>
 
             <Header back={true} />
@@ -53,11 +61,10 @@ const AdminPanel = ({navigation}) => {
                             style={{
                                 backgroundColor: colors.color3,
                                 borderRadius: 10,
-                                alignItems: 'center',
-                                
+                                alignItems: 'center'
                             }}
                         >
-                            <Chart inStock={18} outOfStock={3} />
+                            <Chart inStock={inStock} outOfStock={outOfStock} />
                         </View>
 
                         <View style={{
@@ -85,14 +92,12 @@ const AdminPanel = ({navigation}) => {
                                         price={item.price} 
                                         stock={item.stock} 
                                         name={item.name} 
-                                        category={item.category}
+                                        category={item.category?.category}
                                         imgSrc={item.images[0].url}
                                         id={item._id}
                                     />
                                     ))
                                 }
-
-
                             </View>
                         </ScrollView>
 
@@ -100,6 +105,7 @@ const AdminPanel = ({navigation}) => {
                 )
             }
         </View>
+        </ScrollView>
     )
 }
 

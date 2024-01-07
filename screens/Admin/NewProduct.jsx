@@ -6,6 +6,7 @@ import Loader from '../../components/Loader'
 import { Avatar, Button, TextInput } from 'react-native-paper'
 import { inputOptions } from '../UpdateProfile'
 import SelectComponent from '../../components/SelectComponent'
+import { useDispatch } from 'react-redux'
 
 
 
@@ -15,7 +16,7 @@ const NewProduct = ({ navigation, route }) => {
     const loading = false;
     const loadingOther = false;
     // console.log(route.params);
-
+    const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [image, setImage] = useState("https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
     const [price, setPrice] = useState("");
@@ -31,7 +32,8 @@ const NewProduct = ({ navigation, route }) => {
     const [visible, setVisible] = useState(false);
 
     const submitHandler = () => {
-        console.log(name, description, price, stock, categoryId);
+        // console.log(name, description, price, stock, categoryId);
+        
     }
 
     useEffect(() => {

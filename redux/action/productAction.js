@@ -1,5 +1,8 @@
 import axios from "axios";
 import {
+    CREATE_PRODUCT_FAIL,
+    CREATE_PRODUCT_REQUEST,
+    CREATE_PRODUCT_SUCCESS,
     GET_ADMIN_PRODUCTS_FAIL,
     GET_ADMIN_PRODUCTS_REQUEST,
     GET_ADMIN_PRODUCTS_SUCCESS,
@@ -34,7 +37,7 @@ export const getAllProducts = (keyword,category) => async (dispatch) => {
             type: GET_ALL_PRODUCTS_FAIL,
             payload: error?.response?.data?.message,
         })
-        console.log(error);
+        console.log("error in get all product action method",error);
     }
 }
 
@@ -47,7 +50,7 @@ export const getAdminProducts = () => async (dispatch) => {
         const { data } = await axios.get(`${server}/product/admin`,config);
         // from backend we are getting data like success: true,
         // products: a list of all products so from here we will be sending that to reducer by using data.products 
-        console.log(data.products);
+        // console.log(data.products);
         dispatch({
             type: GET_ADMIN_PRODUCTS_SUCCESS,
             payload: data // in reducer we are fetching the properties with the name 
@@ -58,7 +61,7 @@ export const getAdminProducts = () => async (dispatch) => {
             type: GET_ADMIN_PRODUCTS_FAIL,
             payload: error?.response?.data?.message,
         })
-        console.log(error);
+        console.log("error in get get admin products action method",error);
     }
 }
 
@@ -79,7 +82,28 @@ export const getProductDetails = (id) => async (dispatch) => {
             type: PRODUCT_DETAILS_FAIL,
             payload: error?.response?.data?.message,
         })
-        console.log(error);
+        console.log("error in get product details action method",error);
     }
 }
 
+export const createProduct = () => async(dispatch)=>{
+    try {
+        console.log("1");
+        dispatch({
+            type:CREATE_PRODUCT_REQUEST
+        })
+        console.log("2");
+        const config = { headers: { "Content-Type": "application/json" },withCredentials:true};
+        const {data}  = await axios.post(`${server}/product/new`,config);
+        dispatch({
+            type:CREATE_PRODUCT_SUCCESS,
+            payload:data.message
+        })
+    } catch (error) {
+        dispatch({
+            type:CREATE_PRODUCT_FAIL,
+            payload:error?.response?.data?.message
+        })
+        console.log("error in create product action method ",error);
+    }
+}

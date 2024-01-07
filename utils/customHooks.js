@@ -4,6 +4,8 @@ import { CLEAR_ERROR, CLEAR_MESSAGE } from "../redux/constants/userConstants";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 import { server } from "../redux/store";
+import { getAdminProducts } from "../redux/action/productAction";
+
 
 
 export const useMessageAndError = (navigation, navigateTo="login", dispatch) => {
@@ -112,3 +114,29 @@ export const useSetCategories = (setCategories,isFocused)=>{
 //         orders
 //     }
 // }
+
+
+
+export const useAdminProduct = (dispatch,isFocused)=>{
+
+    const {products,inStock,outOfStock,error,loading}=useSelector((state)=>state.product)
+
+    useEffect(() => {
+       
+        if (error) {
+            Toast.show({
+                type: "error",
+                text1: error
+            })
+            dispatch({
+                type: CLEAR_ERROR
+            })
+        }
+        dispatch(getAdminProducts());
+    }, [dispatch,error,isFocused])
+    
+    return{
+        loading,inStock,outOfStock,products
+    }
+
+}
