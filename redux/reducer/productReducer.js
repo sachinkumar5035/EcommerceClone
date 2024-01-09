@@ -10,7 +10,7 @@ export const productReducer = createReducer({products:[],product:{}}, (builder) 
         state.loading=true
     }).addCase(PRODUCT_DETAILS_REQUEST,(state)=>{
         state.loading=true
-    }).addCase(CREATE_PRODUCT_REQUEST,(state,action)=>{
+    }).addCase(CREATE_PRODUCT_REQUEST,(state)=>{
         state.loading=true
     });
 

@@ -7,16 +7,19 @@ import { Avatar, Button, TextInput } from 'react-native-paper'
 import { inputOptions } from '../UpdateProfile'
 import SelectComponent from '../../components/SelectComponent'
 import { useDispatch } from 'react-redux'
-
+import { useMessageAndErrorOther, useSetCategories } from '../../utils/customHooks'
+import { useIsFocused } from '@react-navigation/native'
+import { createProduct } from '../../redux/action/productAction'
+import mime from 'mime';
 
 
 // from myModal we are navigating to update product by passing Id so that id can be accessed here also by using route.params
 const NewProduct = ({ navigation, route }) => {
-
-    const loading = false;
-    const loadingOther = false;
     // console.log(route.params);
+    const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
+    const loading = useMessageAndErrorOther(dispatch,navigation,"adminpanel");
+    const loadingOther = false;
     const [name, setName] = useState("");
     const [image, setImage] = useState("https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
     const [price, setPrice] = useState("");
@@ -24,16 +27,25 @@ const NewProduct = ({ navigation, route }) => {
     const [stock, setStock] = useState("");
     const [category, setCategory] = useState("Laptop");
     const [categoryId, setCategoryId] = useState("");
-    const [categories, setCategories] = useState([
-        { _id: "ID1", category: "Laptop" },
-        { _id: "ID2", category: "Cloths" },
-        { _id: "ID3", category: "Daily" }
-    ]);
-    const [visible, setVisible] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const isFocused = useIsFocused();
+    useSetCategories(setCategories,isFocused);
+    
+    const condition = !name || !price || !description || !stock || !image; 
 
     const submitHandler = () => {
-        // console.log(name, description, price, stock, categoryId);
-        
+        const myForm = new FormData();
+        myForm.append("name",name);
+        myForm.append("price",price);
+        myForm.append("description",description);
+        myForm.append("stock",stock);
+        myForm.append("file",{
+            uri:image,
+            type:mime.getType(image),
+            name:image.split("/").pop()
+        })
+        console.log(myForm.file);
+        // dispatch(createProduct());
     }
 
     useEffect(() => {
@@ -148,7 +160,8 @@ const NewProduct = ({ navigation, route }) => {
                                         marginHorizontal: 20,
                                         textAlign: "center",
                                         borderRadius: 3,
-                                        textAlignVertical: 'center'
+                                        textAlignVertical: 'center',
+                                        textTransform:"uppercase"
                                     }}
                                     onPress={() => setVisible(true)}
                                 >

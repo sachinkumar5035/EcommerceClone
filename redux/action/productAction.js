@@ -48,9 +48,6 @@ export const getAdminProducts = () => async (dispatch) => {
         dispatch({ type: GET_ADMIN_PRODUCTS_REQUEST });
         const config = { headers: { "Content-Type": "application/json" },withCredentials:true };
         const { data } = await axios.get(`${server}/product/admin`,config);
-        // from backend we are getting data like success: true,
-        // products: a list of all products so from here we will be sending that to reducer by using data.products 
-        // console.log(data.products);
         dispatch({
             type: GET_ADMIN_PRODUCTS_SUCCESS,
             payload: data // in reducer we are fetching the properties with the name 
@@ -86,15 +83,36 @@ export const getProductDetails = (id) => async (dispatch) => {
     }
 }
 
-export const createProduct = () => async(dispatch)=>{
+// export const createProduct = () => async(dispatch)=>{
+//     try {
+//         console.log("1");
+//         dispatch({
+//             type:CREATE_PRODUCT_REQUEST
+//         })
+//         console.log("2");
+//         const config = { headers: { "Content-Type": "application/json" },withCredentials:true};
+//         const {data}  = await axios.post(`${server}/product/new`,config);
+//         dispatch({
+//             type:CREATE_PRODUCT_SUCCESS,
+//             payload:data.message
+//         })
+//     } catch (error) {
+//         dispatch({
+//             type:CREATE_PRODUCT_FAIL,
+//             payload:error?.response?.data?.message
+//         })
+//         console.log("error in create product action method ",error);
+//     }
+// }
+
+
+export const createProduct=(formData) => async(dispatch)=>{
     try {
+        dispatch({type:CREATE_PRODUCT_REQUEST})
         console.log("1");
-        dispatch({
-            type:CREATE_PRODUCT_REQUEST
-        })
+        const config = { headers: { "Content-Type": "multipart/form-data" },withCredentials:true }; // multipart/form-data while uploading file and text data 
+        const {data} = await axios.post(`${server}/product/new`,formData,config);
         console.log("2");
-        const config = { headers: { "Content-Type": "application/json" },withCredentials:true};
-        const {data}  = await axios.post(`${server}/product/new`,config);
         dispatch({
             type:CREATE_PRODUCT_SUCCESS,
             payload:data.message
@@ -107,3 +125,26 @@ export const createProduct = () => async(dispatch)=>{
         console.log("error in create product action method ",error);
     }
 }
+
+// export const addNewProduct = () => async(dispatch)=>{
+//     try {
+//         console.log("1");
+//         dispatch({
+//             type:CREATE_PRODUCT_REQUEST
+//         })
+//         console.log("2");
+//         const config = { headers: { "Content-Type": "application/json" },withCredentials:true};
+//         const {data}  = await axios.post(`${server}/product/new`,config);
+//         dispatch({
+//             type:CREATE_PRODUCT_SUCCESS,
+//             payload:data.message
+//         })
+//     } catch (error) {
+//         dispatch({
+//             type:CREATE_PRODUCT_FAIL,
+//             payload:error?.response?.data?.message
+//         })
+//         console.log("error in create product action method ",error);
+//     }
+// }
+
