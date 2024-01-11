@@ -83,40 +83,20 @@ export const getProductDetails = (id) => async (dispatch) => {
     }
 }
 
-// export const createProduct = () => async(dispatch)=>{
-//     try {
-//         console.log("1");
-//         dispatch({
-//             type:CREATE_PRODUCT_REQUEST
-//         })
-//         console.log("2");
-//         const config = { headers: { "Content-Type": "application/json" },withCredentials:true};
-//         const {data}  = await axios.post(`${server}/product/new`,config);
-//         dispatch({
-//             type:CREATE_PRODUCT_SUCCESS,
-//             payload:data.message
-//         })
-//     } catch (error) {
-//         dispatch({
-//             type:CREATE_PRODUCT_FAIL,
-//             payload:error?.response?.data?.message
-//         })
-//         console.log("error in create product action method ",error);
-//     }
-// }
-
 
 export const createProduct=(formData) => async(dispatch)=>{
     try {
         dispatch({type:CREATE_PRODUCT_REQUEST})
-        console.log("1");
+        // console.log(" formdata ",formData);
         const config = { headers: { "Content-Type": "multipart/form-data" },withCredentials:true }; // multipart/form-data while uploading file and text data 
         const {data} = await axios.post(`${server}/product/new`,formData,config);
-        console.log("2");
+        // console.log(`${server}/product/new`);
+        // console.log("2");
         dispatch({
             type:CREATE_PRODUCT_SUCCESS,
-            payload:data.message
-        })
+            payload:data
+        });
+        // console.log("3");
     } catch (error) {
         dispatch({
             type:CREATE_PRODUCT_FAIL,
@@ -126,25 +106,4 @@ export const createProduct=(formData) => async(dispatch)=>{
     }
 }
 
-// export const addNewProduct = () => async(dispatch)=>{
-//     try {
-//         console.log("1");
-//         dispatch({
-//             type:CREATE_PRODUCT_REQUEST
-//         })
-//         console.log("2");
-//         const config = { headers: { "Content-Type": "application/json" },withCredentials:true};
-//         const {data}  = await axios.post(`${server}/product/new`,config);
-//         dispatch({
-//             type:CREATE_PRODUCT_SUCCESS,
-//             payload:data.message
-//         })
-//     } catch (error) {
-//         dispatch({
-//             type:CREATE_PRODUCT_FAIL,
-//             payload:error?.response?.data?.message
-//         })
-//         console.log("error in create product action method ",error);
-//     }
-// }
 

@@ -21,7 +21,6 @@ const AdminPanel = ({navigation}) => {
     const isFocused = useIsFocused();
     const {loading,products,inStock,outOfStock} = useAdminProduct(dispatch,isFocused);
 
-
     const navigationHandler = (text) => {
         // based on the text we will navigate through the screen 
         // make sure text will match with ButtonBox text 

@@ -28,4 +28,5 @@ export const server = "https://portal-service-m54p.onrender.com/api/v1"
 // abhishek's server link 
 // export const server = "https://ecommerce-server-i8ns.onrender.com/api/v1";
 
+//local server
 // export const server  = "http://localhost:3000/api/v1";

@@ -11,6 +11,7 @@ import { useMessageAndErrorOther, useSetCategories } from '../../utils/customHoo
 import { useIsFocused } from '@react-navigation/native'
 import { createProduct } from '../../redux/action/productAction'
 import mime from 'mime';
+import Toast from 'react-native-toast-message'
 
 
 // from myModal we are navigating to update product by passing Id so that id can be accessed here also by using route.params
@@ -18,20 +19,19 @@ const NewProduct = ({ navigation, route }) => {
     // console.log(route.params);
     const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
-    const loading = useMessageAndErrorOther(dispatch,navigation,"adminpanel");
-    const loadingOther = false;
+    // const loadingOther = useSelector(state=>state.product);
     const [name, setName] = useState("");
     const [image, setImage] = useState("https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
     const [stock, setStock] = useState("");
-    const [category, setCategory] = useState("Laptop");
+    const [category, setCategory] = useState("Choose Category");
     const [categoryId, setCategoryId] = useState("");
     const [categories, setCategories] = useState([]);
     const isFocused = useIsFocused();
     useSetCategories(setCategories,isFocused);
     
-    const condition = !name || !price || !description || !stock || !image; 
+    const disableBtn = !name || !price || !description || !stock || !image || (category==="Choose Category"); 
 
     const submitHandler = () => {
         const myForm = new FormData();
@@ -44,9 +44,18 @@ const NewProduct = ({ navigation, route }) => {
             type:mime.getType(image),
             name:image.split("/").pop()
         })
-        console.log(myForm.file);
-        // dispatch(createProduct());
+        if(category)
+            myForm.append("category",categoryId); // at the time of product creation we need to pass the product id
+        dispatch(createProduct(myForm));
+        navigation.navigate("adminpanel");
+        Toast.show({
+            type:"success",
+            text1:"Product created successfully"
+        })
+        // console.log(myForm);
     }
+
+    const loading = useMessageAndErrorOther(dispatch,navigation,"adminpanel");
 
     useEffect(() => {
       if(route.params?.image){ // this is sent from the camera.jsx while selecting the image 
@@ -54,8 +63,6 @@ const NewProduct = ({ navigation, route }) => {
       }
     }, [route.params])
     
-
-
     return (
         <>
             <View
@@ -177,7 +184,7 @@ const NewProduct = ({ navigation, route }) => {
                                     }}
                                     onPress={submitHandler}
                                     loading={loading}
-                                    disabled={loading}
+                                    disabled={disableBtn || loading}
                                 >
                                     Create
                                 </Button>

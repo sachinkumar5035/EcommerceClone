@@ -10,58 +10,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Toast from 'react-native-toast-message'
 import { ADD_TO_CART, REMOVE_FROM_CART } from '../redux/constants/cartConstant'
 
-// export const cartItems=[ // we will fetch it from cart reducer later for now let us make it hard coded
-//     {
-//         name:"Macbook",
-//         image:"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-//         product:"this is product id",
-//         stock:50,
-//         price:150000,
-//         quantity:3
-//     },
-//     {
-//         name:"Bag",
-//         image:"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-//         product:"this is product id 1",
-//         stock:100,
-//         price:10000,
-//         quantity:30
-//     },
-//     {
-//         name:"Nike run",
-//         image:"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-//         product:"this is product id 2",
-//         stock:10,
-//         price:1000,
-//         quantity:3
-//     },
-//     {
-//         name:"Macbook",
-//         image:"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-//         product:"this is prsaasct id",
-//         stock:50,
-//         price:150000,
-//         quantity:3
-//     },
-//     {
-//         name:"Bag",
-//         image:"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-//         product:"this is sasauct id 1",
-//         stock:100,
-//         price:10000,
-//         quantity:30
-//     },
-//     {
-//         name:"Nike run",
-//         image:"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-//         product:"this is sasdasdduct id 2",
-//         stock:10,
-//         price:1000,
-//         quantity:3
-//     }
-// ]
-
-
 const Cart = () => {
 
     const navigate = useNavigation();
