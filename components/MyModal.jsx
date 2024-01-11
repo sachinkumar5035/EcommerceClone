@@ -7,7 +7,6 @@ const MyModal = ({ id, deleteHandler, navigate, setOpenModal }) => {
 
 
 
-
     return (
         <View style={styles.container}>
             <TouchableOpacity

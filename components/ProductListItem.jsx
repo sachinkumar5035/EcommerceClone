@@ -72,7 +72,7 @@ const ProductListItem = ({
                     >
                         {category}
                     </Text>
-
+                    
                     <Text 
                         style={{
                             color: colors.color2,
@@ -82,11 +82,7 @@ const ProductListItem = ({
                     >
                         {stock}
                     </Text>
-
                 </View>
-
-
-
             </TouchableOpacity>
 
 {

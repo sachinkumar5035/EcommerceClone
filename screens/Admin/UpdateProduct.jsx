@@ -1,51 +1,52 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import { colors, defaultStyle } from '../../styles/style'
 import Loader from '../../components/Loader'
 import { Button, TextInput } from 'react-native-paper'
 import { inputOptions } from '../UpdateProfile'
 import SelectComponent from '../../components/SelectComponent'
+import { useDispatch, useSelector } from 'react-redux'
+import { useIsFocused } from '@react-navigation/native'
+import { useMessageAndErrorOther, useSetCategories } from '../../utils/customHooks'
+import { getProductDetails, updateProduct } from '../../redux/action/productAction'
 
 
 
 // from myModal we are navigating to update product by passing Id so that id can be accessed here also by using route.params
 const UpdateProduct = ({ navigation, route }) => {
 
-    const loading = false; // this loading is used when page is fetching the data 
-    const loadingOther = false; // this loading is for button 
-    console.log("Update product ",route.params);
+    // const loadingOther = false; // this loading is for button 
+    // console.log("Update product ",route.params);
+    const dispatch = useDispatch();
+    const isFocused = useIsFocused();
+    const {product,loading} = useSelector(state=>state.product);
 
-    const [id] = useState(route.params.id);
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState("");
-    const [description, setDescription] = useState("");
-    const [stock, setStock] = useState("");
-    const [category, setCategory] = useState("Laptop");
-    const [categoryId, setCategoryId] = useState("");
-    const [categories, setCategories] = useState([
-        { _id: "ID1", category: "Laptop" },
-        { _id: "ID2", category: "Cloths" },
-        { _id: "ID3", category: "Daily" }
-    ]);
     const [visible, setVisible] = useState(false);
-
-    const images = [
-        {
-            url: "https://picsum.photos/id/237/600/600",
-            _id: "ID1"
-        },
-        {
-            url: "https://picsum.photos/id/237/600/600",
-            _id: "ID2"
-        }
-    ]
-
-
-
+    const [id] = useState(route.params.id);
+    const [name, setName] = useState(product?.name);
+    const [price, setPrice] = useState(product?.price.toString());
+    const [description, setDescription] = useState(product?.description);
+    const [stock, setStock] = useState(product?.stock.toString());
+    const [category, setCategory] = useState(product?.category?.category);
+    const [categoryId, setCategoryId] = useState(product?.category?._id);
+    const [categories, setCategories] = useState([]);
+    useSetCategories(setCategories,isFocused);
+    const loading1 = useMessageAndErrorOther(dispatch,navigation,"adminpanel"); // this loading is used when page is fetching the data 
+    const images = []
+    // console.log(product);
+    // console.log(id);
     const submitHandler = () => {
-        console.log(name, description, price, stock, categoryId);
+        // console.log(name, description, price, stock, categoryId,id);
+        
+        dispatch(updateProduct(name,description,categoryId,price,stock,id));
+        // navigation.navigate("adminpanel");
     }
+
+    useEffect(() => {
+        dispatch(getProductDetails(id));
+    }, [id,isFocused,dispatch])
+    
 
 
     return (
@@ -125,7 +126,8 @@ const UpdateProduct = ({ navigation, route }) => {
                                         marginHorizontal: 20,
                                         textAlign: "center",
                                         borderRadius: 3,
-                                        textAlignVertical: 'center'
+                                        textAlignVertical: 'center',
+                                        textTransform:"uppercase"
                                     }}
                                     onPress={() => setVisible(true)}
                                 >{category}</Text>
@@ -138,8 +140,8 @@ const UpdateProduct = ({ navigation, route }) => {
                                         padding: 6
                                     }}
                                     onPress={submitHandler}
-                                    loading={loadingOther}
-                                    disabled={loadingOther}
+                                    loading={loading1}
+                                    disabled={loading}
                                 >Update</Button>
 
                             </View>

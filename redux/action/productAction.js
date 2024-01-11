@@ -3,6 +3,9 @@ import {
     CREATE_PRODUCT_FAIL,
     CREATE_PRODUCT_REQUEST,
     CREATE_PRODUCT_SUCCESS,
+    DELETE_PRODUCT_FAIL,
+    DELETE_PRODUCT_REQUEST,
+    DELETE_PRODUCT_SUCCESS,
     GET_ADMIN_PRODUCTS_FAIL,
     GET_ADMIN_PRODUCTS_REQUEST,
     GET_ADMIN_PRODUCTS_SUCCESS,
@@ -11,7 +14,10 @@ import {
     GET_ALL_PRODUCTS_SUCCESS,
     PRODUCT_DETAILS_FAIL,
     PRODUCT_DETAILS_REQUEST,
-    PRODUCT_DETAILS_SUCCESS
+    PRODUCT_DETAILS_SUCCESS,
+    UPDATE_PRODUCT_FAIL,
+    UPDATE_PRODUCT_REQUEST,
+    UPDATE_PRODUCT_SUCCESS
 } from "../constants/productConstants";
 import { server } from "../store";
 
@@ -90,8 +96,6 @@ export const createProduct=(formData) => async(dispatch)=>{
         // console.log(" formdata ",formData);
         const config = { headers: { "Content-Type": "multipart/form-data" },withCredentials:true }; // multipart/form-data while uploading file and text data 
         const {data} = await axios.post(`${server}/product/new`,formData,config);
-        // console.log(`${server}/product/new`);
-        // console.log("2");
         dispatch({
             type:CREATE_PRODUCT_SUCCESS,
             payload:data
@@ -105,5 +109,49 @@ export const createProduct=(formData) => async(dispatch)=>{
         console.log("error in create product action method ",error);
     }
 }
+
+
+
+export const deleteProduct=(id) => async(dispatch)=>{
+    try {
+        dispatch({type:DELETE_PRODUCT_REQUEST})
+        // console.log(" formdata ",formData);
+        const config = { headers: { "Content-Type": "application/json" },withCredentials:true }; // multipart/form-data while uploading file and text data 
+        const {data} = await axios.delete(`${server}/product/delete/${id}`,config);
+        dispatch({
+            type:DELETE_PRODUCT_SUCCESS,
+            payload:data.message
+        });
+        // console.log("3");
+    } catch (error) {
+        dispatch({
+            type:DELETE_PRODUCT_FAIL,
+            payload:error?.response?.data?.message
+        })
+        console.log("error in delete product action method ",error);
+    }
+}
+
+export const updateProduct=(name, id,description,category, price, stock) => async(dispatch)=>{
+    try {
+        dispatch({type:UPDATE_PRODUCT_REQUEST})
+        console.log("1");
+        const config = { headers: { "Content-Type": "application/json" },withCredentials:true }; // multipart/form-data while uploading file and text data 
+        const {data} = await axios.put(`${server}/product/update/${id}`,{name, description,category, price, stock},config);
+        console.log("2");
+        dispatch({
+            type:UPDATE_PRODUCT_SUCCESS,
+            payload:data.message
+        });
+        console.log("3");
+    } catch (error) {
+        dispatch({
+            type:UPDATE_PRODUCT_FAIL,
+            payload:error?.response?.data?.message
+        })
+        console.log("error in update product action method ",error);
+    }
+}
+
 
 

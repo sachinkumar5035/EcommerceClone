@@ -10,6 +10,8 @@ import Chart from '../../components/Chart'
 import { useAdminProduct } from '../../utils/customHooks'
 import { useDispatch } from 'react-redux'
 import { useIsFocused } from '@react-navigation/native'
+import { deleteProduct, getAdminProducts } from '../../redux/action/productAction'
+import { useEffect } from 'react'
 
 // const products=[];
 
@@ -41,8 +43,11 @@ const AdminPanel = ({navigation}) => {
     }
 
     const deleteProductHandler=(id)=>{
-        console.log("product deleted " + id);
+        // console.log("product deleted " + id);
+        dispatch(deleteProduct(id));
+        navigation.navigate("profile");
     }
+    
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
