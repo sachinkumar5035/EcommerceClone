@@ -12,6 +12,7 @@ import { useIsFocused } from '@react-navigation/native'
 import { createProduct } from '../../redux/action/productAction'
 import mime from 'mime';
 import Toast from 'react-native-toast-message'
+import { CLEAR_ERROR } from '../../redux/constants/userConstants'
 
 
 // from myModal we are navigating to update product by passing Id so that id can be accessed here also by using route.params
@@ -39,18 +40,21 @@ const NewProduct = ({ navigation, route }) => {
         myForm.append("price",price);
         myForm.append("description",description);
         myForm.append("stock",stock);
+        if(category)
+            myForm.append("category",categoryId.toString().trim()); // at the time of product creation we need to pass the product id
         myForm.append("file",{
             uri:image,
             type:mime.getType(image),
             name:image.split("/").pop()
         })
-        if(category)
-            myForm.append("category",categoryId); // at the time of product creation we need to pass the product id
         dispatch(createProduct(myForm));
         navigation.navigate("adminpanel");
         Toast.show({
             type:"success",
             text1:"Product created successfully"
+        })
+        dispatch({
+            type:CLEAR_ERROR
         })
         // console.log(myForm);
     }

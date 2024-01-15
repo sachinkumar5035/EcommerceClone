@@ -91,23 +91,24 @@ export const getProductDetails = (id) => async (dispatch) => {
 
 
 export const createProduct=(formData) => async(dispatch)=>{
-    try {
-        dispatch({type:CREATE_PRODUCT_REQUEST})
-        // console.log(" formdata ",formData);
-        const config = { headers: { "Content-Type": "multipart/form-data" },withCredentials:true }; // multipart/form-data while uploading file and text data 
-        const {data} = await axios.post(`${server}/product/new`,formData,config);
-        dispatch({
-            type:CREATE_PRODUCT_SUCCESS,
-            payload:data
-        });
-        // console.log("3");
-    } catch (error) {
-        dispatch({
-            type:CREATE_PRODUCT_FAIL,
-            payload:error?.response?.data?.message
-        })
-        console.log("error in create product action method ",error);
-    }
+        try {
+            dispatch({type:CREATE_PRODUCT_REQUEST})
+            // console.log("1 ",formData);
+            const config = { headers: { "Content-Type": "multipart/form-data" } }; // multipart/form-data while uploading file and text data 
+            const {data} = await axios.post(`${server}/product/new`,formData,config,{withCredentials:true});
+            // console.log("2 ", formData )
+            dispatch({
+                type:CREATE_PRODUCT_SUCCESS,
+                payload:data.message
+            })
+            // console.log(data);
+        } catch (error) {
+            dispatch({
+                type:CREATE_PRODUCT_FAIL,
+                payload:error?.response?.data?.message
+            })
+            console.log("error in create product action method ",error);
+        }
 }
 
 
@@ -134,8 +135,8 @@ export const deleteProduct=(id) => async(dispatch)=>{
 
 export const updateProduct=(name, id,description,category, price, stock) => async(dispatch)=>{
     try {
-        dispatch({type:UPDATE_PRODUCT_REQUEST})
-        console.log("1");
+        dispatch({type:UPDATE_PRODUCT_REQUEST});
+        console.log(name, id,description,category, price, stock);
         const config = { headers: { "Content-Type": "application/json" },withCredentials:true }; // multipart/form-data while uploading file and text data 
         const {data} = await axios.put(`${server}/product/update/${id}`,{name, description,category, price, stock},config);
         console.log("2");

@@ -23,11 +23,12 @@ const Signup = ({ navigation,route }) => {
     const [password, setPassword] = useState("");
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
+    const [state, setState] = useState("");
     const [country, setCountry] = useState("");
     const [pinCode, setPinCode] = useState("");
     const [avatar, setAvatar] = useState('');
 
-    const disableSignupBtn = !name || !email || !password || !address || !city || !country || !pinCode ;
+    const disableSignupBtn = !name || !email || !password || !address || !city || !state || !country || !pinCode ;
 
     const dispatch = useDispatch();
 
@@ -42,6 +43,7 @@ const Signup = ({ navigation,route }) => {
         myForm.append("password",password);
         myForm.append("address",address);
         myForm.append("city",city);
+        myForm.append("state",state);
         myForm.append("country",country);
         myForm.append("pinCode",pinCode);
         if(avatar!==""){
@@ -127,6 +129,12 @@ const Signup = ({ navigation,route }) => {
                             placeholder='City'
                             value={city}
                             onChangeText={setCity}
+                        />
+                        <TextInput
+                            {...inputOptions}
+                            placeholder='State'
+                            value={state}
+                            onChangeText={setState}
                         />
 
                         <TextInput

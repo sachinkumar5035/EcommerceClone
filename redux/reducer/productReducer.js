@@ -19,6 +19,7 @@ import {
     UPDATE_PRODUCT_REQUEST, 
     UPDATE_PRODUCT_SUCCESS 
 } from "../constants/productConstants";
+import { CLEAR_ERROR, CLEAR_MESSAGE } from "../constants/userConstants";
 
 
 export const productReducer = createReducer({products:[],product:{}}, (builder) => {
@@ -77,7 +78,17 @@ export const productReducer = createReducer({products:[],product:{}}, (builder) 
         state.loading=false,
         state.error=action.payload
     }).addCase(UPDATE_PRODUCT_FAIL,(state,action)=>{
+        console.log(action.payload),
         state.loading=false,
         state.error=action.payload
     });
-})
+
+    builder.addCase(CLEAR_ERROR,(state)=>{
+        state.error=null
+    })
+
+    builder.addCase(CLEAR_MESSAGE,(state)=>{
+        state.message=null
+    })
+
+})  

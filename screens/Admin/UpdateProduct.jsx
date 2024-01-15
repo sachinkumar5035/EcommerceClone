@@ -25,20 +25,17 @@ const UpdateProduct = ({ navigation, route }) => {
     const [visible, setVisible] = useState(false);
     const [id] = useState(route.params.id);
     const [name, setName] = useState(product?.name);
-    const [price, setPrice] = useState(product?.price.toString());
+    const [stock, setStock] = useState(product?.stock?.toString());
+    const [price, setPrice] = useState(product?.price?.toString());
     const [description, setDescription] = useState(product?.description);
-    const [stock, setStock] = useState(product?.stock.toString());
     const [category, setCategory] = useState(product?.category?.category);
     const [categoryId, setCategoryId] = useState(product?.category?._id);
     const [categories, setCategories] = useState([]);
     useSetCategories(setCategories,isFocused);
     const loading1 = useMessageAndErrorOther(dispatch,navigation,"adminpanel"); // this loading is used when page is fetching the data 
-    const images = []
-    // console.log(product);
-    // console.log(id);
+    const images = [];
     const submitHandler = () => {
         // console.log(name, description, price, stock, categoryId,id);
-        
         dispatch(updateProduct(name,description,categoryId,price,stock,id));
         // navigation.navigate("adminpanel");
     }
