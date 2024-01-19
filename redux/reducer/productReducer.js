@@ -78,7 +78,6 @@ export const productReducer = createReducer({products:[],product:{}}, (builder) 
         state.loading=false,
         state.error=action.payload
     }).addCase(UPDATE_PRODUCT_FAIL,(state,action)=>{
-        console.log(action.payload),
         state.loading=false,
         state.error=action.payload
     });

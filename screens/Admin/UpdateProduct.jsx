@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useIsFocused } from '@react-navigation/native'
 import { useMessageAndErrorOther, useSetCategories } from '../../utils/customHooks'
 import { getProductDetails, updateProduct } from '../../redux/action/productAction'
+// import { CLEAR_ERROR, CLEAR_MESSAGE } from '../../redux/constants/userConstants'
+import Toast from 'react-native-toast-message'
 
 
 
@@ -21,7 +23,7 @@ const UpdateProduct = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const isFocused = useIsFocused();
     const {product,loading} = useSelector(state=>state.product);
-
+    // console.log(product);
     const [visible, setVisible] = useState(false);
     const [id] = useState(route.params.id);
     const [name, setName] = useState(product?.name);
@@ -36,8 +38,18 @@ const UpdateProduct = ({ navigation, route }) => {
     const images = [];
     const submitHandler = () => {
         // console.log(name, description, price, stock, categoryId,id);
-        dispatch(updateProduct(name,description,categoryId,price,stock,id));
-        // navigation.navigate("adminpanel");
+        try {
+            dispatch(updateProduct(name,id,description,categoryId,price,stock));
+            Toast.show({
+                type:"success",
+                text1:"Product updated successfully"
+            })
+        } catch (error) {
+            Toast.show({
+                type:"error",
+                text1:"Internal server error"
+            })
+        }
     }
 
     useEffect(() => {
@@ -80,7 +92,7 @@ const UpdateProduct = ({ navigation, route }) => {
                                     textColor={colors.color1}
                                     onPress={() => navigation.navigate('productimages', {
                                         id, // id is product id 
-                                        images: images // here we are sending the images array for the product to ProductImages page
+                                        images: product.images // here we are sending the images array for the product to ProductImages page
                                     })}
                                 >
                                     Manage Images

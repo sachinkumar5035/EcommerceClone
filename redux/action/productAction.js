@@ -136,15 +136,15 @@ export const deleteProduct=(id) => async(dispatch)=>{
 export const updateProduct=(name, id,description,category, price, stock) => async(dispatch)=>{
     try {
         dispatch({type:UPDATE_PRODUCT_REQUEST});
-        console.log(name, id,description,category, price, stock);
+        // console.log(name, id,description,category, price, stock);
         const config = { headers: { "Content-Type": "application/json" },withCredentials:true }; // multipart/form-data while uploading file and text data 
         const {data} = await axios.put(`${server}/product/update/${id}`,{name, description,category, price, stock},config);
-        console.log("2");
+        // console.log("2");
         dispatch({
             type:UPDATE_PRODUCT_SUCCESS,
             payload:data.message
         });
-        console.log("3");
+        // console.log("3");
     } catch (error) {
         dispatch({
             type:UPDATE_PRODUCT_FAIL,
