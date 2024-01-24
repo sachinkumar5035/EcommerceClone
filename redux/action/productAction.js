@@ -4,6 +4,9 @@ import {
     CREATE_PRODUCT_REQUEST,
     CREATE_PRODUCT_SUCCESS,
     DELETE_PRODUCT_FAIL,
+    DELETE_PRODUCT_IMAGE_FAIL,
+    DELETE_PRODUCT_IMAGE_REQUEST,
+    DELETE_PRODUCT_IMAGE_SUCCESS,
     DELETE_PRODUCT_REQUEST,
     DELETE_PRODUCT_SUCCESS,
     GET_ADMIN_PRODUCTS_FAIL,
@@ -16,6 +19,8 @@ import {
     PRODUCT_DETAILS_REQUEST,
     PRODUCT_DETAILS_SUCCESS,
     UPDATE_PRODUCT_FAIL,
+    UPDATE_PRODUCT_IMAGE_REQUEST,
+    UPDATE_PRODUCT_IMAGE_SUCCESS,
     UPDATE_PRODUCT_REQUEST,
     UPDATE_PRODUCT_SUCCESS
 } from "../constants/productConstants";
@@ -111,8 +116,6 @@ export const createProduct=(formData) => async(dispatch)=>{
         }
 }
 
-
-
 export const deleteProduct=(id) => async(dispatch)=>{
     try {
         dispatch({type:DELETE_PRODUCT_REQUEST})
@@ -154,5 +157,43 @@ export const updateProduct=(name, id,description,category, price, stock) => asyn
     }
 }
 
+export const updateProductImage = (id,formData)=>async(dispatch)=>{
+    try {
+        dispatch({
+            type:UPDATE_PRODUCT_IMAGE_REQUEST
+        })
+        console.log("1");
+        const config = {headers: {'Content-Type': 'multipart/form-data'},withCredentials:true};
+        const {data} = await axios.post(`${server}/product/images/${id}`,formData,config);
+        console.log("2");
+        dispatch({
+            type:UPDATE_PRODUCT_IMAGE_SUCCESS,
+            payload:data.message
+        })
+        console.log("3");
+    } catch (error) {
+        dispatch({
+            type:UPDATE_PRODUCT_FAIL, 
+            payload:error?.response?.data?.message
+        })
+        console.log("error in update product image action method ",error);
+    }
+}
 
 
+export const deleteProductImage = (productId,imageId)=>async(dispatch)=>{
+    try {
+        dispatch({type:DELETE_PRODUCT_IMAGE_REQUEST});
+        const {data} = await axios.delete(`${server}/product/images/${productId}?id=${imageId}`,{withCredentials:true});
+        dispatch({
+            type:DELETE_PRODUCT_IMAGE_SUCCESS,
+            payload:data.message
+        })
+    } catch (error) {
+        dispatch({
+            type:DELETE_PRODUCT_IMAGE_FAIL,
+            payload:error?.response?.data?.message
+        })
+        console.log("error in delete product image action method ",error);
+    }
+}

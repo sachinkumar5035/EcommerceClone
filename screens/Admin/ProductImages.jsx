@@ -4,27 +4,54 @@ import { colors, defaultStyle } from '../../styles/style'
 import Header from '../../components/Header'
 import ImageCard from '../../components/ImageCard'
 import { Avatar, Button } from 'react-native-paper'
-
+import { useMessageAndErrorOther } from '../../utils/customHooks'
+import { useDispatch } from 'react-redux'
+import { deleteProductImage, updateProductImage } from '../../redux/action/productAction'
+import mime from 'mime';
+import Toast from 'react-native-toast-message'
 
 const ProductImages = ({ navigation, route }) => {
 
-    console.log(route.params);
-    console.log("productId is ", route.params.id); // this is product id for which images needs to be manage
+    // console.log(route.params);
+    // console.log("productId is ", route.params.id); // this is product id for which images needs to be manage
+    const dispatch = useDispatch();
+    
     const [images] = useState(route.params.images);
     const [productId] = useState(route.params.id); // id is the product for which we are managing the images 
-   
-    const loading = false;
+    
+    const loading = useMessageAndErrorOther(dispatch,navigation,"adminpanel");
     const [image,setImage] = useState(null);
     const [imageChanged,setImageChanged] = useState(false);
 
     const submitHandler = ()=>{
-        console.log("submit handler called");
+        const myForm = new FormData();
+        myForm.append("file", {
+            uri: image,
+            type: mime.getType(image),
+            name: image.split("/").pop()
+        })
+        // console.log(productId,myForm);
+        try {
+            dispatch(updateProductImage(productId,myForm));
+            Toast.show({
+                type:"success",
+                text1:"images added"
+            })
+            navigation.navigate('adminpanel');
+        } catch (error) {
+            Toast.show({
+                type:"error",
+                text1:"internal server error"
+            })
+        }
     }
 
     const deleteHandler = (id) => { // this id is coming from imageCard page
-        console.log("inside delete handler");
-        console.log("Image id ", id);
-        console.log("Product id ", productId);
+        // console.log("inside delete handler");
+        // console.log("Image id ", id);
+        // console.log("Product id ", productId);
+        dispatch(deleteProductImage(productId,id));  
+
     }
 
     useEffect(() => {
@@ -65,7 +92,7 @@ const ProductImages = ({ navigation, route }) => {
                         images.map((image) => (
                             <ImageCard
                                 key={image._id}
-                                src={image.url} // this is image url
+                                src={image?.url} // this is image url
                                 id={image._id} // this is image id not the product id
                                 deleteHandler={deleteHandler}
                             /> // need to create this imageCard component

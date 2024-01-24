@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import { colors, defaultStyle, inputStyling } from '../styles/style';
 import { Button, TextInput } from 'react-native-paper';
 import Footer from '../components/Footer';
+import { useDispatch } from 'react-redux';
+import { forgetPassword } from '../redux/action/userAction';
+import { useMessageAndError, useMessageAndErrorOther } from '../utils/customHooks';
 
 const inputOptions={
     style:inputStyling,
@@ -14,13 +17,11 @@ const inputOptions={
 const ForgetPassword = ({navigation}) => {
 
     const [email, setEmail] = useState("");
-
-    const loading = false;
-
+    const dispatch = useDispatch();
+    const loading = useMessageAndError(navigation,"verify",dispatch);
 
     const submitHandler =()=>{
-        // alert("send otp btn clicked");
-        navigation.navigate("verify");
+        dispatch(forgetPassword(email));
     }
 
     return (

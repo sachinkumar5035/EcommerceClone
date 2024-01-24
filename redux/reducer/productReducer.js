@@ -4,6 +4,9 @@ import {
     CREATE_PRODUCT_REQUEST, 
     CREATE_PRODUCT_SUCCESS, 
     DELETE_PRODUCT_FAIL, 
+    DELETE_PRODUCT_IMAGE_FAIL, 
+    DELETE_PRODUCT_IMAGE_REQUEST, 
+    DELETE_PRODUCT_IMAGE_SUCCESS, 
     DELETE_PRODUCT_REQUEST, 
     DELETE_PRODUCT_SUCCESS, 
     GET_ADMIN_PRODUCTS_FAIL,
@@ -16,6 +19,9 @@ import {
     PRODUCT_DETAILS_REQUEST, 
     PRODUCT_DETAILS_SUCCESS, 
     UPDATE_PRODUCT_FAIL, 
+    UPDATE_PRODUCT_IMAGE_FAIL, 
+    UPDATE_PRODUCT_IMAGE_REQUEST, 
+    UPDATE_PRODUCT_IMAGE_SUCCESS, 
     UPDATE_PRODUCT_REQUEST, 
     UPDATE_PRODUCT_SUCCESS 
 } from "../constants/productConstants";
@@ -35,6 +41,10 @@ export const productReducer = createReducer({products:[],product:{}}, (builder) 
     }).addCase(DELETE_PRODUCT_REQUEST,(state)=>{
         state.loading=true
     }).addCase(UPDATE_PRODUCT_REQUEST,(state)=>{
+        state.loading=true
+    }).addCase(UPDATE_PRODUCT_IMAGE_REQUEST,(state)=>{
+        state.loading=true
+    }).addCase(DELETE_PRODUCT_IMAGE_REQUEST,(state)=>{
         state.loading=true
     });
 
@@ -60,6 +70,12 @@ export const productReducer = createReducer({products:[],product:{}}, (builder) 
     }).addCase(UPDATE_PRODUCT_SUCCESS,(state,action)=>{
         state.loading=false,
         state.message=action.payload
+    }).addCase(UPDATE_PRODUCT_IMAGE_SUCCESS,(state,action)=>{
+        state.loading=false,
+        state.message=action.payload
+    }).addCase(DELETE_PRODUCT_IMAGE_SUCCESS,(state,action)=>{
+        state.loading=false,
+        state.message=action.payload
     });
 
     builder.addCase(GET_ALL_PRODUCTS_FAIL,(state,action)=>{
@@ -78,6 +94,12 @@ export const productReducer = createReducer({products:[],product:{}}, (builder) 
         state.loading=false,
         state.error=action.payload
     }).addCase(UPDATE_PRODUCT_FAIL,(state,action)=>{
+        state.loading=false,
+        state.error=action.payload
+    }).addCase(UPDATE_PRODUCT_IMAGE_FAIL,(state,action)=>{
+        state.loading=false,
+        state.error=action.payload
+    }).addCase(DELETE_PRODUCT_IMAGE_FAIL,(state,action)=>{
         state.loading=false,
         state.error=action.payload
     });

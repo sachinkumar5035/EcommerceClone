@@ -13,7 +13,13 @@ import {
     LOGOUT_FAIL,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
-    REGISTER_USER_FAIL
+    REGISTER_USER_FAIL,
+    FORGET_PASSWORD_REQUEST,
+    FORGET_PASSWORD_SUCCESS,
+    FORGET_PASSWORD_FAIL,
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAIL
 } from '../constants/userConstants';
 
 
@@ -25,6 +31,11 @@ export const userReducer = createReducer({}, (builder) => {
     }).addCase(LOGOUT_REQUEST,(state)=>{
         state.loading=true
     }).addCase(REGISTER_USER_REQUEST,(state)=>{
+        state.loading=true
+    }).addCase(FORGET_PASSWORD_REQUEST,(state)=>{
+        state.loading=true
+    }).addCase(RESET_PASSWORD_REQUEST,(state)=>{
+        console.log(state)
         state.loading=true
     });
 
@@ -45,6 +56,14 @@ export const userReducer = createReducer({}, (builder) => {
         state.loading=false,
         state.isAuthenticated=true,
         state.message=action.payload
+    }).addCase(FORGET_PASSWORD_SUCCESS,(state,action)=>{
+        console.log(action.payload),
+        state.loading=false,
+        state.message=action.payload
+    }).addCase(RESET_PASSWORD_SUCCESS,(state,action)=>{
+        console.log(action.payload),
+        state.loading=false,
+        state.message=action.payload
     });
 
     builder.addCase(LOGIN_FAIL, (state, action) => {
@@ -62,6 +81,13 @@ export const userReducer = createReducer({}, (builder) => {
     }).addCase(REGISTER_USER_FAIL,(state,action)=>{
         state.loading=false,
         state.isAuthenticated=false,
+        state.error=action.payload
+    }).addCase(FORGET_PASSWORD_FAIL,(state,action)=>{
+        state.loading=false,
+        state.error=action.payload
+    }).addCase(RESET_PASSWORD_FAIL,(state,action)=>{
+        console.log(action.payload),
+        state.loading=false,
         state.error=action.payload
     });
 

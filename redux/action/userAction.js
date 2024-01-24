@@ -10,7 +10,13 @@ import {
     LOGOUT_FAIL,
     REGISTER_USER_REQUEST,
     REGISTER_USER_FAIL,
-    REGISTER_USER_SUCCESS
+    REGISTER_USER_SUCCESS,
+    FORGET_PASSWORD_REQUEST,
+    FORGET_PASSWORD_SUCCESS,
+    FORGET_PASSWORD_FAIL,
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAIL
 } from '../constants/userConstants';
 import axios from 'axios';
 import { server} from '../store.js'
@@ -101,4 +107,42 @@ export const registerUser=(formData) => async(dispatch)=>{
     }
 }
 
+export const forgetPassword=(email) => async(dispatch)=>{
+    try {
+        dispatch({type:FORGET_PASSWORD_REQUEST})
+        console.log("1");
+        const config = { headers: { "Content-Type": "application/json" },withCredentials:true}; // multipart/form-data while uploading file and text data 
+        const {data} = await axios.post(`${server}/user/forgetpassword`,{email},{config});
+        dispatch({
+            type:FORGET_PASSWORD_SUCCESS,
+            payload:data.message
+        })
+        console.log("2");
+    } catch (error) {
+        dispatch({
+            type:FORGET_PASSWORD_FAIL,
+            payload:error?.response?.data?.message
+        })
+        console.log("error in forget password action method",error);
+    }
+}
 
+export const resetPassword=(otp,newPassword) => async(dispatch)=>{
+    try {
+        dispatch({type:RESET_PASSWORD_REQUEST})
+        // console.log("1 ",otp,newPassword);
+        const config = { headers: { "Content-Type": "application/json" },withCredentials:true}; // multipart/form-data while uploading file and text data 
+        const {data} = await axios.put(`${server}/user/forgetpassword`,{otp,newPassword},{config});
+        dispatch({
+            type:RESET_PASSWORD_SUCCESS,
+            payload:data.message
+        })
+        // console.log("2");
+    } catch (error) {
+        dispatch({
+            type:RESET_PASSWORD_FAIL,
+            payload:error?.response?.data?.message
+        })
+        console.log("error in reset password action method",error);
+    }
+}

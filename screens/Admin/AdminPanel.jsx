@@ -63,6 +63,7 @@ const AdminPanel = ({navigation}) => {
                     <>
                         <View 
                             style={{
+                                // ...styles.container,
                                 backgroundColor: colors.color3,
                                 borderRadius: 10,
                                 alignItems: 'center'
@@ -123,14 +124,15 @@ const styles = StyleSheet.create({
         color: colors.color2,
         padding: 5,
         borderRadius: 5,
-    }
+    },
+    container: {
+        elevation: 7,
+        backgroundColor: colors.color3,
+        padding: 30,
+        borderRadius: 10,
+        alignItems: 'center'
+
+    },
 })
 
 export default AdminPanel
-
-// center a div?
-
-
-
-
-
